@@ -80,12 +80,21 @@ class WPBT_Core {
 		);
 
 		add_settings_field(
-			'core_settings',
-			null,
-			array( $this, 'core_radio_group' ),
+			'channel_settings',
+			__( 'Select the update channel you would like this website to use:', 'wordpress-beta-tester' ),
+			array( $this, 'channel_radio_group' ),
 			'wp_beta_tester_core',
 			'wp_beta_tester_core',
-			array( esc_html__( 'Choose an update branch', 'wordpress-beta-tester' ) )
+			array( 'class' => 'wpbt-settings-title' )
+		);
+
+		add_settings_field(
+			'stream_settings',
+			__( 'Select one of the stream options below:', 'wordpress-beta-tester' ),
+			array( $this, 'stream_radio_group' ),
+			'wp_beta_tester_core',
+			'wp_beta_tester_core',
+			array( 'class' => 'wpbt-settings-title' )
 		);
 	}
 
@@ -99,14 +108,12 @@ class WPBT_Core {
 		if ( isset( $post_data['option_page'] )
 			&& 'wp_beta_tester_core' === $post_data['option_page']
 		) {
-			$options                 = isset( $post_data['wp-beta-tester'] )
-				? $post_data['wp-beta-tester']
-				: array();
-			self::$options['stream'] = WPBT_Settings::sanitize( $options );
+			$options                  = isset( $post_data['wp-beta-tester'] ) ? $post_data['wp-beta-tester'] : 'branch-development';
+			self::$options['channel'] = WPBT_Settings::sanitize( $options );
 
-			// set an option when picking 'point' release stream.
-			// used to ensure correct mangled version is returned.
-			self::$options['revert'] = 'point' === $options;
+			$options_beta_rc                = isset( $post_data['wp-beta-tester-beta-rc'] ) ? $post_data['wp-beta-tester-beta-rc'] : '';
+			self::$options['stream-option'] = WPBT_Settings::sanitize( $options_beta_rc );
+
 			update_site_option( 'wp_beta_tester', (array) self::$options );
 			add_filter( 'wp_beta_tester_save_redirect', array( $this, 'save_redirect_page' ) );
 		}
@@ -153,72 +160,96 @@ class WPBT_Core {
 			'https://core.trac.wordpress.org/newticket'
 		);
 		echo '</p><p>';
-		echo wp_kses_post( __( 'By default, your WordPress install uses the stable update stream. To return to this, please deactivate this plugin and re-install from the <a href="update-core.php">WordPress Updates</a> page.', 'wordpress-beta-tester' ) );
+		echo wp_kses_post( __( 'By default, your WordPress installation uses the stable update channel. To return to this, please deactivate this plugin and re-install from the <a href="update-core.php">WordPress Updates</a> page.', 'wordpress-beta-tester' ) );
 		echo '</p><p>';
 		printf(
 			/* translators: %s: update version */
 			wp_kses_post( __( 'Currently your site is set to update to %s.', 'wordpress-beta-tester' ) ),
 			'<strong>' . esc_attr( $preferred->version ) . '</strong>'
 		);
-		echo '</p><p>';
-		esc_html_e( 'Please select the update stream you would like this website to use:', 'wordpress-beta-tester' );
 		echo '</p></div>';
 	}
 
 	/**
-	 * Create settings radio button options.
+	 * Create channel settings radio button options.
 	 *
 	 * @return void
 	 */
-	public function core_radio_group() {
-		$wp_version = get_bloginfo( 'version' );
-		$preferred  = $this->wp_beta_tester->get_preferred_from_update_core();
-
-		$beta_rc                = 1 === preg_match( '/alpha|beta|RC/', $wp_version );
-		$point                  = 1 === preg_match( '/point/', static::$options['stream'] );
-		$unstable               = 1 === preg_match( '/unstable/', static::$options['stream'] );
-		list( $wp_base )        = explode( '-', $wp_version );
-		list( $preferred_base ) = explode( '-', $preferred->version );
-
-		// Odd bug where Core API returns 'version <version_number>' instead of just the <version_number>.
-		// I can't explain it, but it showed up on my server at least once.
-		$preferred_base = explode( ' ', $preferred_base );
-		$preferred_base = array_pop( $preferred_base );
-
-		$show_beta_rc = $wp_base === $preferred_base || 'latest' === $preferred->response;
-
+	public function channel_radio_group() {
+		$next_versions = $this->calculate_next_versions();
 		?>
 		<fieldset>
 		<tr>
-			<th><label><input name="wp-beta-tester" id="update-stream-point-nightlies"   type="radio" value="point" class="tog" <?php checked( 'point', self::$options['stream'] ); ?> />
-			<?php esc_html_e( 'Point release nightlies', 'wordpress-beta-tester' ); ?>
+			<th><label><input name="wp-beta-tester" id="update-stream-point-nightlies" type="radio" value="branch-development" class="tog" <?php checked( 'branch-development', self::$options['channel'] ); ?> />
+			<?php esc_html_e( 'Point release', 'wordpress-beta-tester' ); ?>
 			</label></th>
-			<td><?php esc_html_e( 'This contains the work that is occurring on a branch in preparation for a x.x.x point release. This should also be fairly stable but will be available before the branch is ready for release.', 'wordpress-beta-tester' ); ?></td>
+			<td>
+			<?php
+			printf(
+				/* translators: %s: Current WordPress version base, eg 5.5 */
+				esc_html__( 'This contains the work that is occurring on a branch in preparation for a %s point release. This should also be fairly stable but will be available before the branch is ready for release.', 'wordpress-beta-tester' ),
+				esc_attr( $next_versions['point'] )
+			);
+			?>
+			</td>
 		</tr>
-		<?php if ( $point && $beta_rc && $show_beta_rc ) : ?>
 		<tr>
-			<th><label><input name="wp-beta-tester" id="update-stream-beta-rc-point"    type="radio" value="beta-rc-point" class="tog" <?php checked( 'beta-rc-point', self::$options['stream'] ); ?> />
-			<?php esc_html_e( 'Beta/RC - Point release', 'wordpress-beta-tester' ); ?>
+			<th><label><input name="wp-beta-tester" id="update-stream-bleeding-nightlies" type="radio" value="development" class="tog" <?php checked( 'development', self::$options['channel'] ); ?> />
+			<?php esc_html_e( 'Bleeding edge', 'wordpress-beta-tester' ); ?>
 			</label></th>
-			<td><?php echo( wp_kses_post( __( 'This is for the Beta/RC releases only of the x.x.x point release. It will only update to beta/RC releases of point releases.', 'wordpress-beta-tester' ) ) ); ?></td>
+			<td><?php echo wp_kses_post( __( 'This is the bleeding edge development code from `trunk` which may be unstable at times. <em>Only use this if you really know what you are doing</em>.', 'wordpress-beta-tester' ) ); ?></td>
 		</tr>
-		<?php endif ?>
-		<tr>
-			<th><label><input name="wp-beta-tester" id="update-stream-bleeding-nightlies"    type="radio" value="unstable" class="tog" <?php checked( 'unstable', self::$options['stream'] ); ?> />
-			<?php esc_html_e( 'Bleeding edge nightlies', 'wordpress-beta-tester' ); ?>
-			</label></th>
-			<td><?php echo( wp_kses_post( __( 'This is the bleeding edge development code from `trunk` which may be unstable at times. <em>Only use this if you really know what you are doing</em>.', 'wordpress-beta-tester' ) ) ); ?></td>
-		</tr>
-		<?php if ( $unstable && $beta_rc && $show_beta_rc ) : ?>
-		<tr>
-			<th><label><input name="wp-beta-tester" id="update-stream-beta-rc-unstable"    type="radio" value="beta-rc-unstable" class="tog" <?php checked( 'beta-rc-unstable', self::$options['stream'] ); ?> />
-			<?php esc_html_e( 'Beta/RC - Bleeding edge', 'wordpress-beta-tester' ); ?>
-			</label></th>
-			<td><?php echo( wp_kses_post( __( 'This is for the Beta/RC releases only of development code from `trunk`. It will only update to beta/RC releases of `trunk`.', 'wordpress-beta-tester' ) ) ); ?></td>
-		</tr>
-		<?php endif ?>
 		</fieldset>
 		<?php
+	}
+
+	/**
+	 * Create stream settings radio button options.
+	 *
+	 * @return void
+	 */
+	public function stream_radio_group() {
+		if ( $this->wp_beta_tester::$core_update_constant ) {
+			?>
+			<fieldset>
+			<tr>
+				<th><label></label></th>
+				<td><?php esc_html_e( 'Stream options are overridden by the `WP_AUTO_UPDATE_CORE` constant.', 'wordpress-beta-tester' ); ?><p>
+				<?php
+				printf(
+					/* translators: %s: WP_AUTO_UPDATE_CORE setting */
+					esc_html__( '`WP_AUTO_UPDATE_CORE` is defined as `%s`.', 'wordpress-beta-tester' ),
+					esc_attr( $this->wp_beta_tester::$core_update_constant )
+				);
+				?>
+				</p></td>
+			</tr>
+			</fieldset>
+			<?php
+		} else {
+			?>
+			<fieldset>
+			<tr>
+				<th><label><input name="wp-beta-tester-beta-rc" id="update-stream-beta" type="radio" value="" class="tog" <?php checked( false, self::$options['stream-option'] ); ?> />
+				<?php esc_html_e( 'Nightlies', 'wordpress-beta-tester' ); ?>
+				</label></th>
+				<td><?php esc_html_e( 'Latest daily updates.', 'wordpress-beta-tester' ); ?></td>
+			</tr>
+			<tr>
+				<th><label><input name="wp-beta-tester-beta-rc" id="update-stream-beta" type="radio" value="beta" class="tog" <?php checked( 'beta', self::$options['stream-option'] ); ?> />
+				<?php esc_html_e( 'Beta/RC Only', 'wordpress-beta-tester' ); ?>
+				</label></th>
+				<td><?php esc_html_e( 'This is for the Beta/RC releases only of the selected channel.', 'wordpress-beta-tester' ); ?></td>
+			</tr>
+			<tr>
+				<th><label><input name="wp-beta-tester-beta-rc" id="update-stream-rc" type="radio" value="rc" class="tog" <?php checked( 'rc', self::$options['stream-option'] ); ?> />
+				<?php esc_html_e( 'Release Candidates Only', 'wordpress-beta-tester' ); ?>
+				</label></th>
+				<td><?php esc_html_e( 'This is for the Release Candidate releases only of the selected channel.', 'wordpress-beta-tester' ); ?></td>
+			</tr>
+			</fieldset>
+			<?php
+		}
 	}
 
 	/**
@@ -239,11 +270,12 @@ class WPBT_Core {
 			</form>
 			<?php endif; ?>
 		</div>
+		<script>jQuery('tr.wpbt-settings-title th').attr('colspan',2);</script>
 		<?php
 	}
 
 	/**
-	 * Get the next version the site will be updated to.
+	 * Get the next version(s) the site will be updated to.
 	 *
 	 * @since 2.2.0
 	 *
@@ -251,23 +283,16 @@ class WPBT_Core {
 	 * @return string
 	 */
 	public function get_next_version( $preferred_version ) {
-		if ( ! ( 0 === strpos( static::$options['stream'], 'beta-rc' )
-				|| ! preg_match( '/alpha|beta|RC/', get_bloginfo( 'version' ) ) ) ) {
-			// site is not running a development version or not on a beta/RC stream.
-			// So use the preferred version.
+		$beta_rc      = ! empty( self::$options['stream-option'] );
+		$next_version = $this->calculate_next_versions();
+		unset( $next_version['point'] );
+
+		// Site is not on a beta/RC stream so use the preferred version.
+		if ( ! $beta_rc && ! empty( $next_version ) && ! $this->wp_beta_tester::$core_update_constant ) {
 			/* translators: %s: version number */
 			return sprintf( __( 'version %s', 'wordpress-beta-tester' ), $preferred_version );
 		}
 
-		$next_version = $this->wp_beta_tester->beta_rc->get_found_version();
-		if ( $next_version ) {
-			// the next beta/RC package was found, return that version.
-			/* translators: %s: version number */
-			return sprintf( __( 'version %s', 'wordpress-beta-tester' ), $next_version );
-		}
-
-		// the next beta/RC package was not found.
-		$next_version = $this->wp_beta_tester->beta_rc->next_package_versions();
 		if ( 1 === count( $next_version ) ) {
 			$next_version = array_shift( $next_version );
 		} elseif ( empty( $next_version ) ) {
@@ -275,11 +300,68 @@ class WPBT_Core {
 		} else {
 			// show all versions that may come next.
 			add_filter( 'wp_sprintf_l', array( $this, 'wpbt_sprintf_or' ) );
+			/* translators: %l: next version numbers */
 			$next_version = wp_sprintf( __( 'version %l', 'wordpress-beta-tester' ), $next_version ) . ', ' . __( 'whichever is released first', 'wordpress-beta-tester' );
 			remove_filter( 'wp_sprintf_l', array( $this, 'wpbt_sprintf_or' ) );
 		}
 
 		return $next_version;
+	}
+
+	/**
+	 * Calculate next versions.
+	 *
+	 * @since 3.0.0
+	 * @return array $next_versions
+	 */
+	public function calculate_next_versions() {
+		$wp_version       = get_bloginfo( 'version' );
+		$exploded_version = explode( '-', $wp_version );
+		$next_release     = array_map( 'intval', explode( '.', $exploded_version[0] ) );
+		$current_release  = $this->wp_beta_tester->get_current_wp_release();
+
+		// User on a current release.
+		if ( 0 === preg_match( '/alpha|beta|RC/', $wp_version ) ) {
+			$exploded_version[0] = $current_release;
+			$exploded_version[1] = null;
+		}
+
+		// Set base version for development channel if necessary.
+		$current_exploded = array_map( 'intval', explode( '.', $exploded_version[0] ) );
+		if ( 'development' === self::$options['channel'] && isset( $current_exploded[2] ) ) {
+			$current_exploded[1] = ++$current_exploded[1];
+			unset( $current_exploded[2] );
+			$exploded_version[0] = implode( '.', $current_exploded );
+		}
+
+		$is_alpha     = 'alpha' === $exploded_version[1];
+		$current_beta = preg_match( '/beta(?)/', $exploded_version[1], $beta_version );
+		$current_rc   = preg_match( '/RC(?)/', $exploded_version[1], $rc_version );
+		$next_beta    = ! empty( $beta_version ) || $is_alpha ? ++$current_beta : 1;
+
+		// Make next point release.
+		$next_point    = array_map( 'intval', explode( '.', $current_release ) );
+		$next_point[2] = isset( $next_point[2] ) ? ++$next_point[2] : 1;
+		$next_point    = implode( '.', $next_point );
+
+		// Set base version for branch-development channel.
+		if ( 'branch-development' === self::$options['channel'] ) {
+			$exploded_version = (array) $next_point;
+		}
+
+		$next_versions = array(
+			'point'   => $next_point,
+			'beta'    => $exploded_version[0] . '-beta' . $next_beta,
+			'rc'      => $exploded_version[0] . '-RC' . ( ++$current_rc ),
+			'release' => $exploded_version[0],
+		);
+		if ( ! $next_versions['beta'] || 'rc' === self::$options['stream-option']
+			|| 'rc' === $this->wp_beta_tester::$core_update_constant
+		) {
+			unset( $next_versions['beta'] );
+		}
+
+		return $next_versions;
 	}
 
 	/**

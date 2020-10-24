@@ -1,4 +1,2 @@
 .DS_Store
 .idea
-/vendor
-!/vendor/WPConfigTransformer.php

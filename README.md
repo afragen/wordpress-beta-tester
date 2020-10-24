@@ -7,12 +7,12 @@
 * License URI: https://www.opensource.org/licenses/GPL-2.0
 * Requires PHP: 5.2.4
 
-Allows you to easily upgrade to Beta releases.
+Allows you to easily upgrade for testing the next versions of WordPress.
 
 ## Description
-This plugin provides an easy way to get involved with Beta testing WordPress.
+This plugin provides an easy way to get involved with beta testing WordPress.
 
-Once installed it will enable you to upgrade your website to the latest Beta or Release candidate at the click of a button using the built in upgrader.
+Once installed it will enable you to upgrade your website to the latest Nightly, Beta, or Release Candidate at the click of a button using the built in upgrader.
 
 By default once enabled it switches your website onto the point release development track.
 

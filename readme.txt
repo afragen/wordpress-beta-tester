@@ -2,21 +2,21 @@
 
 Tags: beta, advanced, testing
 Contributors: westi, mlteal, afragen, pbiron
-Tested up to: 5.5
-Requires at least: 3.1
-Stable Tag: 2.2.13
 License: GPLv2
 License URI: https://www.opensource.org/licenses/GPL-2.0
-Requires PHP: 5.2.4
+Requires at least: 3.1
+Requires PHP: 5.6
+Tested up to: 5.6
+Stable Tag: 3.0.0
 
-Allows you to easily upgrade to Beta releases.
+Allows you to easily upgrade for testing the next versions of WordPress.
 
 ## Description
-This plugin provides an easy way to get involved with Beta testing WordPress.
+This plugin provides an easy way to get involved with beta testing WordPress.
 
-Once installed it will enable you to upgrade your website to the latest Beta or Release candidate at the click of a button using the built in upgrader.
+Once installed it will enable you to upgrade your website to the latest Nightly, Beta, or Release Candidate at the click of a button using the built in upgrader.
 
-By default once enabled it switches your website onto the point release development track.
+By default once enabled it switches your website onto the point release update channel.
 
 For the more adventurous there is the option to switch to the bleeding edge (trunk) of development.
 
@@ -39,6 +39,12 @@ If no settings are present there is no testing to be done that requires this fea
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.0.0 / 2020-10-23
+* major refactor for new core update API, thanks @dd32!
+* now requires PHP >5.6
+* allows for overrides when using the `WP_AUTO_UPDATE_CORE` constant
+* update on-screen help
 
 #### 2.2.13 / 2020-09-05
 * enclose `WPConfigTransformer` in try/catch
