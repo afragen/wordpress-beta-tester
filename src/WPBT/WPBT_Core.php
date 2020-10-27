@@ -342,10 +342,10 @@ class WPBT_Core {
 			$exploded_version[0] = implode( '.', $current_exploded );
 		}
 
-		$is_alpha     = 'alpha' === $exploded_version[1];
-		$current_beta = preg_match( '/beta(?)/', $exploded_version[1], $beta_version );
-		$current_rc   = preg_match( '/RC(?)/', $exploded_version[1], $rc_version );
-		$next_beta    = ! empty( $beta_version ) || $is_alpha ? ++$current_beta : 1;
+		preg_match( '/beta(\d+)/', $exploded_version[1], $current_beta );
+		preg_match( '/RC(\d+)/', $exploded_version[1], $current_rc );
+		$next_beta = ! empty( $current_beta ) ? $current_beta[1] + 1 : 1;
+		$next_rc   = ! empty( $current_rc ) ? $current_rc[1] + 1 : 1;
 
 		// Make next point release.
 		$next_point    = array_map( 'intval', explode( '.', $current_release ) );
@@ -360,7 +360,7 @@ class WPBT_Core {
 		$next_versions = array(
 			'point'   => $next_point,
 			'beta'    => $exploded_version[0] . '-beta' . $next_beta,
-			'rc'      => $exploded_version[0] . '-RC' . ( ++$current_rc ),
+			'rc'      => $exploded_version[0] . '-RC' . $next_rc,
 			'release' => $exploded_version[0],
 		);
 		if ( ! $next_versions['beta'] || 'rc' === self::$options['stream-option']

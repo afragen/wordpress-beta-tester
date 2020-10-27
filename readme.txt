@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 5.6
-Stable Tag: 3.0.2
+Stable Tag: 3.0.3
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -40,10 +40,9 @@ PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
 
-#### 3.0.2 / 2020-10-27
+#### 3.0.1 - 3.0.3 / 2020-10-27
+* fixed regex to get next versions
 * really didn't need to use `ReflectionClass` 🤦‍♂️, thanks @pbiron
-
-#### 3.0.1 / 2020-10-27
 * use `ReflectionClass` to get static variable `$core_update_constant` from `class WP_Beta_Tester` into `class WPBT_Core`
 
 #### 3.0.0 / 2020-10-23
