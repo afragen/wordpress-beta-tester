@@ -29,7 +29,7 @@ class WPBT_Core {
 	/**
 	 * Holds $core_update_constant from WP_Beta_Tester.
 	 *
-	 * @var string
+	 * @var string|bool
 	 */
 	protected static $core_update_constant;
 
@@ -41,11 +41,9 @@ class WPBT_Core {
 	 * @return void
 	 */
 	public function __construct( WP_Beta_Tester $wp_beta_tester, $options ) {
-		self::$options        = $options;
-		$this->wp_beta_tester = $wp_beta_tester;
-
-		$reflector                  = new \ReflectionClass( $wp_beta_tester );
-		self::$core_update_constant = $reflector->getStaticPropertyValue( 'core_update_constant' );
+		self::$options              = $options;
+		$this->wp_beta_tester       = $wp_beta_tester;
+		self::$core_update_constant = $wp_beta_tester::$core_update_constant;
 	}
 
 	/**

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WordPress Beta Tester plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress Beta Tester 3.0.1\n"
+"Project-Id-Version: WordPress Beta Tester 3.0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-beta-tester\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-10-27T19:48:04+00:00\n"
+"POT-Creation-Date: 2020-10-27T20:19:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: wordpress-beta-tester\n"
@@ -38,138 +38,138 @@ msgstr ""
 msgid "Cannot run WordPress Beta Tester plugin in `wordpress-develop`"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:70
+#: src/WPBT/WPBT_Core.php:68
 msgid "WP Beta Tester Settings"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:87
+#: src/WPBT/WPBT_Core.php:85
 msgid "Core Settings"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:94
+#: src/WPBT/WPBT_Core.php:92
 msgid "Select the update channel you would like this website to use:"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:103
+#: src/WPBT/WPBT_Core.php:101
 msgid "Select one of the stream options below:"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:152
+#: src/WPBT/WPBT_Core.php:150
 msgid "<strong>Please note:</strong> There are no development builds available for the beta stream you have chosen, so you will receive normal update notifications."
 msgstr ""
 
 #. translators: 1: link to backing up database, 2: link to make.wp.org/core, 3: link to beta support forum
-#: src/WPBT/WPBT_Core.php:161
+#: src/WPBT/WPBT_Core.php:159
 msgid "By their nature, these releases are unstable and should not be used anyplace where your data is important. So please <a href=\"%1$s\">back up your database</a> before upgrading to a test release. In order to hear about the latest beta releases, your best bet is to watch the <a href=\"%2$s\">development blog</a> and the <a href=\"%3$s\">beta forum</a>."
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:162
+#: src/WPBT/WPBT_Core.php:160
 #: src/WPBT/WPBT_Help.php:48
 msgctxt "URL to database backup instructions"
 msgid "https://codex.wordpress.org/Backing_Up_Your_Database"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:164
+#: src/WPBT/WPBT_Core.php:162
 #: src/WPBT/WPBT_Help.php:50
 msgctxt "URL to beta support forum"
 msgid "https://wordpress.org/support/forum/alphabeta"
 msgstr ""
 
 #. translators: %s: link to new trac ticket
-#: src/WPBT/WPBT_Core.php:169
+#: src/WPBT/WPBT_Core.php:167
 msgid "Thank you for helping test WordPress. Please <a href=\"%s\">report any bugs you find</a>."
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:173
+#: src/WPBT/WPBT_Core.php:171
 msgid "By default, your WordPress installation uses the stable update channel. To return to this, please deactivate this plugin and re-install from the <a href=\"update-core.php\">WordPress Updates</a> page."
 msgstr ""
 
 #. translators: %s: update version
-#: src/WPBT/WPBT_Core.php:177
+#: src/WPBT/WPBT_Core.php:175
 msgid "Currently your site is set to update to %s."
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:194
+#: src/WPBT/WPBT_Core.php:192
 msgid "Point release"
 msgstr ""
 
 #. translators: %s: Current WordPress version base, eg 5.5
-#: src/WPBT/WPBT_Core.php:200
+#: src/WPBT/WPBT_Core.php:198
 msgid "This contains the work that is occurring on a branch in preparation for a %s point release. This should also be fairly stable but will be available before the branch is ready for release."
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:208
+#: src/WPBT/WPBT_Core.php:206
 msgid "Bleeding edge"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:210
+#: src/WPBT/WPBT_Core.php:208
 msgid "This is the bleeding edge development code from `trunk` which may be unstable at times. <em>Only use this if you really know what you are doing</em>."
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:227
+#: src/WPBT/WPBT_Core.php:225
 msgid "Stream options are overridden by the `WP_AUTO_UPDATE_CORE` constant."
 msgstr ""
 
 #. translators: %s: WP_AUTO_UPDATE_CORE setting
-#: src/WPBT/WPBT_Core.php:231
+#: src/WPBT/WPBT_Core.php:229
 msgid "`WP_AUTO_UPDATE_CORE` is defined as `%s`."
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:244
+#: src/WPBT/WPBT_Core.php:242
 msgid "Nightlies"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:246
+#: src/WPBT/WPBT_Core.php:244
 msgid "Latest daily updates."
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:250
+#: src/WPBT/WPBT_Core.php:248
 msgid "Beta/RC Only"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:252
+#: src/WPBT/WPBT_Core.php:250
 msgid "This is for the Beta/RC releases only of the selected channel."
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:256
+#: src/WPBT/WPBT_Core.php:254
 msgid "Release Candidates Only"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:258
+#: src/WPBT/WPBT_Core.php:256
 msgid "This is for the Release Candidate releases only of the selected channel."
 msgstr ""
 
 #. translators: %s: version number
-#: src/WPBT/WPBT_Core.php:303
+#: src/WPBT/WPBT_Core.php:301
 msgid "version %s"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:309
+#: src/WPBT/WPBT_Core.php:307
 msgid "next development version"
 msgstr ""
 
 #. translators: %l: next version numbers
-#: src/WPBT/WPBT_Core.php:314
+#: src/WPBT/WPBT_Core.php:312
 msgid "version %l"
 msgstr ""
 
 #. translators: %l: next version numbers
-#: src/WPBT/WPBT_Core.php:314
+#: src/WPBT/WPBT_Core.php:312
 msgid "whichever is released first"
 msgstr ""
 
 #. translators: Used to join items in a list with more than 2 items.
-#: src/WPBT/WPBT_Core.php:392
+#: src/WPBT/WPBT_Core.php:390
 msgid "%1$s, %2$s"
 msgstr ""
 
 #. translators: Used to join last two items in a list with more than 2 times.
-#: src/WPBT/WPBT_Core.php:394
+#: src/WPBT/WPBT_Core.php:392
 msgid "%1$s, or %2$s"
 msgstr ""
 
 #. translators: Used to join items in a list with only 2 items.
-#: src/WPBT/WPBT_Core.php:396
+#: src/WPBT/WPBT_Core.php:394
 msgid "%1$s or %2$s"
 msgstr ""
 
