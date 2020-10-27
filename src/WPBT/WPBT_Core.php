@@ -27,6 +27,13 @@ class WPBT_Core {
 	protected $wp_beta_tester;
 
 	/**
+	 * Holds $core_update_constant from WP_Beta_Tester.
+	 *
+	 * @var string
+	 */
+	protected static $core_update_constant;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param  WP_Beta_Tester $wp_beta_tester Instance of class WP_Beta_Tester.
@@ -36,6 +43,9 @@ class WPBT_Core {
 	public function __construct( WP_Beta_Tester $wp_beta_tester, $options ) {
 		self::$options        = $options;
 		$this->wp_beta_tester = $wp_beta_tester;
+
+		$reflector                  = new \ReflectionClass( $wp_beta_tester );
+		self::$core_update_constant = $reflector->getStaticPropertyValue( 'core_update_constant' );
 	}
 
 	/**
@@ -209,7 +219,7 @@ class WPBT_Core {
 	 * @return void
 	 */
 	public function stream_radio_group() {
-		if ( $this->wp_beta_tester::$core_update_constant ) {
+		if ( self::$core_update_constant ) {
 			?>
 			<fieldset>
 			<tr>
@@ -219,7 +229,7 @@ class WPBT_Core {
 				printf(
 					/* translators: %s: WP_AUTO_UPDATE_CORE setting */
 					esc_html__( '`WP_AUTO_UPDATE_CORE` is defined as `%s`.', 'wordpress-beta-tester' ),
-					esc_attr( $this->wp_beta_tester::$core_update_constant )
+					esc_attr( self::$core_update_constant )
 				);
 				?>
 				</p></td>
@@ -288,7 +298,7 @@ class WPBT_Core {
 		unset( $next_version['point'] );
 
 		// Site is not on a beta/RC stream so use the preferred version.
-		if ( ! $beta_rc && ! empty( $next_version ) && ! $this->wp_beta_tester::$core_update_constant ) {
+		if ( ! $beta_rc && ! empty( $next_version ) && ! self::$core_update_constant ) {
 			/* translators: %s: version number */
 			return sprintf( __( 'version %s', 'wordpress-beta-tester' ), $preferred_version );
 		}
@@ -356,7 +366,7 @@ class WPBT_Core {
 			'release' => $exploded_version[0],
 		);
 		if ( ! $next_versions['beta'] || 'rc' === self::$options['stream-option']
-			|| 'rc' === $this->wp_beta_tester::$core_update_constant
+			|| 'rc' === self::$core_update_constant
 		) {
 			unset( $next_versions['beta'] );
 		}
