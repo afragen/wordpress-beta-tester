@@ -143,7 +143,11 @@ class WP_Beta_Tester {
 		// Use WP_AUTO_UPDATE_CORE if set.
 		$url = self::$core_update_constant ? add_query_arg( 'channel', self::$core_update_constant, $url ) : $url;
 
- 		// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+		if ( 'branch-development' === self::$options['channel'] ) {
+			$url = add_query_arg( 'version', $this->get_current_wp_release(), $url );
+		}
+
+		// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
 		// $url = add_query_arg( 'pretend_releases', array( '5.6-beta2' ), $url );
 
 		return wp_remote_get( $url, $args );
@@ -209,7 +213,7 @@ class WP_Beta_Tester {
 	 *
 	 * @return bool
 	 */
-	protected function check_if_settings_downgrade() {
+	public function check_if_settings_downgrade() {
 		$wp_version      = get_bloginfo( 'version' );
 		$wp_real_version = explode( '-', $wp_version );
 		$wpbt_core       = new WPBT_Core( $this, self::$options );

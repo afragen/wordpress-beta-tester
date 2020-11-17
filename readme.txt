@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 5.6
-Stable Tag: 3.0.3
+Stable Tag: 3.0.4
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -39,6 +39,12 @@ If no settings are present there is no testing to be done that requires this fea
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.0.4 / 2020-11-17
+* fix to correctly downgrade from _Bleeding edge_ to _Point release nightlies_.
+* hide stream options other than _Nightlies_ for _Point release_ channel until [new Updates API changes](https://meta.trac.wordpress.org/ticket/5511)
+* add settings for future Updates API above
+* added `channel_settings_migrator()` for switching between `Bleeding edge` and `Point release` channels
 
 #### 3.0.1 - 3.0.3 / 2020-10-27
 * fixed regex to get next versions

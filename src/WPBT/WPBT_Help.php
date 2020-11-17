@@ -49,7 +49,7 @@ class WPBT_Help {
 					'https://make.wordpress.org/core/',
 					_x( 'https://wordpress.org/support/forum/alphabeta', 'URL to beta support forum', 'wordpress-beta-tester' )
 				) . '</p><p>' .
-				sprintf( __( 'When switching between <em>Point release</em> and <em>Bleeding edge</em> you will need to set the stream option to <em>Nightlies</em> then update to get on that channel, then set to another stream option ( <em>Beta/RC Only</em> or <em>Release Candidates Only</em> ) if desired.', 'wordpress-beta-tester' ) ) . '</p>',
+				sprintf( __( 'When downgrading from <em>Bleeding edge</em> to <em>Point release</em> you will need to set the stream option to <em>Nightlies</em> then update. There is no current API response to return either <em>Beta/RC Only</em> or <em>Release Candidates Only</em> streams.', 'wordpress-beta-tester' ) ) . '</p>',
 			)
 		);
 

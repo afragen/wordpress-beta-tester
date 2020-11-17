@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'cf2c9408b55b75d4a6056f06e60e69e6fd40a95e',
+    'reference' => '049b22f39cfa2039a5394598520970259d660a7f',
     'name' => 'afragen/wordpress-beta-tester',
   ),
   'versions' => 
@@ -31,16 +31,16 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'cf2c9408b55b75d4a6056f06e60e69e6fd40a95e',
+      'reference' => '049b22f39cfa2039a5394598520970259d660a7f',
     ),
     'wp-cli/wp-config-transformer' => 
     array (
-      'pretty_version' => 'v1.2.7',
-      'version' => '1.2.7.0',
+      'pretty_version' => 'v1.2.8',
+      'version' => '1.2.8.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'bae1e975ed1277470e3dcc7fd0ef99c2d4f4c7a8',
+      'reference' => '0bb2b9162c38ca72370380aea11dc06e431e13a5',
     ),
   ),
 );
