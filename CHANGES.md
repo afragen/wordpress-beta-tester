@@ -1,5 +1,8 @@
 [unreleased]
 
+#### 3.0.5 / 2020-11-18
+* don't show beta as a next version when on RC
+
 #### 3.0.4 / 2020-11-17
 * fix to correctly downgrade from _Bleeding edge_ to _Point release nightlies_.
 * hide stream options other than _Nightlies_ for _Point release_ channel until [new Updates API changes](https://meta.trac.wordpress.org/ticket/5511)

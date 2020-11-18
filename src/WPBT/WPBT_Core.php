@@ -385,7 +385,7 @@ class WPBT_Core {
 			'release' => $exploded_version[0],
 		);
 		if ( ! $next_versions['beta'] || 'rc' === self::$options['stream-option']
-			|| 'rc' === self::$core_update_constant
+			|| 'rc' === self::$core_update_constant || 1 < $next_rc
 		) {
 			unset( $next_versions['beta'] );
 		}
