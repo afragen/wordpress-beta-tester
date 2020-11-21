@@ -1,5 +1,8 @@
 [unreleased]
 
+#### 3.0.6 / 2020-11-21
+* improved flow between _Bleeding edge_ and _Point release_
+
 #### 3.0.5 / 2020-11-18
 * don't show beta as a next version when on RC
 

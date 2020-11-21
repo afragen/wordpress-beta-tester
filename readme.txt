@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 5.6
-Stable Tag: 3.0.5
+Stable Tag: 3.0.6
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -39,6 +39,9 @@ If no settings are present there is no testing to be done that requires this fea
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.0.6 / 2020-11-21
+* improved flow between _Bleeding edge_ and _Point release_
 
 #### 3.0.5 / 2020-11-18
 * don't show beta as a next version when on RC

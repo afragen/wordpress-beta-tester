@@ -48,8 +48,7 @@ class WPBT_Help {
 					_x( 'https://codex.wordpress.org/Backing_Up_Your_Database', 'URL to database backup instructions', 'wordpress-beta-tester' ),
 					'https://make.wordpress.org/core/',
 					_x( 'https://wordpress.org/support/forum/alphabeta', 'URL to beta support forum', 'wordpress-beta-tester' )
-				) . '</p><p>' .
-				sprintf( __( 'When downgrading from <em>Bleeding edge</em> to <em>Point release</em> you will need to set the stream option to <em>Nightlies</em> then update. There is no current API response to return either <em>Beta/RC Only</em> or <em>Release Candidates Only</em> streams.', 'wordpress-beta-tester' ) ) . '</p>',
+				) . '</p>',
 			)
 		);
 
@@ -57,7 +56,9 @@ class WPBT_Help {
 			array(
 				'id'      => 'beta/RC',
 				'title'   => __( 'Beta/RC', 'wordpress-beta-tester' ),
-				'content' => '<p>' . __( 'You must select either the <em>Point release</em> or <em>Bleeding edge</em> channel. Then select the <em>Beta/RC Only</em> or <em>Release Candidates Only</em> stream. Once saved you will only see an update notice when the next release, RC, or beta is available.', 'wordpress-beta-tester' ) . '</p>',
+				'content' => '<p>' .
+					__( 'You must select either the <em>Point release</em> or <em>Bleeding edge</em> channel. Then select the <em>Beta/RC Only</em> or <em>Release Candidates Only</em> stream. Once saved you will only see an update notice when the next release, RC, or beta is available.', 'wordpress-beta-tester' ) . '</p><p>' .
+					__( '<em>Point release</em> channel only has the <em>Nightlies</em> stream available at this time.', 'wordpress-beta-tester' ) . '</p>',
 			)
 		);
 

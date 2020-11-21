@@ -143,14 +143,39 @@ class WP_Beta_Tester {
 		// Use WP_AUTO_UPDATE_CORE if set.
 		$url = self::$core_update_constant ? add_query_arg( 'channel', self::$core_update_constant, $url ) : $url;
 
-		if ( 'branch-development' === self::$options['channel'] ) {
-			$url = add_query_arg( 'version', $this->get_current_wp_release(), $url );
-		}
+		// Make adjustments for switching between channels.
+		$url = $this->channel_switching_modification( $url );
 
 		// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
 		// $url = add_query_arg( 'pretend_releases', array( '5.6-beta2' ), $url );
 
 		return wp_remote_get( $url, $args );
+	}
+
+	/**
+	 * Modify URL to version check to return expected API response.
+	 *
+	 * @param string $url Version check URL.
+	 *
+	 * @return string $url
+	 */
+	private function channel_switching_modification( $url ) {
+		$next_versions = ( new WPBT_Core( $this, static::$options ) )->calculate_next_versions();
+		$wp_version    = get_bloginfo( 'version' );
+		switch ( self::$options['channel'] ) {
+			case 'branch-development':
+				$url = add_query_arg( 'version', $next_versions['point'], $url );
+				break;
+			case 'development':
+				if ( false !== strpos( $wp_version, $next_versions['point'] )
+					|| version_compare( $wp_version, $next_versions['point'], '<' )
+				) {
+					$url = add_query_arg( 'version', $next_versions['release'], $url );
+				}
+				break;
+		}
+
+		return $url;
 	}
 
 	/**
