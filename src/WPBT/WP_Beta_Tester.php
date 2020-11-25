@@ -164,13 +164,13 @@ class WP_Beta_Tester {
 		$wp_version    = get_bloginfo( 'version' );
 		switch ( self::$options['channel'] ) {
 			case 'branch-development':
-				$url = add_query_arg( 'version', $next_versions['point'], $url );
+				$url = add_query_arg( 'version', $next_versions['point'] . '-alpha', $url );
 				break;
 			case 'development':
 				if ( false !== strpos( $wp_version, $next_versions['point'] )
 					|| version_compare( $wp_version, $next_versions['point'], '<' )
 				) {
-					$url = add_query_arg( 'version', $next_versions['release'], $url );
+					$url = add_query_arg( 'version', $next_versions['release'] . '-alpha', $url );
 				}
 				break;
 		}
