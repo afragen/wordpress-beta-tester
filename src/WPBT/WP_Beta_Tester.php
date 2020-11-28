@@ -398,7 +398,7 @@ class WP_Beta_Tester {
 	 * @filter update_footer
 	 */
 	public function update_footer() {
-		add_filter( 'pre_site_transient_update_core', array( $this, 'add_minimal_development_response' ), 10, 2 );
+		add_filter( 'pre_site_transient_update_core', array( $this, 'add_minimal_development_response' ), 10, 0 );
 
 		$content = core_update_footer();
 
@@ -412,16 +412,11 @@ class WP_Beta_Tester {
 	 *
 	 * @since 2.2.0
 	 *
-	 * @param  mixed  $pre_site_transient The default value to return if the site
-	 *                                    transient does not exist. Any value other
-	 *                                    than false will short-circuit the retrieval
-	 *                                    of the transient, and return the returned value.
-	 * @param  string $transient          Transient name.
 	 * @return object
 	 *
 	 * @filter pre_site_transient_update_core
 	 */
-	public function add_minimal_development_response( $pre_site_transient, $transient ) {
+	public function add_minimal_development_response() {
 		$from_api = new stdClass();
 		$update   = new stdClass();
 		// a "minimal" response is one with the `response`, `current` and `locale` properties.

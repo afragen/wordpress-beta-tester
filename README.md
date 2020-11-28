@@ -20,6 +20,8 @@ For the more adventurous there is the option to switch to the bleeding edge (tru
 
 Don't forget to backup before you start!
 
+Please enable auto-updates for this plugin to ensure future changes are properly handled with core updates.
+
 ### Extra Settings
 
 There is a setting to **Skip successful autoupdate emails**. It functions to disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.

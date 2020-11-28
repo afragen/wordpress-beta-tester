@@ -126,8 +126,8 @@ class WPBT_Settings {
 		$redirect_url = is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'tools.php' );
 
 		if ( $update ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing
-			$query = isset( $_POST['_wp_http_referer'] ) ? wp_parse_url( esc_url_raw( wp_unslash( $_POST['_wp_http_referer'] ) ), PHP_URL_QUERY ) : null;
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.WP.AlternativeFunctions.parse_url_parse_url
+			$query = isset( $_POST['_wp_http_referer'] ) ? parse_url( esc_url_raw( wp_unslash( $_POST['_wp_http_referer'] ) ), PHP_URL_QUERY ) : null;
 			parse_str( $query, $arr );
 			$arr['tab'] = ! empty( $arr['tab'] ) ? $arr['tab'] : 'wp_beta_tester_core';
 
