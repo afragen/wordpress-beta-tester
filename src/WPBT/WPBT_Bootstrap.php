@@ -94,9 +94,9 @@ class WPBT_Bootstrap {
 	private function deactivate_die_wordpress_develop() {
 		$wp_version    = get_bloginfo( 'version' );
 		$version_regex = '@(\d+\.\d+(\.\d+)?)-(alpha|beta|RC)(\d+)?-(\d+-src|\d{8}\.\d{6})@';
+		$is_wp_develop = preg_match( $version_regex, $wp_version );
 
-		preg_match( $version_regex, $wp_version, $matches );
-		if ( ! empty( $matches ) ) {
+		if ( $is_wp_develop ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			deactivate_plugins( $this->file );
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

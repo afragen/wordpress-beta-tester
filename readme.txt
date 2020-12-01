@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 5.6
-Stable Tag: 3.0.8
+Stable Tag: 3.0.9
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -41,6 +41,11 @@ If no settings are present there is no testing to be done that requires this fea
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.0.9 / 2020-12-01
+* add conditional for filter to fix `core_update_footer()`, fixed in [r49708](https://core.trac.wordpress.org/changeset/49708)
+* simplify some `preg_match()` calls
+* fix PHP warning
 
 #### 3.0.8 / 2020-11-28
 * fix some PHP errors when using older versions of WP, for testing updates directly from these older versions like when using Core Rollback plugin

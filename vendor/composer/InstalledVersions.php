@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '0c31bb564b7c60ba8200e764a98eae9358aa0f4d',
+    'reference' => 'acb99d40e5cd4e626c5e7cac87e763718b981463',
     'name' => 'afragen/wordpress-beta-tester',
   ),
   'versions' => 
@@ -31,7 +31,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '0c31bb564b7c60ba8200e764a98eae9358aa0f4d',
+      'reference' => 'acb99d40e5cd4e626c5e7cac87e763718b981463',
     ),
     'wp-cli/wp-config-transformer' => 
     array (

@@ -71,8 +71,11 @@ class WP_Beta_Tester {
 		);
 		add_filter( 'pre_http_request', array( $this, 'filter_http_request' ), 10, 3 );
 
-		// set priority to 11 so that we fire after the function core hooks into this filter.
-		add_filter( 'update_footer', array( $this, 'update_footer' ), 11 );
+		// Fixed in https://core.trac.wordpress.org/changeset/49708.
+		if ( version_compare( get_bloginfo( 'version' ), '5.6-RC1-49708', '<=' ) ) {
+			// set priority to 11 so that we fire after the function core hooks into this filter.
+			add_filter( 'update_footer', array( $this, 'update_footer' ), 11 );
+		}
 
 		// Add dashboard widget.
 		add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widget' ) );
@@ -259,7 +262,7 @@ class WP_Beta_Tester {
 	 */
 	public function add_dashboard_widget() {
 		$wp_version = get_bloginfo( 'version' );
-		$beta_rc    = 1 === preg_match( '/alpha|beta|RC/', $wp_version );
+		$beta_rc    = preg_match( '/alpha|beta|RC/', $wp_version );
 
 		if ( $beta_rc ) {
 			wp_add_dashboard_widget( 'beta_tester_dashboard_widget', __( 'WordPress Beta Testing', 'wordpress-beta-tester' ), array( $this, 'beta_tester_dashboard' ) );
@@ -337,8 +340,8 @@ class WP_Beta_Tester {
 	 */
 	private function add_dev_notes_field_guide_links( $milestone ) {
 		$wp_version       = get_bloginfo( 'version' );
-		$beta_rc          = 1 === preg_match( '/beta|RC/', $wp_version );
-		$rc               = 1 === preg_match( '/RC/', $wp_version );
+		$beta_rc          = preg_match( '/beta|RC/', $wp_version );
+		$rc               = preg_match( '/RC/', $wp_version );
 		$milestone_dash   = str_replace( '.', '-', $milestone );
 		$dev_note_link    = '';
 		$field_guide_link = '';
@@ -422,6 +425,7 @@ class WP_Beta_Tester {
 		// a "minimal" response is one with the `response`, `current` and `locale` properties.
 		$update->response = 'development';
 		$update->current  = get_bloginfo( 'version' );
+		$update->version  = $update->current;
 		$update->locale   = get_locale();
 
 		$from_api->updates = array(

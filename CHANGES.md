@@ -1,5 +1,10 @@
 [unreleased]
 
+#### 3.0.9 / 2020-12-01
+* add conditional for filter to fix `core_update_footer()`, fixed in [r49708](https://core.trac.wordpress.org/changeset/49708)
+* simplify some `preg_match()` calls
+* fix PHP warning
+
 #### 3.0.8 / 2020-11-28
 * fix some PHP errors when using older versions of WP, for testing updates directly from these older versions like when using Core Rollback plugin
 
