@@ -72,7 +72,9 @@ class WP_Beta_Tester {
 		add_filter( 'pre_http_request', array( $this, 'filter_http_request' ), 10, 3 );
 
 		// Fixed in https://core.trac.wordpress.org/changeset/49708.
-		if ( version_compare( get_bloginfo( 'version' ), '5.6-RC1-49708', '<=' ) ) {
+		if ( version_compare( get_bloginfo( 'version' ), '5.6-RC1-49708', '<=' )
+			&& preg_match( '/alpha|beta|RC/', get_bloginfo( 'version' ) )
+		) {
 			// set priority to 11 so that we fire after the function core hooks into this filter.
 			add_filter( 'update_footer', array( $this, 'update_footer' ), 11 );
 		}
@@ -163,19 +165,23 @@ class WP_Beta_Tester {
 	 * @return string $url
 	 */
 	private function channel_switching_modification( $url ) {
-		$next_versions = ( new WPBT_Core( $this, static::$options ) )->calculate_next_versions();
-		$wp_version    = get_bloginfo( 'version' );
-		switch ( self::$options['channel'] ) {
-			case 'branch-development':
-				$url = add_query_arg( 'version', $next_versions['point'] . '-alpha', $url );
-				break;
-			case 'development':
-				if ( false !== strpos( $wp_version, $next_versions['point'] )
+		$next_versions   = ( new WPBT_Core( $this, static::$options ) )->calculate_next_versions();
+		$wp_version      = get_bloginfo( 'version' );
+		$current_release = $this->get_current_wp_release();
+
+		if ( version_compare( $wp_version, $current_release, '>=' ) ) {
+			switch ( self::$options['channel'] ) {
+				case 'branch-development':
+					$url = add_query_arg( 'version', $next_versions['point'] . '-alpha', $url );
+					break;
+				case 'development':
+					if ( false !== strpos( $wp_version, $next_versions['point'] )
 					|| version_compare( $wp_version, $next_versions['point'], '<' )
-				) {
-					$url = add_query_arg( 'version', $next_versions['release'] . '-alpha', $url );
-				}
-				break;
+					) {
+						$url = add_query_arg( 'version', $next_versions['release'] . '-alpha', $url );
+					}
+					break;
+			}
 		}
 
 		return $url;
@@ -213,27 +219,27 @@ class WP_Beta_Tester {
 	/**
 	 * Get current WP release version.
 	 *
-	 * @since 3.0.0
+	 * @since 3.1.0
 	 * @return string $wp_version
 	 */
 	public function get_current_wp_release() {
-		$wp_version = get_bloginfo( 'version' );
-		$preferred  = $this->get_preferred_from_update_core();
-		$current    = get_site_transient( 'update_core' );
+		$response = get_site_transient( 'current_wp_release' );
 
-		// If we're getting no updates back from get_preferred_from_update_core(),
-		// let an HTTP request go through unmangled.
-		if ( ! isset( $preferred->current ) ) {
-			return $wp_version;
-		}
+		if ( ! $response ) {
+			$response = wp_remote_get( 'https://api.wordpress.org/core/stable-check/1.0/' );
+			$response = wp_remote_retrieve_body( $response );
 
-		foreach ( $current->updates as $update ) {
-			if ( 'latest' === $update->response ) {
-				$wp_version = $update->version;
+			if ( is_wp_error( $response ) ) {
+				return null;
 			}
+
+			$response = (array) json_decode( $response );
+			$response = array_keys( $response, 'latest', true );
+			$response = array_pop( $response );
+			set_site_transient( 'current_wp_release', $response, DAY_IN_SECONDS );
 		}
 
-		return $wp_version;
+		return $response;
 	}
 
 	/**
@@ -288,10 +294,10 @@ class WP_Beta_Tester {
 		echo wp_kses_post( $this->parse_development_feed( $milestone ) );
 
 		/* translators: %1: link to closed and reopened trac tickets on current milestone */
-		printf( wp_kses_post( '<p>' . __( 'Here are the <a href="%s">commits for the milestone</a>.', 'wordpress-beta-tester' ) . '</p>' ), esc_url_raw( "https://core.trac.wordpress.org/query?status=closed&status=reopened&milestone=$milestone" ) );
+		printf( wp_kses_post( '<p>' . __( 'Here are the <a href="%s" target="_blank">commits for the milestone</a>.', 'wordpress-beta-tester' ) . '</p>' ), esc_url_raw( "https://core.trac.wordpress.org/query?status=closed&status=reopened&milestone=$milestone" ) );
 
 		/* translators: %s: link to trac search */
-		printf( wp_kses_post( '<p>' . __( '&#128027; Did you find a bug? Search for a <a href="%s">trac ticket</a> to see if it has already been reported.', 'wordpress-beta-tester' ) . '</p>' ), 'https://core.trac.wordpress.org/search' );
+		printf( wp_kses_post( '<p>' . __( '&#128027; Did you find a bug? Search for a <a href="%s" target="_blank">trac ticket</a> to see if it has already been reported.', 'wordpress-beta-tester' ) . '</p>' ), 'https://core.trac.wordpress.org/search' );
 
 		$capability = is_multisite() ? 'manage_network_options' : 'manage_options';
 		if ( current_user_can( $capability ) ) {

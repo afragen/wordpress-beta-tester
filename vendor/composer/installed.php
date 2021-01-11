@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'acb99d40e5cd4e626c5e7cac87e763718b981463',
+    'reference' => 'ddfc4b3083598cd933edf3663d3183dfee6b78a1',
     'name' => 'afragen/wordpress-beta-tester',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'acb99d40e5cd4e626c5e7cac87e763718b981463',
+      'reference' => 'ddfc4b3083598cd933edf3663d3183dfee6b78a1',
     ),
     'wp-cli/wp-config-transformer' => 
     array (

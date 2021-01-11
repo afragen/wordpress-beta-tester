@@ -1,5 +1,10 @@
 [unreleased]
 
+#### 3.0.10 / 2021-01-11
+* re-write `WP_Beta_Tester::get_current_wp_release()` to check https://api.wordpress.org/core/stable-check/1.0/
+* fix `WPBT_Core::get_next_versions()` if user on current release
+* tweak `WP_Beta_Tester::channel_switching_modification()` to work correctly with $wp_version <= $current_release and if on current release
+
 #### 3.0.9 / 2020-12-01
 * add conditional for filter to fix `core_update_footer()`, fixed in [r49708](https://core.trac.wordpress.org/changeset/49708)
 * simplify some `preg_match()` calls
