@@ -29,9 +29,16 @@ class WP_Beta_Tester {
 	/**
 	 * Holds WP_AUTO_UPDATE_CORE if set.
 	 *
-	 * @var $core_update_constant
+	 * @var $core_update_stream_constant
 	 */
-	public static $core_update_constant;
+	public static $core_update_stream_constant;
+
+	/**
+	 * Holds WP_AUTO_UPDATE_CORE if set.
+	 *
+	 * @var $core_update_channel_constant
+	 */
+	public static $core_update_channel_constant;
 
 	/**
 	 * Constructor.
@@ -41,9 +48,11 @@ class WP_Beta_Tester {
 	 * @return void
 	 */
 	public function __construct( $file, $options ) {
-		$this->file                 = $file;
-		self::$options              = $options;
-		self::$core_update_constant = defined( 'WP_AUTO_UPDATE_CORE' ) && in_array( \WP_AUTO_UPDATE_CORE, array( 'beta', 'rc' ), true ) ? \WP_AUTO_UPDATE_CORE : false;
+		$this->file                         = $file;
+		self::$options                      = $options;
+		self::$core_update_stream_constant  = defined( 'WP_AUTO_UPDATE_CORE' ) && in_array( \WP_AUTO_UPDATE_CORE, array( 'beta', 'rc' ), true ) ? \WP_AUTO_UPDATE_CORE : false;
+		self::$core_update_channel_constant = defined( 'WP_AUTO_UPDATE_CORE' ) && in_array( \WP_AUTO_UPDATE_CORE, array( 'development', 'branch-development' ), true ) ? \WP_AUTO_UPDATE_CORE : false;
+
 	}
 
 	/**
@@ -146,7 +155,8 @@ class WP_Beta_Tester {
 			: add_query_arg( 'channel', self::$options['stream-option'], $url );
 
 		// Use WP_AUTO_UPDATE_CORE if set.
-		$url = self::$core_update_constant ? add_query_arg( 'channel', self::$core_update_constant, $url ) : $url;
+		$url = self::$core_update_stream_constant ? add_query_arg( 'channel', self::$core_update_stream_constant, $url ) : $url;
+		$url = self::$core_update_channel_constant ? add_query_arg( 'channel', self::$core_update_channel_constant, $url ) : $url;
 
 		// Make adjustments for switching between channels.
 		$url = $this->channel_switching_modification( $url );
@@ -165,23 +175,21 @@ class WP_Beta_Tester {
 	 * @return string $url
 	 */
 	private function channel_switching_modification( $url ) {
-		$next_versions   = ( new WPBT_Core( $this, static::$options ) )->calculate_next_versions();
-		$wp_version      = get_bloginfo( 'version' );
-		$current_release = $this->get_current_wp_release();
+		$next_versions = ( new WPBT_Core( $this, static::$options ) )->calculate_next_versions();
+		$wp_version    = get_bloginfo( 'version' );
+		$channel       = self::$core_update_channel_constant ? self::$core_update_channel_constant : self::$options['channel'];
 
-		if ( version_compare( $wp_version, $current_release, '>=' ) ) {
-			switch ( self::$options['channel'] ) {
-				case 'branch-development':
-					$url = add_query_arg( 'version', $next_versions['point'] . '-alpha', $url );
-					break;
-				case 'development':
-					if ( false !== strpos( $wp_version, $next_versions['point'] )
-					|| version_compare( $wp_version, $next_versions['point'], '<' )
-					) {
-						$url = add_query_arg( 'version', $next_versions['release'] . '-alpha', $url );
-					}
-					break;
-			}
+		switch ( $channel ) {
+			case 'branch-development':
+				$url = add_query_arg( 'version', $next_versions['point'] . '-alpha', $url );
+				break;
+			case 'development':
+				if ( false !== strpos( $wp_version, $next_versions['point'] )
+				|| version_compare( $wp_version, $next_versions['point'], '<' )
+				) {
+					$url = add_query_arg( 'version', $next_versions['release'] . '-alpha', $url );
+				}
+				break;
 		}
 
 		return $url;
