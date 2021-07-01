@@ -170,7 +170,7 @@ class WPBT_Core {
 		printf(
 			/* translators: 1: link to backing up database, 2: link to make.wp.org/core, 3: link to beta support forum */
 			wp_kses_post( __( 'By their nature, these releases are unstable and should not be used anyplace where your data is important. So please <a href="%1$s">back up your database</a> before upgrading to a test release. In order to hear about the latest beta releases, your best bet is to watch the <a href="%2$s">development blog</a> and the <a href="%3$s">beta forum</a>.', 'wordpress-beta-tester' ) ),
-			esc_url( _x( 'https://codex.wordpress.org/Backing_Up_Your_Database', 'URL to database backup instructions', 'wordpress-beta-tester' ) ),
+			esc_url( _x( 'https://wordpress.org/support/article/wordpress-backups/', 'URL to database backup instructions on HelpHub', 'wordpress-beta-tester' ) ),
 			'https://make.wordpress.org/core/',
 			esc_url( _x( 'https://wordpress.org/support/forum/alphabeta', 'URL to beta support forum', 'wordpress-beta-tester' ) )
 		);
