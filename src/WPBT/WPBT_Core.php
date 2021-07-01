@@ -104,16 +104,16 @@ class WPBT_Core {
 			array( 'class' => 'wpbt-settings-title' )
 		);
 
-		if ( ! self::$core_update_channel_constant ) {
-			add_settings_field(
-				'stream_settings',
-				__( 'Select one of the stream options below:', 'wordpress-beta-tester' ),
-				array( $this, 'stream_radio_group' ),
-				'wp_beta_tester_core',
-				'wp_beta_tester_core',
-				array( 'class' => 'wpbt-settings-title' )
-			);
-		}
+		add_settings_field(
+			'stream_settings',
+			__( 'Select one of the stream options below:', 'wordpress-beta-tester' ),
+			array( $this, 'stream_radio_group' ),
+			'wp_beta_tester_core',
+			'wp_beta_tester_core',
+			array(
+				'class' => 'wpbt-settings-title' . ( ! self::$core_update_channel_constant ? '' : 'hidden' ),
+			)
+		);
 	}
 
 	/**
