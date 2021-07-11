@@ -49,6 +49,6 @@
             "install-path": "../wp-cli/wp-config-transformer"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }

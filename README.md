@@ -1,11 +1,11 @@
 # WordPress Beta Tester
 * Tags: beta, advanced, testing
 * Contributors: [westi](https://github.com/westi), [mlteal](https://github.com/mlteal), [afragen](https://github.com/afragen), [pbiron](https://github.com/pbiron)
-* Requires at least: 3.1
-* Stable Tag: master
 * License: GPLv2
 * License URI: https://www.opensource.org/licenses/GPL-2.0
+* Requires at least: 3.1
 * Requires PHP: 5.6
+* Stable Tag: master
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 

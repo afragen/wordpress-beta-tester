@@ -6,8 +6,8 @@ License: GPLv2
 License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
-Tested up to: 5.7
-Stable Tag: 3.1.0
+Tested up to: 5.8
+Stable Tag: 3.1.1
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -41,6 +41,10 @@ If no settings are present there is no testing to be done that requires this fea
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.1.1 / 2021-07-11
+* add @10up GitHub Actions WordPress SVN integration
+* update Codex links for HelpHub links @audrasjb
 
 #### 3.1.0 / 2021-02-08
 * update for working correctly if new `WP_AUTO_UPDATE_CORE` constant is used.

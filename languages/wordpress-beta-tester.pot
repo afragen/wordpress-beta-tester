@@ -1,17 +1,17 @@
 # Copyright (C) 2021 Peter Westwood, Andy Fragen
-# This file is distributed under the same license as the WordPress Beta Tester plugin.
+# This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress Beta Tester 3.1.0\n"
+"Project-Id-Version: WordPress Beta Tester 3.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-beta-tester\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-02-08T16:55:54+00:00\n"
+"POT-Creation-Date: 2021-07-11T17:52:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: wordpress-beta-tester\n"
 
 #. Plugin Name of the plugin
@@ -50,7 +50,7 @@ msgstr ""
 msgid "Select the update channel you would like this website to use:"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:110
+#: src/WPBT/WPBT_Core.php:109
 msgid "Select one of the stream options below:"
 msgstr ""
 
@@ -65,8 +65,8 @@ msgstr ""
 
 #: src/WPBT/WPBT_Core.php:173
 #: src/WPBT/WPBT_Help.php:48
-msgctxt "URL to database backup instructions"
-msgid "https://codex.wordpress.org/Backing_Up_Your_Database"
+msgctxt "URL to database backup instructions on HelpHub"
+msgid "https://wordpress.org/support/article/wordpress-backups/"
 msgstr ""
 
 #: src/WPBT/WPBT_Core.php:175
@@ -198,15 +198,15 @@ msgstr ""
 msgid "Disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent."
 msgstr ""
 
-#: src/WPBT/WPBT_Extras.php:141
+#: src/WPBT/WPBT_Extras.php:140
 msgid "Just an example."
 msgstr ""
 
-#: src/WPBT/WPBT_Extras.php:142
+#: src/WPBT/WPBT_Extras.php:141
 msgid "Look in `wp-config.php` for results."
 msgstr ""
 
-#: src/WPBT/WPBT_Extras.php:301
+#: src/WPBT/WPBT_Extras.php:300
 msgid "This area is for extra special beta testing. If nothing is present there are no additional features that need testing or the `wp-config.php` file is not writable. Features will set constants in the `wp-config.php` file."
 msgstr ""
 
