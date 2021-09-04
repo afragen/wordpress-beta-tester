@@ -274,9 +274,9 @@ class WPBT_Settings {
 		$checked = isset( self::$options[ $args['id'] ] ) ? self::$options[ $args['id'] ] : null;
 		?>
 		<style> .form-table th { display:none; } </style>
-		<label for="<?php esc_attr_e( $args['id'] ); ?>">
-			<input type="checkbox" id="<?php esc_attr_e( $args['id'] ); ?>" name="wp-beta-tester[<?php esc_attr_e( $args['id'] ); ?>]" value="1" <?php checked( '1', $checked ); ?> >
-			<?php esc_attr_e( $args['title'] ); ?>
+		<label for="<?php echo esc_attr( $args['id'] ); ?>">
+			<input type="checkbox" id="<?php echo esc_attr( $args['id'] ); ?>" name="wp-beta-tester[<?php echo esc_attr( $args['id'] ); ?>]" value="1" <?php checked( '1', $checked ); ?> >
+			<?php echo esc_attr( $args['title'] ); ?>
 			<?php
 			if ( isset( $args['description'] ) ) {
 				echo '<p class="description">' . esc_attr__( $args['description'] ) . '</p>';

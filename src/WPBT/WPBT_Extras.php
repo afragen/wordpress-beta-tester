@@ -311,7 +311,7 @@ class WPBT_Extras {
 		?>
 		<div>
 		<?php if ( 'wp_beta_tester_extras' === $tab ) : ?>
-			<form method="post" action="<?php esc_attr_e( $action ); ?>">
+			<form method="post" action="<?php echo esc_attr( $action ); ?>">
 				<?php settings_fields( 'wp_beta_tester_extras' ); ?>
 				<?php do_settings_sections( 'wp_beta_tester_extras' ); ?>
 				<?php submit_button(); ?>

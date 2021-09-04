@@ -321,7 +321,7 @@ class WPBT_Core {
 		?>
 		<div>
 			<?php if ( 'wp_beta_tester_core' === $tab ) : ?>
-			<form method="post" action="<?php esc_attr_e( $action ); ?>">
+			<form method="post" action="<?php echo esc_attr( $action ); ?>">
 				<?php settings_fields( 'wp_beta_tester_core' ); ?>
 				<?php do_settings_sections( 'wp_beta_tester_core' ); ?>
 				<?php submit_button(); ?>
