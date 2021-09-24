@@ -1,5 +1,8 @@
 [unreleased]
 
+#### 3.1.4 / 2021-09-24 **Hotfix**
+* don't load `pluggable.php` for `wp_create_nonce()`, load in `plugins_loaded` hook
+
 #### 3.1.3 / 2021-09-23
 * nonce, escape, and sanitize all the things
 

@@ -31,7 +31,7 @@ class WPBT_Settings {
 	 *
 	 * @var $nonce
 	 */
-	protected $nonce;
+	protected static $nonce;
 
 	/**
 	 * Constructor.
@@ -43,10 +43,12 @@ class WPBT_Settings {
 	public function __construct( WP_Beta_Tester $wp_beta_tester, $options ) {
 		self::$options        = $options;
 		$this->wp_beta_tester = $wp_beta_tester;
-		if ( ! function_exists( 'wp_create_nonce' ) ) {
-			require ABSPATH . WPINC . '/pluggable.php';
-		}
-		$this->nonce = wp_create_nonce( 'wp-beta-tester' );
+		add_action(
+			'plugins_loaded',
+			function() {
+				static::$nonce = wp_create_nonce( 'wp-beta-tester' );
+			}
+		);
 	}
 
 	/**
@@ -102,7 +104,7 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	public function update_settings() {
-		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+		if ( ! wp_verify_nonce( static::$nonce, 'wp-beta-tester' ) ) {
 			return;
 		}
 		/**
@@ -119,7 +121,7 @@ class WPBT_Settings {
 	 * Redirect to correct Settings/Tools tab on Save.
 	 */
 	protected function redirect_on_save() {
-		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+		if ( ! wp_verify_nonce( static::$nonce, 'wp-beta-tester' ) ) {
 			return;
 		}
 
@@ -185,7 +187,7 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	private function options_tabs() {
-		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+		if ( ! wp_verify_nonce( static::$nonce, 'wp-beta-tester' ) ) {
 			return;
 		}
 		$current_tab = isset( $_GET['tab'] ) ? sanitize_file_name( wp_unslash( $_GET['tab'] ) ) : 'wp_beta_tester_core';
@@ -203,7 +205,7 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	private function saved_settings_notice() {
-		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+		if ( ! wp_verify_nonce( static::$nonce, 'wp-beta-tester' ) ) {
 			return;
 		}
 		if ( ( isset( $_GET['updated'] ) && '1' === $_GET['updated'] ) ||
@@ -236,7 +238,7 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	public function create_settings_page() {
-		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+		if ( ! wp_verify_nonce( static::$nonce, 'wp-beta-tester' ) ) {
 			return;
 		}
 		$this->saved_settings_notice();
