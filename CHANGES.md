@@ -1,5 +1,8 @@
 [unreleased]
 
+#### 3.1.3 / 2021-09-23
+* nonce, escape, and sanitize all the things
+
 #### 3.1.2 / 2021-09-04
 * only use `esc_attr_e` for translating strings
 

@@ -27,6 +27,13 @@ class WPBT_Settings {
 	protected static $options;
 
 	/**
+	 * Placeholder for nonce.
+	 *
+	 * @var $nonce
+	 */
+	protected $nonce;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param  WP_Beta_Tester $wp_beta_tester Instance of class WP_Beta_Tester.
@@ -36,6 +43,10 @@ class WPBT_Settings {
 	public function __construct( WP_Beta_Tester $wp_beta_tester, $options ) {
 		self::$options        = $options;
 		$this->wp_beta_tester = $wp_beta_tester;
+		if ( ! function_exists( 'wp_create_nonce' ) ) {
+			require ABSPATH . WPINC . '/pluggable.php';
+		}
+		$this->nonce = wp_create_nonce( 'wp-beta-tester' );
 	}
 
 	/**
@@ -91,12 +102,14 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	public function update_settings() {
+		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+			return;
+		}
 		/**
 		 * Save $options in add-on classes.
 		 *
 		 * @since 2.0.0
 		 */
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		do_action( 'wp_beta_tester_update_settings', $_POST );
 
 		$this->redirect_on_save();
@@ -106,6 +119,10 @@ class WPBT_Settings {
 	 * Redirect to correct Settings/Tools tab on Save.
 	 */
 	protected function redirect_on_save() {
+		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+			return;
+		}
+
 		/**
 		 * Filter to add to $option_page array.
 		 *
@@ -115,18 +132,16 @@ class WPBT_Settings {
 		$option_page = apply_filters( 'wp_beta_tester_save_redirect', array( 'wp-beta-tester' ) );
 		$update      = false;
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		if ( ( isset( $_POST['action'] ) && 'update' === $_POST['action'] )
 			&& ( isset( $_POST['option_page'] ) && in_array( $_POST['option_page'], $option_page, true ) )
 		) {
 			$update = true;
 		}
-		// phpcs:enable
 
 		$redirect_url = is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'tools.php' );
 
 		if ( $update ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.WP.AlternativeFunctions.parse_url_parse_url
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
 			$query = isset( $_POST['_wp_http_referer'] ) ? parse_url( esc_url_raw( wp_unslash( $_POST['_wp_http_referer'] ) ), PHP_URL_QUERY ) : null;
 			parse_str( $query, $arr );
 			$arr['tab'] = ! empty( $arr['tab'] ) ? $arr['tab'] : 'wp_beta_tester_core';
@@ -170,7 +185,9 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	private function options_tabs() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+			return;
+		}
 		$current_tab = isset( $_GET['tab'] ) ? sanitize_file_name( wp_unslash( $_GET['tab'] ) ) : 'wp_beta_tester_core';
 		echo '<nav class="nav-tab-wrapper" aria-label="Secondary menu">';
 		foreach ( $this->settings_tabs() as $key => $name ) {
@@ -186,11 +203,11 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	private function saved_settings_notice() {
-		// phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		if ( ( isset( $_GET['updated'] ) && true == $_GET['updated'] ) ||
-		( isset( $_GET['settings-updated'] ) && true == $_GET['settings-updated'] )
-		// phpcs:enable
+		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+			return;
+		}
+		if ( ( isset( $_GET['updated'] ) && '1' === $_GET['updated'] ) ||
+		( isset( $_GET['settings-updated'] ) && '1' === $_GET['settings-updated'] )
 		) {
 			echo '<div class="updated"><p>';
 			esc_html_e( 'Saved.', 'wordpress-beta-tester' );
@@ -219,10 +236,12 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	public function create_settings_page() {
+		if ( ! wp_verify_nonce( $this->nonce, 'wp-beta-tester' ) ) {
+			return;
+		}
 		$this->saved_settings_notice();
 		$action = is_multisite() ? 'edit.php?action=wp-beta-tester' : 'options.php';
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$tab = isset( $_GET['tab'] ) ? sanitize_file_name( wp_unslash( $_GET['tab'] ) ) : 'wp_beta_tester_core';
+		$tab    = isset( $_GET['tab'] ) ? sanitize_file_name( wp_unslash( $_GET['tab'] ) ) : 'wp_beta_tester_core';
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Beta Testing WordPress', 'wordpress-beta-tester' ); ?></h1>
