@@ -1,5 +1,10 @@
 [unreleased]
 
+#### 3.1.5 / 2022-01-28
+* use `sanitize_title_with_dashes()` as `sanitize_file_name()` maybe have attached filter that changes output
+* fix variable docblocks
+* update nonce checks
+
 #### 3.1.4 / 2021-09-24 **Hotfix**
 * don't load `pluggable.php` for `wp_create_nonce()`, load in `plugins_loaded` hook
 

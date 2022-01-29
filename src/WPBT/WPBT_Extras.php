@@ -15,7 +15,7 @@ class WPBT_Extras {
 	/**
 	 * Placeholder for saved options.
 	 *
-	 * @var $options
+	 * @var array
 	 */
 	protected static $options;
 
@@ -151,6 +151,11 @@ class WPBT_Extras {
 	 * @return void
 	 */
 	public function save_settings( $post_data ) {
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_extras-options' )
+		) {
+			return;
+		}
+
 		if ( isset( $post_data['option_page'] )
 			&& 'wp_beta_tester_extras' === $post_data['option_page']
 		) {

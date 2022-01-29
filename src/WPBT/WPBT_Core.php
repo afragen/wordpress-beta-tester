@@ -123,6 +123,11 @@ class WPBT_Core {
 	 * @return void
 	 */
 	public function save_settings( $post_data ) {
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_core-options' )
+		) {
+			return;
+		}
+
 		if ( isset( $post_data['option_page'] )
 			&& 'wp_beta_tester_core' === $post_data['option_page']
 		) {

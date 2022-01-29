@@ -15,14 +15,14 @@ class WPBT_Bootstrap {
 	/**
 	 * Holds main plugin file.
 	 *
-	 * @var $file
+	 * @var string
 	 */
 	protected $file;
 
 	/**
 	 * Holds plugin options.
 	 *
-	 * @var $options
+	 * @var array
 	 */
 	protected static $options;
 
@@ -99,6 +99,7 @@ class WPBT_Bootstrap {
 		if ( $is_wp_develop ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			deactivate_plugins( $this->file );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			wp_die( new \WP_Error( 'deactivate', esc_html__( 'Cannot run WordPress Beta Tester plugin in `wordpress-develop`', 'wordpress-beta-tester' ) ) );
 		}
 	}

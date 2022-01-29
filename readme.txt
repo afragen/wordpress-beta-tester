@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 5.8
-Stable Tag: 3.1.4
+Stable Tag: 3.1.5
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -41,6 +41,11 @@ If no settings are present there is no testing to be done that requires this fea
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.1.5 / 2022-01-28
+* use `sanitize_title_with_dashes()` as `sanitize_file_name()` maybe have attached filter that changes output
+* fix variable docblocks
+* update nonce checks
 
 #### 3.1.4 / 2021-09-24 **Hotfix**
 * don't load `pluggable.php` for `wp_create_nonce()`, load in `plugins_loaded` hook

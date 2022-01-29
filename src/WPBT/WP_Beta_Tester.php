@@ -15,28 +15,28 @@ class WP_Beta_Tester {
 	/**
 	 * Holds main plugin file.
 	 *
-	 * @var $file
+	 * @var string
 	 */
 	public $file;
 
 	/**
 	 * Holds plugin options.
 	 *
-	 * @var $options
+	 * @var array
 	 */
 	public static $options;
 
 	/**
 	 * Holds WP_AUTO_UPDATE_CORE if set.
 	 *
-	 * @var $core_update_stream_constant
+	 * @var string|bool
 	 */
 	public static $core_update_stream_constant;
 
 	/**
 	 * Holds WP_AUTO_UPDATE_CORE if set.
 	 *
-	 * @var $core_update_channel_constant
+	 * @var string|bool
 	 */
 	public static $core_update_channel_constant;
 
