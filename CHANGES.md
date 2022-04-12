@@ -1,5 +1,9 @@
 [unreleased]
 
+#### 3.2.0 / 2022-04-12
+* use `sanitize_key()` for nonces
+* fix for transition from WP x.9 to WP x.0 to display correct next versions
+
 #### 3.1.5 / 2022-01-28
 * use `sanitize_title_with_dashes()` as `sanitize_file_name()` maybe have attached filter that changes output
 * fix variable docblocks

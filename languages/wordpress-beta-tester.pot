@@ -2,16 +2,16 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress Beta Tester 3.1.4.2\n"
+"Project-Id-Version: WordPress Beta Tester 3.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-beta-tester\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-01-19T02:15:29+00:00\n"
+"POT-Creation-Date: 2022-04-12T19:19:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wordpress-beta-tester\n"
 
 #. Plugin Name of the plugin
@@ -168,17 +168,17 @@ msgid "whichever is released first"
 msgstr ""
 
 #. translators: Used to join items in a list with more than 2 items.
-#: src/WPBT/WPBT_Core.php:450
+#: src/WPBT/WPBT_Core.php:454
 msgid "%1$s, %2$s"
 msgstr ""
 
 #. translators: Used to join last two items in a list with more than 2 times.
-#: src/WPBT/WPBT_Core.php:452
+#: src/WPBT/WPBT_Core.php:456
 msgid "%1$s, or %2$s"
 msgstr ""
 
 #. translators: Used to join items in a list with only 2 items.
-#: src/WPBT/WPBT_Core.php:454
+#: src/WPBT/WPBT_Core.php:458
 msgid "%1$s or %2$s"
 msgstr ""
 

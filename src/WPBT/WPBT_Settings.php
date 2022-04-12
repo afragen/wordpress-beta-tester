@@ -107,8 +107,8 @@ class WPBT_Settings {
 	 */
 	protected function redirect_on_save() {
 		if ( ! isset( $_POST['_wpnonce'] )
-			|| ! ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_core-options' )
-			|| ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_extras-options' ) )
+			|| ! ( ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_core-options' )
+			|| ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_extras-options' ) )
 		) {
 			return;
 		}
@@ -192,7 +192,7 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	private function saved_settings_notice() {
-		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'wpbt_redirect' ) ) {
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wpnonce'] ) ), 'wpbt_redirect' ) ) {
 			return;
 		}
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ce609095faf121aaabab97beefa6748",
+    "content-hash": "b5dfe829b5ecfe15b1f7c2e4444c5f76",
     "packages": [
         {
             "name": "wp-cli/wp-config-transformer",
@@ -57,7 +57,9 @@
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.6"
+    },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

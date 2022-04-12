@@ -123,7 +123,7 @@ class WPBT_Core {
 	 * @return void
 	 */
 	public function save_settings( $post_data ) {
-		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_core-options' )
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_core-options' )
 		) {
 			return;
 		}
@@ -387,7 +387,11 @@ class WPBT_Core {
 		// User on a current release.
 		if ( ! $is_development_version ) {
 			unset( $next_release[2] );
-			$next_release[1]     = $next_release[1] + 1;
+			$next_release[1] = $next_release[1] + 1;
+			if ( 10 === $next_release[1] ) {
+				$next_release[0] = $next_release[0] + 1;
+				$next_release[1] = 0;
+			}
 			$next_release        = implode( '.', $next_release );
 			$exploded_version[0] = $next_release;
 			$exploded_version[1] = null;

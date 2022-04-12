@@ -151,7 +151,7 @@ class WPBT_Extras {
 	 * @return void
 	 */
 	public function save_settings( $post_data ) {
-		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_extras-options' )
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'wp_beta_tester_extras-options' )
 		) {
 			return;
 		}
