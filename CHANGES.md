@@ -1,5 +1,8 @@
 [unreleased]
 
+#### 3.2.1 / 2022-04-13
+* update composer to work with PHP 5.6
+
 #### 3.2.0 / 2022-04-12
 * use `sanitize_key()` for nonces
 * fix for transition from WP x.9 to WP x.0 to display correct next versions
