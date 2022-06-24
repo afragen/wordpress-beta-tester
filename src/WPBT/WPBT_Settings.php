@@ -132,7 +132,7 @@ class WPBT_Settings {
 
 		if ( $update ) {
 			// phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
-			$query = isset( $_POST['_wp_http_referer'] ) ? parse_url( esc_url_raw( wp_unslash( $_POST['_wp_http_referer'] ) ), PHP_URL_QUERY ) : null;
+			$query = isset( $_POST['_wp_http_referer'] ) ? parse_url( sanitize_url( wp_unslash( $_POST['_wp_http_referer'] ) ), PHP_URL_QUERY ) : null;
 			parse_str( $query, $arr );
 			$arr['tab'] = ! empty( $arr['tab'] ) ? $arr['tab'] : 'wp_beta_tester_core';
 

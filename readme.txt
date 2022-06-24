@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 6.0
-Stable Tag: 3.2.1
+Stable Tag: 3.2.2
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -41,6 +41,10 @@ If no settings are present there is no testing to be done that requires this fea
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.2.2 / 2022-06-23
+* correctly use `sanitize_url()` and `esc_url()`
+* fix `WP_Config_Transformer` to get anchor if wp-config.php has been modified
 
 #### 3.2.1 / 2022-04-13
 * update composer to work with PHP 5.6

@@ -27,6 +27,13 @@ class WPBT_Extras {
 	protected static $config_path;
 
 	/**
+	 * Holds config args for WPConfigTransformer.
+	 *
+	 * @var array
+	 */
+	protected static $config_args;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param  WP_Beta_Tester $wp_beta_tester Instance of class WP_Beta_Tester.
@@ -34,9 +41,24 @@ class WPBT_Extras {
 	 * @return void
 	 */
 	public function __construct( WP_Beta_Tester $wp_beta_tester, $options ) {
+		$this->wp_beta_tester = $wp_beta_tester;
 		self::$options        = $options;
 		self::$config_path    = $this->get_config_path();
-		$this->wp_beta_tester = $wp_beta_tester;
+		self::$config_args    = array(
+			'raw'       => true,
+			'normalize' => true,
+		);
+		if ( false === strpos( file_get_contents( self::$config_path ), "/* That's all, stop editing!" ) ) {
+			if ( 1 === preg_match( '@\$table_prefix(.*;)@', file_get_contents( self::$config_path ), $matches ) ) {
+				self::$config_args = array_merge(
+					self::$config_args,
+					array(
+						'anchor'    => "$matches[0]",
+						'placement' => 'after',
+					)
+				);
+			}
+		}
 	}
 
 	/**
@@ -245,15 +267,11 @@ class WPBT_Extras {
 	 * @return void|array
 	 */
 	private function add_constants( $add ) {
-		$config_args = array(
-			'raw'       => true,
-			'normalize' => true,
-		);
 		try {
 			$config_transformer = new \WPConfigTransformer( self::$config_path );
 			foreach ( array_keys( $add ) as $constant ) {
 				$feature_flag = strtoupper( 'wp_beta_tester_' . $constant );
-				$config_transformer->update( 'constant', $feature_flag, 'true', $config_args );
+				$config_transformer->update( 'constant', $feature_flag, 'true', self::$config_args );
 			}
 		} catch ( \Exception $e ) {
 			$messsage = 'Caught Exception: \WPBT_Extras::add_constants() - ' . $e->getMessage();

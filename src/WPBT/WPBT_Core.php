@@ -388,6 +388,8 @@ class WPBT_Core {
 		if ( ! $is_development_version ) {
 			unset( $next_release[2] );
 			$next_release[1] = $next_release[1] + 1;
+
+			// x.10 moves to (x+1).0 as core doesn't follow semver.
 			if ( 10 === $next_release[1] ) {
 				$next_release[0] = $next_release[0] + 1;
 				$next_release[1] = 0;

@@ -1,5 +1,9 @@
 [unreleased]
 
+#### 3.2.2 / 2022-06-23
+* correctly use `sanitize_url()` and `esc_url()`
+* fix `WP_Config_Transformer` to get anchor if wp-config.php has been modified
+
 #### 3.2.1 / 2022-04-13
 * update composer to work with PHP 5.6
 
