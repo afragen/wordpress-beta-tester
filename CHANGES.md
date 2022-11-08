@@ -1,5 +1,8 @@
 [unreleased]
 
+#### 3.2.4 / 2022-11-07
+* return empty array for 8.1 compatibility
+
 #### 3.2.3 / 2022-09-29
 * update for PHP 8.1 compatibility
 
