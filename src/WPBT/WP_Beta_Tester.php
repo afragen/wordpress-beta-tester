@@ -380,7 +380,7 @@ class WP_Beta_Tester {
 			);
 			$field_guide_link = "<li>$field_guide_link</li>";
 		}
-		$links = $beta_rc || $rc ? "<ul> $dev_note_link $field_guide_link </ul>" : null;
+		$links = $beta_rc || $rc ? "<ul> $dev_note_link $field_guide_link </ul>" : '';
 
 		return $links;
 	}

@@ -6,8 +6,8 @@ License: GPLv2
 License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
-Tested up to: 6.0
-Stable Tag: 3.2.4
+Tested up to: 6.2
+Stable Tag: 3.2.5
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -41,6 +41,10 @@ If no settings are present there is no testing to be done that requires this fea
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.2.5 / 2023-01-29
+* added auto display relative fields immediately bleeding edge option is selected, thanks @Preciousomonze
+* fixes for PHP8.1
 
 #### 3.2.4 / 2022-11-07
 * return empty array for 8.1 compatibility

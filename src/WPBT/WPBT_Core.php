@@ -203,6 +203,14 @@ class WPBT_Core {
 	 */
 	public function channel_radio_group() {
 		$next_versions = $this->calculate_next_versions();
+		?>
+		<fieldset>
+			<tr>
+				<th><label><?php esc_html_e( __( 'Save after switching', 'wordpress-beta-tester' ) ); ?></label></th>
+				<td></td>
+			</tr>
+		</fieldset>
+		<?php
 		if ( self::$core_update_channel_constant ) {
 			?>
 			<fieldset>
@@ -281,20 +289,18 @@ class WPBT_Core {
 				<td><?php esc_html_e( 'Latest daily updates.', 'wordpress-beta-tester' ); ?></td>
 			</tr>
 
-			<?php if ( 'development' === self::$options['channel'] ) : ?>
-			<tr>
+			<tr class="bleeding-edge-stream">
 				<th><label><input name="wp-beta-tester-beta-rc" id="update-stream-beta" type="radio" value="beta" class="tog" <?php checked( 'beta', self::$options['stream-option'] ); ?> />
 				<?php esc_html_e( 'Beta/RC Only', 'wordpress-beta-tester' ); ?>
 				</label></th>
 				<td><?php esc_html_e( 'This is for the Beta/RC releases only of the selected channel.', 'wordpress-beta-tester' ); ?></td>
 			</tr>
-			<tr>
+			<tr class="bleeding-edge-stream">
 				<th><label><input name="wp-beta-tester-beta-rc" id="update-stream-rc" type="radio" value="rc" class="tog" <?php checked( 'rc', self::$options['stream-option'] ); ?> />
 				<?php esc_html_e( 'Release Candidates Only', 'wordpress-beta-tester' ); ?>
 				</label></th>
 				<td><?php esc_html_e( 'This is for the Release Candidate releases only of the selected channel.', 'wordpress-beta-tester' ); ?></td>
 			</tr>
-			<?php endif; ?>
 
 			<?php if ( false && 'branch-development' === self::$options['channel'] ) : ?>
 			<tr>
@@ -333,7 +339,24 @@ class WPBT_Core {
 			</form>
 			<?php endif; ?>
 		</div>
-		<script>jQuery('tr.wpbt-settings-title th').attr('colspan',2);</script>
+		<script>
+			jQuery( document ).ready( function( $ ){
+				$( 'tr.wpbt-settings-title th' ).attr( 'colspan', 2 );
+				let $bleedingEdgeStream = $( '.bleeding-edge-stream' );
+
+				<?php if ( 'development' !== self::$options['channel'] ) : // Time to do our basic JS magic :). ?>
+					$bleedingEdgeStream.hide();
+				<?php endif; ?>
+
+				$( document ).on( 'change', 'input[name="wp-beta-tester"]', function() {
+					if ( $( '#update-stream-bleeding-nightlies' ).is( ":checked" ) ) {
+						$bleedingEdgeStream.show();
+					} else {
+						$bleedingEdgeStream.hide();
+					}
+				});
+			});
+		</script>
 		<?php
 	}
 

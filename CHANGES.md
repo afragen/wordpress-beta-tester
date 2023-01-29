@@ -1,5 +1,9 @@
 [unreleased]
 
+#### 3.2.5 / 2023-01-29
+* added auto display relative fields immediately bleeding edge option is selected, thanks @Preciousomonze
+* fixes for PHP8.1
+
 #### 3.2.4 / 2022-11-07
 * return empty array for 8.1 compatibility
 
