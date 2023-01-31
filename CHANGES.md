@@ -1,5 +1,8 @@
 [unreleased]
 
+#### 3.2.6 / 2023-01-30
+* revert to Composer v2.5.0 as v2.5.1 has bug causing fatal, fixed in next version of Composer
+
 #### 3.2.5 / 2023-01-29
 * added auto display relative fields immediately bleeding edge option is selected, thanks @Preciousomonze
 * fixes for PHP8.1
