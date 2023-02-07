@@ -42,6 +42,9 @@ PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
 
+#### 3.2.8 / 2023-02-07
+* Composer 2.5.2 is fixed.
+
 #### 3.2.7 / 2023-02-07
 * revert to Composer v2.2.x locally for autoloader compatibility
 

@@ -22,10 +22,10 @@
         'wp-cli/wp-config-transformer' => array(
             'pretty_version' => 'v1.3.1',
             'version' => '1.3.1.0',
+            'reference' => 'c5b5349b86a3eea6c8a3f401f556f21a717aa80e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../wp-cli/wp-config-transformer',
             'aliases' => array(),
-            'reference' => 'c5b5349b86a3eea6c8a3f401f556f21a717aa80e',
             'dev_requirement' => false,
         ),
     ),
