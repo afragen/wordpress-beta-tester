@@ -1,5 +1,8 @@
 [unreleased]
 
+#### 3.2.7 / 2023-02-07
+* revert to Composer v2.2.x locally for autoloader compatibility
+
 #### 3.2.6 / 2023-01-30
 * revert to Composer v2.5.0 as v2.5.1 has bug causing fatal, fixed in next version of Composer
 

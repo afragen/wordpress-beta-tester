@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 6.2
-Stable Tag: 3.2.6
+Stable Tag: 3.2.7
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -41,6 +41,9 @@ If no settings are present there is no testing to be done that requires this fea
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.2.7 / 2023-02-07
+* revert to Composer v2.2.x locally for autoloader compatibility
 
 #### 3.2.6 / 2023-01-30
 * revert to Composer v2.5.0 as v2.5.1 has bug causing fatal, fixed in next version of Composer
