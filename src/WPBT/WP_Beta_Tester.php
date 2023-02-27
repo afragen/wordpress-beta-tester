@@ -244,6 +244,7 @@ class WP_Beta_Tester {
 			$response = (array) json_decode( $response );
 			$response = array_keys( $response, 'latest', true );
 			$response = array_pop( $response );
+			$response = null === $response ? '' : $response;
 			set_site_transient( 'current_wp_release', $response, DAY_IN_SECONDS );
 		}
 

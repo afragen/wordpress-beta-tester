@@ -34,6 +34,13 @@ class WPBT_Extras {
 	protected static $config_args;
 
 	/**
+	 * Holds the WP_Beta_Tester instance.
+	 *
+	 * @var WP_Beta_Tester
+	 */
+	protected $wp_beta_tester;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param  WP_Beta_Tester $wp_beta_tester Instance of class WP_Beta_Tester.
