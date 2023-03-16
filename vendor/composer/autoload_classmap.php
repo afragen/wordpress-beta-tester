@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'WPBT_Bootstrap' => $baseDir . '/src/WPBT/WPBT_Bootstrap.php',
+    'WPBT_Bug_Report' => $baseDir . '/src/WPBT/WPBT_Bug_Report.php',
     'WPBT_Core' => $baseDir . '/src/WPBT/WPBT_Core.php',
     'WPBT_Extras' => $baseDir . '/src/WPBT/WPBT_Extras.php',
     'WPBT_Help' => $baseDir . '/src/WPBT/WPBT_Help.php',

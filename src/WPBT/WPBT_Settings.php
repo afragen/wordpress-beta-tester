@@ -47,6 +47,7 @@ class WPBT_Settings {
 		$this->load_hooks();
 		( new WPBT_Core( $this->wp_beta_tester, self::$options ) )->load_hooks();
 		( new WPBT_Extras( $this->wp_beta_tester, self::$options ) )->load_hooks();
+		( new WPBT_Bug_Report( $this->wp_beta_tester, self::$options ) )->load_hooks();
 		( new WPBT_Extras( $this->wp_beta_tester, self::$options ) )->skip_autoupdate_email();
 		( new WPBT_Help() )->load_hooks();
 	}
@@ -59,6 +60,7 @@ class WPBT_Settings {
 	public function load_hooks() {
 		add_action( 'admin_init', array( $this, 'add_settings' ) );
 		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu', array( $this, 'add_plugin_menu' ) );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 80 );
 		add_action( 'network_admin_edit_wp_beta_tester', array( $this, 'update_settings' ) );
 		add_action( 'admin_init', array( $this, 'update_settings' ) );
 
@@ -164,6 +166,23 @@ class WPBT_Settings {
 		 * @param array $tabs Array of default tabs.
 		 */
 		return apply_filters( 'wp_beta_tester_add_settings_tabs', array() );
+	}
+
+	/**
+	 * Defines the menu for the admin bar.
+	 *
+	 * @param WP_Admin_Bar $wpadminbar The WP_Admin_Bar object.
+	 * @return void
+	 */
+	public function admin_bar_menu( $wp_admin_bar ) {
+		/**
+		 * Action hook to add adminbar menu.
+		 *
+		 * @since 3.3.0
+		 *
+		 * @param WP_Admin_Bar $wpadminbar The WP_Admin_Bar object.
+		 */
+		do_action( 'wp_beta_tester_add_admin_bar_menu', $wp_admin_bar );
 	}
 
 	/**

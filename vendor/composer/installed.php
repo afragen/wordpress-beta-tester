@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
+        'name' => 'afragen/wordpress-beta-tester',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
+        'reference' => 'b9e3394e16f2b2016e74a50cf2bbce177132578d',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '77013c53e2ed4e81d37cb3aad43f4e6b021e91cd',
-        'name' => 'afragen/wordpress-beta-tester',
         'dev' => false,
     ),
     'versions' => array(
         'afragen/wordpress-beta-tester' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
+            'reference' => 'b9e3394e16f2b2016e74a50cf2bbce177132578d',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '77013c53e2ed4e81d37cb3aad43f4e6b021e91cd',
             'dev_requirement' => false,
         ),
         'wp-cli/wp-config-transformer' => array(
