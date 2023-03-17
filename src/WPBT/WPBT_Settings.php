@@ -171,10 +171,18 @@ class WPBT_Settings {
 	/**
 	 * Defines the menu for the admin bar.
 	 *
-	 * @param WP_Admin_Bar $wpadminbar The WP_Admin_Bar object.
+	 * @param WP_Admin_Bar $wp_admin_bar The WP_Admin_Bar object.
 	 * @return void
 	 */
-	public function admin_bar_menu( $wp_admin_bar ) {
+	public function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
+		$capability         = is_multisite() ? 'manage_network_options' : 'manage_options';
+		$display_admin_menu = current_user_can( $capability );
+
+		// Exit if user doesn't have correct capabilities.
+		if ( ! $display_admin_menu ) {
+			return;
+		}
+
 		/**
 		 * Action hook to add adminbar menu.
 		 *

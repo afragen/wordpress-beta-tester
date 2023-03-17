@@ -8,9 +8,6 @@
  * @copyright 2009-2016 Peter Westwood (email : peter.westwood@ftwr.co.uk)
  */
 
-
- require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
 /**
  * WPBT_Bug_Report
  */
@@ -65,6 +62,13 @@ class WPBT_Bug_Report {
 	protected static $plugins;
 
 	/**
+	 * Holds a list of mu-plugins.
+	 *
+	 * @var string
+	 */
+	protected static $muplugins;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param  WP_Beta_Tester $wp_beta_tester Instance of class WP_Beta_Tester.
@@ -72,6 +76,7 @@ class WPBT_Bug_Report {
 	 * @return void
 	 */
 	public function __construct( WP_Beta_Tester $wp_beta_tester, $options ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		$this->wp_beta_tester = $wp_beta_tester;
 		self::$options        = $options;
 
@@ -96,7 +101,8 @@ class WPBT_Bug_Report {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		wp_register_script( 'wordpress-beta-tester-bug_report', '', array( 'jquery', 'clipboard' ), false, true );
+		$version = get_file_data( $this->wp_beta_tester->file, array( 'Version' => 'Version' ) )['Version'];
+		wp_register_script( 'wordpress-beta-tester-bug_report', '', array( 'jquery', 'clipboard' ), $version, true );
 		wp_enqueue_script( 'wordpress-beta-tester-bug_report' );
 		wp_add_inline_script(
 			'wordpress-beta-tester-bug_report',
@@ -126,6 +132,7 @@ class WPBT_Bug_Report {
 		$this->set_server();
 		$this->set_browser();
 		$this->set_theme();
+		$this->set_mu_plugins();
 		$this->set_plugins();
 	}
 
@@ -200,8 +207,6 @@ class WPBT_Bug_Report {
 
 		$server       = array_keys( $filtered );
 		self::$server = end( $server ) . ' (' . PHP_OS . ')';
-
-		return;
 	}
 
 	/**
@@ -212,7 +217,7 @@ class WPBT_Bug_Report {
 	private function set_browser() {
 		global $is_lynx, $is_gecko, $is_opera, $is_NS4, $is_safari, $is_chrome, $is_IE, $is_edge;
 
-		$agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
+		$agent = isset( $_SERVER['HTTP_USER_AGENT'] ) && sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 
 		self::$browser = __( 'Could not determine.', 'wordpress-beta-tester' );
 		$browsers      = array(
@@ -256,7 +261,7 @@ class WPBT_Bug_Report {
 			return;
 		}
 
-		self::$theme = $theme->name;
+		self::$theme = $theme->name . ' ' . $theme->version;
 	}
 
 	/**
@@ -278,16 +283,39 @@ class WPBT_Bug_Report {
 			$name    = $data['Name'];
 			$version = $data['Version'];
 
-			// Exclude this plugin.
-			if ( 'WordPress Beta Tester' === $name ) {
-				unset( $plugin_files[ $k ] );
-			}
+			$plugin = "&nbsp;&nbsp;* $name $version";
+		}
+		unset( $plugin );
+		natcasesort( $plugin_files );
+
+		self::$plugins = "\n" . implode( "\n", $plugin_files );
+	}
+
+	/**
+	 * Set the list of mu-plugins.
+	 *
+	 * @return void
+	 */
+	private function set_mu_plugins() {
+		self::$muplugins = __( 'None activated', 'wordpress-beta-tester' );
+		$plugin_files    = get_mu_plugins();
+
+		if ( ! $plugin_files || 1 === count( $plugin_files ) ) {
+			return;
+		}
+
+		foreach ( $plugin_files as $k => &$plugin ) {
+			$path    = WP_CONTENT_DIR . '/mu-plugins/' . $k;
+			$data    = get_plugin_data( $path );
+			$name    = ! empty( $data['Name'] ) ? $data['Name'] : $k;
+			$version = ! empty( $data['Version'] ) ? $data['Version'] : '';
 
 			$plugin = "&nbsp;&nbsp;* $name $version";
 		}
 		unset( $plugin );
+		natcasesort( $plugin_files );
 
-		self::$plugins = "\n" . implode( "\n", $plugin_files );
+		self::$muplugins = "\n" . implode( "\n", $plugin_files );
 	}
 
 	/**
@@ -297,6 +325,9 @@ class WPBT_Bug_Report {
 	 * @return void
 	 */
 	public function add_admin_bar_menu( $wp_admin_bar ) {
+		if ( is_multisite() && ! is_super_admin() ) {
+			return;
+		}
 		$wp_admin_bar->add_menu(
 			array(
 				'id'    => 'wp-beta-tester-report-a-bug',
@@ -306,7 +337,7 @@ class WPBT_Bug_Report {
 						'page' => 'wp-beta-tester',
 						'tab'  => 'wp_beta_tester_bug_report',
 					),
-					admin_url( 'tools.php' )
+					is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'tools.php' )
 				),
 				'meta'  => array( 'title' => __( 'Discovered a bug? Report it now!', 'wordpress-beta-tester' ) ),
 			)
@@ -386,10 +417,10 @@ class WPBT_Bug_Report {
 		<div style="width: min( 100vw, 520px - .5rem); padding-bottom: 2rem;">
 			<h2><?php esc_html_e( $title ); ?></h2>
 			<div style="display: flex; align-items: center; gap: 1rem;">
-				<a class="button button-small" href="<?php echo esc_url( $url ); ?>" target="_blank"><?php _e( 'File a report', 'wordpress-beta-tester' ); ?></a>
+				<a class="button button-small" href="<?php echo esc_url( $url ); ?>" target="_blank"><?php esc_html_e( 'File a report', 'wordpress-beta-tester' ); ?></a>
 				<div style="display: flex; align-items: center; gap: .25rem;">
-					<button type="button" class="button button-small" data-clipboard-text="<?php echo $test_report; ?>"><?php _e( 'Copy to clipboard', 'wordpress-beta-tester' ); ?></button>
-					<span class="success hidden" style="color: #008a20;" aria-hidden="true"><?php _e( 'Copied!', 'wordpress-beta-tester' ); ?></span>
+					<button type="button" class="button button-small" data-clipboard-text="<?php esc_attr_e( $test_report ); ?>"><?php esc_html_e( 'Copy to clipboard', 'wordpress-beta-tester' ); ?></button>
+					<span class="success hidden" style="color: #008a20;" aria-hidden="true"><?php esc_html_e( 'Copied!', 'wordpress-beta-tester' ); ?></span>
 				</div>
 			</div>
 			<?php echo wp_kses_post( '<div class="card" style="margin-top: 1rem;">' . nl2br( $this->get_bug_report_template( $format ) ) . '</div>' ); ?>
@@ -413,6 +444,7 @@ class WPBT_Bug_Report {
 			'- WordPress: ' . $wp_version,
 			'- Browser: ' . self::$browser,
 			'- Theme: ' . self::$theme,
+			'- MU-Plugins' . self::$muplugins,
 			'- Plugins: ' . self::$plugins,
 		);
 

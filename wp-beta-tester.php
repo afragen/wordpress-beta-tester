@@ -13,7 +13,7 @@
  * Plugin URI:        https://wordpress.org/plugins/wordpress-beta-tester/
  * Description:       Allows you to easily upgrade to Beta releases.
  * Author:            Peter Westwood, Andy Fragen
- * Version:           3.3.0
+ * Version:           3.3.1
  * Network:           true
  * Author URI:        https://blog.ftwr.co.uk/
  * Text Domain:       wordpress-beta-tester
@@ -31,4 +31,10 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
-( new WPBT_Bootstrap( __FILE__ ) )->run();
+
+add_action(
+	'plugins_loaded',
+	function() {
+		( new WPBT_Bootstrap( __FILE__ ) )->run();
+	}
+);

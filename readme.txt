@@ -1,13 +1,13 @@
 # WordPress Beta Tester
 
 Tags: beta, advanced, testing
-Contributors: westi, mlteal, afragen, pbiron
+Contributors: westi, mlteal, afragen, pbiron, costdev
 License: GPLv2
 License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 6.2
-Stable Tag: 3.3.0
+Stable Tag: 3.3.1
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -38,9 +38,22 @@ This plugin resets the constants in `wp-config.php` on plugin activation and rem
 
 If no settings are present there is no testing to be done that requires this feature.
 
+### Report a Bug
+
+This feature will hopefully promote the testing and reporting of issues to the appropriate location.
+
+There is a **Report a Bug** admin menu item to directly take the user to the **Report a Bug** tab in WordPress Beta Tester.
+
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.3.1 / 2023-03-17 ☘️
+* update readme
+* sort listed plugins in 'Report a Bug'
+* add mu-plugins in 'Report a Bug'
+* fix for multisite
+* initiate plugin in `plugins_loaded`
 
 #### 3.3.0 / 2023-03-16
 * added `Report a Bug` feature, thanks @costdev, @ironprogrammer
@@ -282,3 +295,4 @@ PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 1. This shows the main administration page for the plugin
 2. This shows the Extra Settings page for the plugin
 3. This shows the Dashboard callout
+4. This shows the 'Report a Bug' tab
