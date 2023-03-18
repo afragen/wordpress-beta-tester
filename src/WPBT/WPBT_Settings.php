@@ -175,11 +175,9 @@ class WPBT_Settings {
 	 * @return void
 	 */
 	public function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
-		$capability         = is_multisite() ? 'manage_network_options' : 'manage_options';
-		$display_admin_menu = current_user_can( $capability );
-
 		// Exit if user doesn't have correct capabilities.
-		if ( ! $display_admin_menu ) {
+		$capability = is_multisite() ? 'manage_network_options' : 'manage_options';
+		if ( ! current_user_can( $capability ) ) {
 			return;
 		}
 
@@ -228,7 +226,7 @@ class WPBT_Settings {
 		) {
 			echo '<div class="updated"><p>';
 			esc_html_e( 'Saved.', 'wordpress-beta-tester' );
-			echo '<span style="padding:0 2em;">' . wp_kses_post( __( 'Why don&#8217;t you <a href="update-core.php">head on over and upgrade now</a>.', 'wordpress-beta-tester' ) ) . '</span>';
+			echo '<span style="padding:0 2em;">' . wp_kses_post( __( 'Perhaps you should head on over and <a href="update-core.php">upgrade now</a>.', 'wordpress-beta-tester' ) ) . '</span>';
 			echo '</p></div>';
 		}
 	}

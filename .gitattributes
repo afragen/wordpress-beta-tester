@@ -7,5 +7,6 @@ composer.lock export-ignore
 /tests export-ignore
 phpunit.xml export-ignore
 .phpcs.xml export-ignore
+phpcs.xml export-ignore
 /.wordpress-org export-ignore
 /.github export-ignore

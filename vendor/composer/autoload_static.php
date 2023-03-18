@@ -10,6 +10,20 @@ class ComposerStaticInit248763277659ec81f8c4ff690d89804d
         'ac949ce40a981819ba132473518a9a31' => __DIR__ . '/..' . '/wp-cli/wp-config-transformer/src/WPConfigTransformer.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'D' => 
+        array (
+            'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'WPBT_Bootstrap' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Bootstrap.php',
@@ -24,6 +38,8 @@ class ComposerStaticInit248763277659ec81f8c4ff690d89804d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit248763277659ec81f8c4ff690d89804d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit248763277659ec81f8c4ff690d89804d::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit248763277659ec81f8c4ff690d89804d::$classMap;
 
         }, null, ClassLoader::class);
