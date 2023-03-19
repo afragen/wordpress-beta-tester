@@ -115,12 +115,42 @@ class WPBT_Bug_Report {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
+		$version = get_file_data( $this->wp_beta_tester->file, array( 'Version' => 'Version' ) )['Version'];
+
+		wp_register_style( 'wordpress-beta-tester-bug_report', '', '', $version );
+		wp_enqueue_style( 'wordpress-beta-tester-bug_report' );
+		wp_add_inline_style(
+			'wordpress-beta-tester-bug_report',
+			'
+			#wp-admin-bar-wp-beta-tester-report-a-bug {
+				display: block !important;
+			}
+
+			#wp-admin-bar-wp-beta-tester-report-a-bug .ab-icon {
+				margin: 2px 4px 0 0;
+			}
+
+			#wp-admin-bar-wp-beta-tester-report-a-bug .ab-icon::before {
+				content: "\f451";
+			}
+			
+			@media (max-width: 782px) {
+				#wp-admin-bar-wp-beta-tester-report-a-bug .ab-icon {
+					margin-left: 4px;
+				}
+
+				#wp-admin-bar-wp-beta-tester-report-a-bug .ab-label {
+					display: none;
+				}
+			}
+			'
+		);
+
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $_GET['tab'] ) || 'wp_beta_tester_bug_report' !== $_GET['tab'] ) {
 			return;
 		}
 
-		$version = get_file_data( $this->wp_beta_tester->file, array( 'Version' => 'Version' ) )['Version'];
 		wp_register_script( 'wordpress-beta-tester-bug_report', '', array( 'jquery', 'clipboard' ), $version, true );
 		wp_enqueue_script( 'wordpress-beta-tester-bug_report' );
 		wp_add_inline_script(
@@ -358,7 +388,7 @@ class WPBT_Bug_Report {
 		$wp_admin_bar->add_menu(
 			array(
 				'id'    => 'wp-beta-tester-report-a-bug',
-				'title' => __( 'Report a Bug', 'wordpress-beta-tester' ),
+				'title' => '<span class="ab-icon" aria-hidden="true"></span><span class="ab-label">' . __( 'Report a Bug', 'wordpress-beta-tester' ) . '</span>',
 				'href'  => add_query_arg(
 					array(
 						'page' => 'wp-beta-tester',
