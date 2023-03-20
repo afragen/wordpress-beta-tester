@@ -1,5 +1,8 @@
 [unreleased]
 
+#### 3.3.4 / 2023-03-20
+* PHP 5.6 and `EOD`, why we can't have nice looking code in the editor
+
 #### 3.3.3 / 2023-03-20
 * add an icon 🐞
 * improved environment data and display

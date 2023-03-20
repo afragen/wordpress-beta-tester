@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 6.2
-Stable Tag: 3.3.3
+Stable Tag: 3.3.4
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -47,6 +47,9 @@ There is a **Report a Bug** admin menu item to directly take the user to the **R
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.3.4 / 2023-03-20
+* PHP 5.6 and `EOD`, why we can't have nice looking code in the editor
 
 #### 3.3.3 / 2023-03-20
 * add an icon 🐞

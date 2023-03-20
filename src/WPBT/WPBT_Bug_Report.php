@@ -573,7 +573,7 @@ class WPBT_Bug_Report {
 
 		$sub_heading Actual Results
 		1.&nbsp; ❌ What actually happened.
-		EOD;
+EOD;
 
 		return $report;
 	}
