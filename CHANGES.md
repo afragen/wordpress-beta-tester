@@ -1,5 +1,11 @@
 [unreleased]
 
+#### 3.3.3 / 2023-03-20
+* add an icon 🐞
+* improved environment data and display
+* improve clipboard text for insertion
+* lots of other stuff for Colin to do
+
 #### 3.3.2 / 2023-03-17 🇮🇪☘️
 * more fixes for 'Report a Bug'
 * updated/added strings

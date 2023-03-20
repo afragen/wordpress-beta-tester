@@ -20,18 +20,25 @@ class WPBT_Bug_Report {
 	protected static $options;
 
 	/**
+	 * Holds the plugin's version.
+	 *
+	 * @var string
+	 */
+	protected static $plugin_version;
+
+	/**
+	 * Holds the plugin's base URL.
+	 *
+	 * @var string
+	 */
+	protected static $plugin_base_url;
+
+	/**
 	 * Holds the WP_Beta_Tester instance.
 	 *
 	 * @var WP_Beta_Tester
 	 */
 	protected $wp_beta_tester;
-
-	/**
-	 * Holds the operating system's name.
-	 *
-	 * @var string
-	 */
-	protected static $os;
 
 	/**
 	 * Holds the server's name.
@@ -41,11 +48,26 @@ class WPBT_Bug_Report {
 	protected static $server;
 
 	/**
+	 * Holds the database's extension,
+	 * server version and client version.
+	 *
+	 * @var string
+	 */
+	protected static $database;
+
+	/**
 	 * Holds the browser's name and version.
 	 *
 	 * @var string
 	 */
 	protected static $browser;
+
+	/**
+	 * Holds the browser's operating system's name.
+	 *
+	 * @var string
+	 */
+	protected static $os;
 
 	/**
 	 * Holds the active theme's name.
@@ -91,10 +113,14 @@ class WPBT_Bug_Report {
 	 */
 	public function __construct( WP_Beta_Tester $wp_beta_tester, $options ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		$this->wp_beta_tester = $wp_beta_tester;
-		self::$options        = $options;
-		self::$unknown        = __( 'Could not determine', 'wordpress-beta-tester' );
-		self::$none_activated = __( 'None activated', 'wordpress-beta-tester' );
+		$this->wp_beta_tester  = $wp_beta_tester;
+		self::$plugin_version  = get_file_data( $this->wp_beta_tester->file, array( 'Version' => 'Version' ) )['Version'];
+		$directory             = basename( dirname( $this->wp_beta_tester->file ) );
+		$file                  = basename( $this->wp_beta_tester->file );
+		self::$plugin_base_url = plugin_dir_url( $directory . '/' . $file );
+		self::$options         = $options;
+		self::$unknown         = __( 'Could not determine', 'wordpress-beta-tester' );
+		self::$none_activated  = __( 'None activated', 'wordpress-beta-tester' );
 	}
 
 	/**
@@ -107,6 +133,7 @@ class WPBT_Bug_Report {
 		add_action( 'wp_beta_tester_add_admin_page', array( $this, 'add_admin_page' ), 10, 2 );
 		add_filter( 'wp_beta_tester_add_settings_tabs', array( $this, 'add_settings_tab' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	/**
@@ -115,30 +142,31 @@ class WPBT_Bug_Report {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
+		wp_enqueue_style(
+			'wordpress-beta-tester-bug-report-admin-bar',
+			self::$plugin_base_url . 'src/WPBT/css/bug-report-admin-bar.css',
+			array(),
+			self::$plugin_version
+		);
+
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! isset( $_GET['tab'] ) || 'wp_beta_tester_bug_report' !== $_GET['tab'] ) {
-			return;
+		if ( is_admin() && isset( $_GET['tab'] ) && 'wp_beta_tester_bug_report' === $_GET['tab'] ) {
+			wp_enqueue_style(
+				'wordpress-beta-tester-bug-report-template',
+				self::$plugin_base_url . 'src/WPBT/css/bug-report-template.css',
+				array(),
+				self::$plugin_version
+			);
+
+			wp_enqueue_script(
+				'wordpress-beta-tester-bug-report-clipboard',
+				self::$plugin_base_url . 'src/WPBT/js/bug-report-clipboard.js',
+				array( 'jquery', 'clipboard' ),
+				self::$plugin_version,
+				true
+			);
 		}
 
-		$version = get_file_data( $this->wp_beta_tester->file, array( 'Version' => 'Version' ) )['Version'];
-		wp_register_script( 'wordpress-beta-tester-bug_report', '', array( 'jquery', 'clipboard' ), $version, true );
-		wp_enqueue_script( 'wordpress-beta-tester-bug_report' );
-		wp_add_inline_script(
-			'wordpress-beta-tester-bug_report',
-			'
-				var bugReportClipboard = new ClipboardJS( "#wordpress-beta-tester-bug-reports button" );
-
-				bugReportClipboard.on( "success", function( e ) {
-					var success = jQuery( e.trigger ).next( ".success" );
-
-					success.removeClass( "hidden" );
-
-					setTimeout( function() {
-						success.addClass( "hidden" );
-					}, 3000 );
-				} );
-			'
-		);
 	}
 
 	/**
@@ -147,16 +175,17 @@ class WPBT_Bug_Report {
 	 * @return void
 	 */
 	private function set_environment_data() {
-		$this->set_os();
 		$this->set_server();
+		$this->set_database();
 		$this->set_browser();
+		$this->set_os();
 		$this->set_theme();
 		$this->set_mu_plugins();
 		$this->set_plugins();
 	}
 
 	/**
-	 * Set the operating system's name.
+	 * Set the browser's operating system's name.
 	 *
 	 * @return void
 	 */
@@ -169,7 +198,8 @@ class WPBT_Bug_Report {
 
 		$agent   = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 		$os_list = array(
-			'/windows nt 10/i'      => 'Windows 10',
+			// At this time, Windows 11 cannot be detected server-side by examining the User agent.
+			'/windows nt 10/i'      => 'Windows 10/11',
 			'/windows nt 6.3/i'     => 'Windows 8.1',
 			'/windows nt 6.2/i'     => 'Windows 8',
 			'/windows nt 6.1/i'     => 'Windows 7',
@@ -209,34 +239,57 @@ class WPBT_Bug_Report {
 	 * @return void
 	 */
 	private function set_server() {
-		global $is_apache, $is_IIS, $is_iis7, $is_nginx;
-
 		self::$server = self::$unknown;
 
 		if ( empty( $_SERVER['SERVER_SOFTWARE'] ) ) {
 			return;
 		}
 
-		$software = sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) );
-		$servers  = array(
-			'Apache' => $is_apache,
-			'NGINX'  => $is_nginx,
-			'IIS'    => $is_IIS,
-			'IIS7'   => $is_iis7,
-		);
-		$filtered = array_filter( $servers );
+		self::$server = sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) );
+	}
 
-		if ( empty( $filtered ) ) {
+	/**
+	 * Sets the database's extension,
+	 * server version and client version.
+	 *
+	 * @return void
+	 */
+	private function set_database() {
+		global $wpdb;
+
+		self::$database = self::$unknown;
+
+		if ( ! $wpdb ) {
 			return;
 		}
 
-		$server       = array_keys( $filtered );
-		self::$server = end( $server ) . ' (' . PHP_OS . ')';
+		// Populate the database debug fields.
+		if ( is_resource( $wpdb->dbh ) ) {
+			// Old mysql extension.
+			$extension = 'mysql';
+		} elseif ( is_object( $wpdb->dbh ) ) {
+			// mysqli or PDO.
+			$extension = get_class( $wpdb->dbh );
+		} else {
+			// Unknown sql extension.
+			$extension = null;
+		}
 
-		// Try to get the server version.
-		preg_match( '/\/([0-9\.\-]+)/', $software, $version );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$server_version = $wpdb->get_var( 'SELECT VERSION()' );
 
-		self::$server .= $version ? ' ' . $version[1] : '';
+		if ( isset( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) {
+			$client_version = $wpdb->dbh->client_info;
+		} else {
+			// phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysql_get_client_info,PHPCompatibility.Extensions.RemovedExtensions.mysql_DeprecatedRemoved
+			if ( preg_match( '|[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}|', mysql_get_client_info(), $matches ) ) {
+				$client_version = $matches[0];
+			} else {
+				$client_version = 'Unavailable';
+			}
+		}
+
+		self::$database = $extension . ' (Server: ' . $server_version . ' / Client: ' . $client_version . ')';
 	}
 
 	/**
@@ -377,7 +430,7 @@ class WPBT_Bug_Report {
 		$wp_admin_bar->add_menu(
 			array(
 				'id'    => 'wp-beta-tester-report-a-bug',
-				'title' => __( 'Report a Bug', 'wordpress-beta-tester' ),
+				'title' => '<span class="ab-icon" aria-hidden="true"></span><span class="ab-label">' . __( 'Report a Bug', 'wordpress-beta-tester' ) . '</span>',
 				'href'  => add_query_arg(
 					array(
 						'page' => 'wp-beta-tester',
@@ -446,7 +499,7 @@ class WPBT_Bug_Report {
 	 */
 	public function print_tab_introduction() {
 		$introduction  = '<p>' . __( 'This area provides bug report templates for pasting into Trac or GitHub.', 'wordpress-beta-tester' ) . '</p>';
-		$introduction .= '<p>' . __( 'After pasting a template into Trac or GitHub, complete the <strong>Steps to Reproduce</strong>, <strong>Expected Results</strong> and <strong>Actual Results</strong> sections.', 'wordpress-beta-tester' ) . '</p>';
+		$introduction .= '<p>' . __( 'After pasting a template into Trac or GitHub, complete the <strong>Description</strong>, <strong>Steps to Reproduce</strong>, <strong>Expected Results</strong> and <strong>Actual Results</strong> sections.', 'wordpress-beta-tester' ) . '</p>';
 		echo wp_kses_post( $introduction );
 	}
 
@@ -461,16 +514,18 @@ class WPBT_Bug_Report {
 	public function print_bug_report_template( $title, $url, $format ) {
 			$test_report = $this->get_bug_report_template( $format );
 		?>
-		<div style="width: min( 100vw, 520px - .5rem); padding-bottom: 2rem;">
-			<h2><?php echo esc_html( $title ); ?></h2>
-			<div style="display: flex; align-items: center; gap: 1rem;">
+		<div class="template">
+			<h3><?php echo esc_html( $title ); ?></h3>
+			<div class="template-buttons">
 				<a class="button button-small" href="<?php echo esc_url( $url ); ?>" target="_blank"><?php esc_html_e( 'File a report', 'wordpress-beta-tester' ); ?></a>
-				<div style="display: flex; align-items: center; gap: .25rem;">
-					<button type="button" class="button button-small" data-clipboard-text="<?php echo esc_attr( $test_report ); ?>"><?php esc_html_e( 'Copy to clipboard', 'wordpress-beta-tester' ); ?></button>
-					<span class="success hidden" style="color: #008a20;" aria-hidden="true"><?php esc_html_e( 'Copied!', 'wordpress-beta-tester' ); ?></span>
+				<div class="copy-to-clipboard">
+					<button type="button" class="button button-small" data-clipboard-text="<?php echo esc_attr( str_replace( '&nbsp;', ' ', $test_report ) ); ?>">
+						<?php esc_html_e( 'Copy to clipboard', 'wordpress-beta-tester' ); ?>
+					</button>
+					<span class="success hidden" aria-hidden="true"><?php esc_html_e( 'Copied!', 'wordpress-beta-tester' ); ?></span>
 				</div>
 			</div>
-			<?php echo wp_kses_post( '<div class="card" style="margin-top: 1rem;">' . nl2br( $this->get_bug_report_template( $format ) ) . '</div>' ); ?>
+			<?php echo wp_kses_post( '<div class="card">' . nl2br( $this->get_bug_report_template( $format ) ) . '</div>' ); ?>
 		</div>
 		<?php
 	}
@@ -485,11 +540,11 @@ class WPBT_Bug_Report {
 		global $wp_version;
 
 		$environment = array(
-			'- OS: ' . self::$os,
-			'- Server: ' . self::$server,
-			'- PHP: ' . phpversion(),
 			'- WordPress: ' . $wp_version,
-			'- Browser: ' . self::$browser,
+			'- PHP: ' . phpversion(),
+			'- Server: ' . self::$server,
+			'- Database: ' . self::$database,
+			'- Browser: ' . self::$browser . ' (' . self::$os . ')',
 			'- Theme: ' . self::$theme,
 			'- MU-Plugins: ' . self::$muplugins,
 			'- Plugins: ' . self::$plugins,
@@ -497,23 +552,26 @@ class WPBT_Bug_Report {
 
 		$environment = implode( "\n", $environment );
 
-		$heading   = 'wiki' === $format ? '===' : '###';
-		$last_item = 'wiki' === $format ? 'x' : '2';
-		$report    = <<<EOD
+		$is_wiki     = 'wiki' === $format;
+		$heading     = $is_wiki ? '==' : '##';
+		$sub_heading = $is_wiki ? '===' : '###';
+		$last_item   = $is_wiki ? 'x' : '2';
+		$report      = <<<EOD
 		$heading Bug Report
+		$sub_heading Description
 		Describe the bug.
 
-		$heading Environment
+		$sub_heading Environment
 		$environment
 
-		$heading Steps to Reproduce
+		$sub_heading Steps to Reproduce
 		1.&nbsp;
 		$last_item. 🐞 Bug occurs.
 
-		$heading Expected Results
+		$sub_heading Expected Results
 		1.&nbsp; ✅ What should happen.
 
-		$heading Actual Results
+		$sub_heading Actual Results
 		1.&nbsp; ❌ What actually happened.
 		EOD;
 

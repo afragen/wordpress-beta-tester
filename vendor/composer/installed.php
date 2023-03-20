@@ -3,7 +3,7 @@
         'name' => 'afragen/wordpress-beta-tester',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '2ea66657e9b8ed50cffe76b603cc5f368a91a515',
+        'reference' => '44da53d6617882ed0876b9188e7b5d5c81b05ab0',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'afragen/wordpress-beta-tester' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '2ea66657e9b8ed50cffe76b603cc5f368a91a515',
+            'reference' => '44da53d6617882ed0876b9188e7b5d5c81b05ab0',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
