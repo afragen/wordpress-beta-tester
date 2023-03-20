@@ -1,6 +1,6 @@
 # WordPress Beta Tester
 * Tags: beta, advanced, testing
-* Contributors: [westi](https://github.com/westi), [mlteal](https://github.com/mlteal), [afragen](https://github.com/afragen), [pbiron](https://github.com/pbiron)
+* Contributors: [westi](https://github.com/westi), [mlteal](https://github.com/mlteal), [afragen](https://github.com/afragen), [pbiron](https://github.com/pbiron), [costdev](https:/github.com/costdev)
 * License: GPLv2
 * License URI: https://www.opensource.org/licenses/GPL-2.0
 * Requires at least: 3.1
