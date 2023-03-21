@@ -465,12 +465,14 @@ class WPBT_Bug_Report {
 					<?php
 						$this->print_bug_report_template(
 							__( 'Trac', 'wordpress-beta-tester' ),
+							'https://core.trac.wordpress.org/search?ticket=1',
 							'https://core.trac.wordpress.org/newticket',
 							'wiki'
 						);
 
 						$this->print_bug_report_template(
 							__( 'GitHub (Gutenberg)', 'wordpress-beta-tester' ),
+							'https://github.com/WordPress/gutenberg/issues',
 							'https://github.com/WordPress/gutenberg/issues/new/choose',
 							'markdown'
 						);
@@ -511,13 +513,14 @@ class WPBT_Bug_Report {
 	 * @param string $format The format to use. "wiki" or "markdown".
 	 * @return void
 	 */
-	public function print_bug_report_template( $title, $url, $format ) {
+	public function print_bug_report_template( $title, $search_url, $report_url, $format ) {
 		$test_report = $this->get_bug_report_template( $format );
 		?>
 		<div class="template">
 			<h3><?php echo esc_html( $title ); ?></h3>
 			<div class="template-buttons">
-				<a class="button button-small" href="<?php echo esc_url( $url ); ?>" target="_blank"><?php esc_html_e( 'File a report', 'wordpress-beta-tester' ); ?></a>
+				<a class="button button-small" href="<?php echo esc_url( $search_url ); ?>" target="_blank"><?php esc_html_e( 'Search for an existing report', 'wordpress-beta-tester' ); ?></a>
+				<a class="button button-small" href="<?php echo esc_url( $report_url ); ?>" target="_blank"><?php esc_html_e( 'File a new report', 'wordpress-beta-tester' ); ?></a>
 				<div class="copy-to-clipboard">
 					<button type="button" class="button button-small" data-clipboard-text="<?php echo esc_attr( str_replace( '&nbsp;', ' ', $test_report ) ); ?>">
 						<?php esc_html_e( 'Copy to clipboard', 'wordpress-beta-tester' ); ?>

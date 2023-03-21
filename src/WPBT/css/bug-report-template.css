@@ -6,6 +6,7 @@
 #wordpress-beta-tester-bug-reports .template-buttons {
 	align-items: center;
 	display: flex;
+	flex-wrap: wrap;
 	gap: 1rem;
 }
 
