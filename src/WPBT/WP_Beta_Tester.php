@@ -296,6 +296,17 @@ class WP_Beta_Tester {
 		$next_version = explode( '-', $wp_version );
 		$milestone    = array_shift( $next_version );
 
+		$bug            = '<span class="dashicons dashicons-buddicons-replies"></span>';
+		$preferred      = $this->get_preferred_from_update_core();
+		$update_version = ( new WPBT_Core( $this, self::$options ) )->get_next_version( $preferred->version );
+		$report_url     = add_query_arg(
+			array(
+				'page' => 'wp-beta-tester',
+				'tab'  => 'wp_beta_tester_bug_report',
+			),
+			is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'tools.php' )
+		);
+
 		/* translators: %s: WordPress version */
 		printf( wp_kses_post( '<p>' . __( 'Please help test <strong>WordPress %s</strong>.', 'wordpress-beta-tester' ) . '</p>' ), esc_attr( $milestone ) );
 
@@ -305,16 +316,24 @@ class WP_Beta_Tester {
 		/* translators: %1: link to closed and reopened trac tickets on current milestone */
 		printf( wp_kses_post( '<p>' . __( 'Here are the <a href="%s" target="_blank">commits for the milestone</a>.', 'wordpress-beta-tester' ) . '</p>' ), esc_url( "https://core.trac.wordpress.org/query?status=closed&status=reopened&milestone=$milestone" ) );
 
-		/* translators: %s: link to trac search */
-		printf( wp_kses_post( '<p>' . __( '&#128027; Did you find a bug? Search for a <a href="%s" target="_blank">trac ticket</a> to see if it has already been reported.', 'wordpress-beta-tester' ) . '</p>' ), 'https://core.trac.wordpress.org/search' );
+		/* translators: %s: link to Report a Bug tab */
+		printf( wp_kses_post( '<p>' . "&nbsp;$bug&nbsp;" . __( 'Found a bug? <a href="%s">Report it</a>!', 'wordpress-beta-tester' ) . '</p>' ), esc_url( $report_url ) );
 
 		$capability = is_multisite() ? 'manage_network_options' : 'manage_options';
 		if ( current_user_can( $capability ) ) {
 			$parent             = is_multisite() ? 'settings.php' : 'tools.php';
 			$wpbt_settings_page = add_query_arg( 'page', 'wp-beta-tester', network_admin_url( $parent ) );
 
-			/* translators: %s: WP Beta Tester settings URL */
-			printf( wp_kses_post( '<p>' . __( 'Head over to your <a href="%s">WordPress Beta Tester Settings</a> and make sure the <strong>beta/RC</strong> stream is selected.', 'wordpress-beta-tester' ) . '</p>' ), esc_url( $wpbt_settings_page ) );
+			printf(
+				/* translators: %s: update version */
+				wp_kses_post( '<p>' . __( 'Currently your site is set to update to <strong>%s</strong>.', 'wordpress-beta-tester' ) . '</p>' ),
+				esc_html( $update_version )
+			);
+
+			if ( 'beta' !== self::$options['stream-option'] ) {
+				/* translators: %s: WP Beta Tester settings URL */
+				printf( wp_kses_post( '<p>' . __( 'Head over to your <a href="%s">WordPress Beta Tester Settings</a> and make sure the <strong>beta/RC</strong> stream is selected.', 'wordpress-beta-tester' ) . '</p>' ), esc_url( $wpbt_settings_page ) );
+			}
 		}
 	}
 

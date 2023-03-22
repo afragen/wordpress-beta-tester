@@ -280,6 +280,7 @@ class WPBT_Bug_Report {
 
 		if ( isset( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) {
 			$client_version = $wpdb->dbh->client_info;
+			$client_version = explode( ' - ', $client_version )[0];
 		} else {
 			// phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysql_get_client_info,PHPCompatibility.Extensions.RemovedExtensions.mysql_DeprecatedRemoved
 			if ( preg_match( '|[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}|', mysql_get_client_info(), $matches ) ) {
@@ -465,12 +466,14 @@ class WPBT_Bug_Report {
 					<?php
 						$this->print_bug_report_template(
 							__( 'Trac', 'wordpress-beta-tester' ),
+							'https://core.trac.wordpress.org/search?ticket=1',
 							'https://core.trac.wordpress.org/newticket',
 							'wiki'
 						);
 
 						$this->print_bug_report_template(
 							__( 'GitHub (Gutenberg)', 'wordpress-beta-tester' ),
+							'https://github.com/WordPress/gutenberg/issues',
 							'https://github.com/WordPress/gutenberg/issues/new/choose',
 							'markdown'
 						);
@@ -497,7 +500,7 @@ class WPBT_Bug_Report {
 	 *
 	 * @return void
 	 */
-	public function print_tab_introduction() {
+	private function print_tab_introduction() {
 		$introduction  = '<p>' . __( 'This area provides bug report templates for pasting into Trac or GitHub.', 'wordpress-beta-tester' ) . '</p>';
 		$introduction .= '<p>' . __( 'After pasting a template into Trac or GitHub, complete the <strong>Description</strong>, <strong>Steps to Reproduce</strong>, <strong>Expected Results</strong> and <strong>Actual Results</strong> sections.', 'wordpress-beta-tester' ) . '</p>';
 		echo wp_kses_post( $introduction );
@@ -506,18 +509,20 @@ class WPBT_Bug_Report {
 	/**
 	 * Print a bug report template.
 	 *
-	 * @param string $title  The title of the bug report template.
-	 * @param string $url    The URL to file a bug report.
-	 * @param string $format The format to use. "wiki" or "markdown".
+	 * @param string $title      The title of the bug report template.
+	 * @param string $search_url The URL to search for existing reports.
+	 * @param string $report_url The URL to file a report.
+	 * @param string $format     The format to use. "wiki" or "markdown".
 	 * @return void
 	 */
-	public function print_bug_report_template( $title, $url, $format ) {
-			$test_report = $this->get_bug_report_template( $format );
+	private function print_bug_report_template( $title, $search_url, $report_url, $format ) {
+		$test_report = $this->get_bug_report_template( $format );
 		?>
 		<div class="template">
 			<h3><?php echo esc_html( $title ); ?></h3>
 			<div class="template-buttons">
-				<a class="button button-small" href="<?php echo esc_url( $url ); ?>" target="_blank"><?php esc_html_e( 'File a report', 'wordpress-beta-tester' ); ?></a>
+				<a class="button button-small" href="<?php echo esc_url( $search_url ); ?>" target="_blank"><?php esc_html_e( 'Search for an existing report', 'wordpress-beta-tester' ); ?></a>
+				<a class="button button-small" href="<?php echo esc_url( $report_url ); ?>" target="_blank"><?php esc_html_e( 'File a new report', 'wordpress-beta-tester' ); ?></a>
 				<div class="copy-to-clipboard">
 					<button type="button" class="button button-small" data-clipboard-text="<?php echo esc_attr( str_replace( '&nbsp;', ' ', $test_report ) ); ?>">
 						<?php esc_html_e( 'Copy to clipboard', 'wordpress-beta-tester' ); ?>
@@ -536,7 +541,7 @@ class WPBT_Bug_Report {
 	 * @param string $format The format to use. "wiki" or "markdown".
 	 * @return string
 	 */
-	public function get_bug_report_template( $format ) {
+	private function get_bug_report_template( $format ) {
 		global $wp_version;
 
 		$environment = array(
