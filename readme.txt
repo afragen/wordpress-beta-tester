@@ -42,7 +42,7 @@ If no settings are present there is no testing to be done that requires this fea
 
 This feature will hopefully promote the testing and reporting of issues to the appropriate location.
 
-There is a **Report a Bug** admin menu item to directly take the user to the **Report a Bug** tab in WordPress Beta Tester.
+There is a **Report a Bug** admin menu item to directly take the user to the **Report a Bug** tab in WordPress Beta Tester. In the **Report a Bug** tab you can copy a bug report template for use in Trac or GitHub.
 
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
