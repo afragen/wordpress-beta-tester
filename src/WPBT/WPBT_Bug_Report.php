@@ -562,22 +562,22 @@ class WPBT_Bug_Report {
 		$sub_heading = $is_wiki ? '===' : '###';
 		$last_item   = $is_wiki ? 'x' : '2';
 		$report      = <<<EOD
-		$heading Bug Report
-		$sub_heading Description
-		Describe the bug.
+$heading Bug Report
+$sub_heading Description
+Describe the bug.
 
-		$sub_heading Environment
-		$environment
+$sub_heading Environment
+$environment
 
-		$sub_heading Steps to Reproduce
-		1.&nbsp;
-		$last_item. 🐞 Bug occurs.
+$sub_heading Steps to Reproduce
+1.&nbsp;
+$last_item. 🐞 Bug occurs.
 
-		$sub_heading Expected Results
-		1.&nbsp; ✅ What should happen.
+$sub_heading Expected Results
+1.&nbsp; ✅ What should happen.
 
-		$sub_heading Actual Results
-		1.&nbsp; ❌ What actually happened.
+$sub_heading Actual Results
+1.&nbsp; ❌ What actually happened.
 EOD;
 
 		return $report;
