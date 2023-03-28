@@ -279,8 +279,17 @@ class WPBT_Bug_Report {
 		$server_version = $wpdb->get_var( 'SELECT VERSION()' );
 
 		if ( isset( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) {
-			$client_version = $wpdb->dbh->client_info;
-			$client_version = explode( ' - ', $client_version )[0];
+			if ( property_exists( $wpdb->dbh, 'client_info' ) ) {
+				$client_version = $wpdb->dbh->client_info;
+				$client_version = explode( ' - ', $client_version )[0];
+			} elseif ( isset( $GLOBALS['@pdo'] ) && $GLOBALS['@pdo'] instanceof PDO ) {
+				// phpcs:disable WordPress.DB.RestrictedClasses.mysql__PDO
+				$server_version = $GLOBALS['@pdo']->getAttribute( PDO::ATTR_SERVER_VERSION );
+				$client_version = $GLOBALS['@pdo']->getAttribute( PDO::ATTR_CLIENT_VERSION );
+				// phpcs:enable WordPress.DB.RestrictedClasses.mysql__PDO
+			} else {
+				$client_version = 'Unavailable';
+			}
 		} else {
 			// phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysql_get_client_info,PHPCompatibility.Extensions.RemovedExtensions.mysql_DeprecatedRemoved
 			if ( preg_match( '|[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}|', mysql_get_client_info(), $matches ) ) {
@@ -562,24 +571,24 @@ class WPBT_Bug_Report {
 		$sub_heading = $is_wiki ? '===' : '###';
 		$last_item   = $is_wiki ? 'x' : '2';
 		$report      = <<<EOD
-$heading Bug Report
-$sub_heading Description
-Describe the bug.
+		$heading Bug Report
+		$sub_heading Description
+		Describe the bug.
 
-$sub_heading Environment
-$environment
+		$sub_heading Environment
+		$environment
 
-$sub_heading Steps to Reproduce
-1.&nbsp;
-$last_item. 🐞 Bug occurs.
+		$sub_heading Steps to Reproduce
+		1.&nbsp;
+		$last_item. 🐞 Bug occurs.
 
-$sub_heading Expected Results
-1.&nbsp; ✅ What should happen.
+		$sub_heading Expected Results
+		1.&nbsp; ✅ What should happen.
 
-$sub_heading Actual Results
-1.&nbsp; ❌ What actually happened.
+		$sub_heading Actual Results
+		1.&nbsp; ❌ What actually happened.
 EOD;
 
-		return $report;
+		return str_replace( "\t", '', $report );
 	}
 }

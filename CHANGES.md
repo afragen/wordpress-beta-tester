@@ -1,5 +1,9 @@
 [unreleased]
 
+#### 3.3.7 / 2023-03-28
+* better fix for spacing of bug report copy
+* `Report a Bug`: update database data for SQLite
+
 #### 3.3.6 / 2023-02-25
 * fix spacing of bug report copy
 
