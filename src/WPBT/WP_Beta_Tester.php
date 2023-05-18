@@ -164,7 +164,51 @@ class WP_Beta_Tester {
 		// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
 		// $url = add_query_arg( 'pretend_releases', array( '5.6-beta2' ), $url );
 
-		return wp_remote_get( $url, $args );
+		$response = wp_remote_get( $url, $args );
+
+		if ( is_array( $response ) ) {
+			$response = $this->maybe_switch_latest_to_upgrade( $response );
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Determines whether the 'latest' offer should be changed to an 'upgrade' offer.
+	 *
+	 * @param array $response The response from the API check.
+	 * @return array The response, possibly modified.
+	 */
+	private function maybe_switch_latest_to_upgrade( $response ) {
+		$body = wp_remote_retrieve_body( $response );
+
+		if ( '' === trim( $body ) ) {
+			return $response;
+		}
+
+		$body            = json_decode( $body );
+		$wp_version      = get_bloginfo( 'version' );
+		$upgrade_version = '';
+
+		foreach ( $body->offers as &$offer ) {
+			if ( 'upgrade' === $offer->response ) {
+				$upgrade_version = $offer->version;
+				continue;
+			}
+
+			if ( 'latest' === $offer->response
+				&& $wp_version !== $offer->current
+				&& ( version_compare( $wp_version, $upgrade_version, '<' )
+					|| version_compare( $wp_version, $offer->current, '<' ) )
+			) {
+				$offer->response = 'upgrade';
+			}
+		}
+		unset( $offer );
+
+		$response['body'] = wp_json_encode( $body );
+
+		return $response;
 	}
 
 	/**
@@ -185,7 +229,7 @@ class WP_Beta_Tester {
 				break;
 			case 'development':
 				if ( false !== strpos( $wp_version, $next_versions['point'] )
-				|| version_compare( $wp_version, $next_versions['point'], '<' )
+					|| version_compare( $wp_version, $next_versions['point'], '<' )
 				) {
 					$url = add_query_arg( 'version', $next_versions['release'] . '-alpha', $url );
 				}

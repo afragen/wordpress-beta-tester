@@ -1,5 +1,10 @@
 [unreleased]
 
+#### 3.3.8 / 2023-05-18
+* update composer.json
+* update GitHub Actions
+* update to correctly return 'upgrade' or 'latest' offer when set to 'beta' or 'rc' stream
+
 #### 3.3.7 / 2023-03-28
 * better fix for spacing of bug report copy
 * `Report a Bug`: update database data for SQLite
