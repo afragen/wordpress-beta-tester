@@ -371,7 +371,6 @@ class WPBT_Core {
 	public function get_next_version( $preferred_version ) {
 		$beta_rc      = ! empty( self::$options['stream-option'] );
 		$next_version = $this->calculate_next_versions();
-		unset( $next_version['point'] );
 
 		// Site is not on a beta/RC stream so use the preferred version.
 		if ( ! $beta_rc && ! empty( $next_version ) && ! self::$core_update_stream_constant ) {
@@ -441,6 +440,7 @@ class WPBT_Core {
 		$next_point    = array_map( 'intval', explode( '.', $current_release ) );
 		$next_point[2] = isset( $next_point[2] ) ? ++$next_point[2] : 1;
 		$next_point    = implode( '.', $next_point );
+		$next_point    = 'development' === self::$options['channel'] && version_compare( $current_release, $wp_version, '>' ) ? $current_release : $next_point;
 
 		// Set base version for branch-development channel.
 		if ( 'branch-development' === self::$options['channel'] ) {
