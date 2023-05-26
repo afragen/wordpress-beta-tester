@@ -142,12 +142,14 @@ class WPBT_Bug_Report {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_style(
-			'wordpress-beta-tester-bug-report-admin-bar',
-			self::$plugin_base_url . 'src/WPBT/css/bug-report-admin-bar.css',
-			array(),
-			self::$plugin_version
-		);
+		if ( is_user_logged_in() ) {
+			wp_enqueue_style(
+				'wordpress-beta-tester-bug-report-admin-bar',
+				self::$plugin_base_url . 'src/WPBT/css/bug-report-admin-bar.css',
+				array(),
+				self::$plugin_version
+			);
+		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( is_admin() && isset( $_GET['tab'] ) && 'wp_beta_tester_bug_report' === $_GET['tab'] ) {
