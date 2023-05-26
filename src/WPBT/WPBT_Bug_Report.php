@@ -129,6 +129,10 @@ class WPBT_Bug_Report {
 	 * @return void
 	 */
 	public function load_hooks() {
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
 		add_action( 'wp_beta_tester_add_admin_bar_menu', array( $this, 'add_admin_bar_menu' ) );
 		add_action( 'wp_beta_tester_add_admin_page', array( $this, 'add_admin_page' ), 10, 2 );
 		add_filter( 'wp_beta_tester_add_settings_tabs', array( $this, 'add_settings_tab' ) );
