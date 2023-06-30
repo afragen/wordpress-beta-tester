@@ -1,5 +1,12 @@
 [unreleased]
 
+#### 3.5.0 / 2023-06-30
+* update dashboard widget for MarComm publishing of posts
+* update to correctly identify Opera browser in `Report a Bug`
+* update API query when channel set to beta or RC and version is non-current
+* fix `WP_Beta_Tester::switch_update_offer()` to correctly display 'Update' or 'Re-install' buttons on update-core.php
+* remove unused item from **Extra Settings** tab
+
 #### 3.4.1 / 2023-05-26
 * **Report a Bug** only for logged in users
 

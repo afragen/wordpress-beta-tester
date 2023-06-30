@@ -163,43 +163,56 @@ class WP_Beta_Tester {
 
 		// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
 		// $url = add_query_arg( 'pretend_releases', array( '5.6-beta2' ), $url );
+		// pretend_releases[]=5.6-beta2 query arg example.
+
+		/**
+		 * API switches channel to `stable` if `version` query arg is not current version.
+		 * Removing `version` query arg defaults to current version in API response
+		 * returning the expected response for a beta or RC channel request.
+		 *
+		 * https://api.wordpress.org/core/version-check/1.7/?channel=beta
+		 */
+		if ( ! empty( self::$options['stream-option'] ) ) {
+			$url = remove_query_arg( 'version', $url );
+		}
 
 		$response = wp_remote_get( $url, $args );
 
 		if ( is_array( $response ) ) {
-			$response = $this->maybe_switch_latest_to_upgrade( $response );
+			$response = $this->switch_offer_response( $response );
 		}
 
 		return $response;
 	}
 
 	/**
-	 * Determines whether the 'latest' offer should be changed to an 'upgrade' offer.
+	 * Change offer response as appropriate.
+	 * This results in correctly displaying the 'Re-install' button on update-core.php
 	 *
 	 * @param array $response The response from the API check.
 	 * @return array The response, possibly modified.
 	 */
-	private function maybe_switch_latest_to_upgrade( $response ) {
+	private function switch_offer_response( $response ) {
 		$body = wp_remote_retrieve_body( $response );
 
 		if ( '' === trim( $body ) ) {
 			return $response;
 		}
 
-		$body            = json_decode( $body );
-		$wp_version      = get_bloginfo( 'version' );
-		$upgrade_version = '';
+		$body       = json_decode( $body );
+		$wp_version = get_bloginfo( 'version' );
 
 		foreach ( $body->offers as &$offer ) {
-			if ( 'upgrade' === $offer->response ) {
-				$upgrade_version = $offer->version;
-				continue;
+
+			if ( 'development' === $offer->response
+				&& version_compare( $wp_version, $offer->current, '=' )
+				&& ! empty( self::$options['stream-option'] )
+			) {
+				$offer->response = 'latest';
 			}
 
 			if ( 'latest' === $offer->response
-				&& $wp_version !== $offer->current
-				&& ( version_compare( $wp_version, $upgrade_version, '<' )
-					|| version_compare( $wp_version, $offer->current, '<' ) )
+				&& version_compare( $wp_version, $offer->current, '<' )
 			) {
 				$offer->response = 'upgrade';
 			}
@@ -400,8 +413,10 @@ class WP_Beta_Tester {
 			'show_summary' => 0,
 			'items'        => 10,
 		);
+		$urls     = array( "https://wordpress.org/news/tag/development/feed/?s=$milestone", "https://make.wordpress.org/core/tag/development/feed/?s=$milestone" );
+
 		ob_start();
-		wp_widget_rss_output( 'https://wordpress.org/news/category/development/feed/', $rss_args );
+		wp_widget_rss_output( array( 'url' => $urls ), $rss_args );
 		$feed = ob_get_contents();
 		ob_end_clean();
 
@@ -434,7 +449,7 @@ class WP_Beta_Tester {
 			$dev_note_link = sprintf(
 			/* translators: %1$s Link to dev notes, %2$s: Link title */
 				'<a href="%1$s">%2$s</a>',
-				"https://make.wordpress.org/core/tag/$milestone_dash+dev-notes/",
+				"https://make.wordpress.org/core/tag/dev-notes-$milestone_dash/",
 				/* translators: %s: Milestone version */
 				sprintf( __( 'WordPress %s Dev Notes', 'wordpress-beta-tester' ), $milestone )
 			);
@@ -444,7 +459,7 @@ class WP_Beta_Tester {
 			$field_guide_link = sprintf(
 			/* translators: %1$s Link to field guide, %2$s: Link title */
 				'<a href="%1$s">%2$s</a>',
-				"https://make.wordpress.org/core/tag/$milestone_dash+field-guide/",
+				"https://make.wordpress.org/core/wordpress-$milestone_dash-field-guide/",
 				/* translators: %s: Milestone version */
 				sprintf( __( 'WordPress %s Field Guide', 'wordpress-beta-tester' ), $milestone )
 			);

@@ -3,7 +3,7 @@
         'name' => 'afragen/wordpress-beta-tester',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'b00821d6f977c755cfb5fb6c69b95b95269e4f78',
+        'reference' => '2c2b2dfccebe20c6fefc44e39416c4670038e13e',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'afragen/wordpress-beta-tester' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'b00821d6f977c755cfb5fb6c69b95b95269e4f78',
+            'reference' => '2c2b2dfccebe20c6fefc44e39416c4670038e13e',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -36,15 +36,6 @@
             'install_path' => __DIR__ . '/../squizlabs/php_codesniffer',
             'aliases' => array(),
             'dev_requirement' => true,
-        ),
-        'wp-cli/wp-config-transformer' => array(
-            'pretty_version' => 'v1.3.3',
-            'version' => '1.3.3.0',
-            'reference' => 'b1a6a013e4a8c74b29ba185368b78a140b3268da',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../wp-cli/wp-config-transformer',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'wp-coding-standards/wpcs' => array(
             'pretty_version' => '2.3.0',

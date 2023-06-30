@@ -50,24 +50,6 @@ class WPBT_Extras {
 	public function __construct( WP_Beta_Tester $wp_beta_tester, $options ) {
 		$this->wp_beta_tester = $wp_beta_tester;
 		self::$options        = $options;
-		self::$config_path    = $this->get_config_path();
-		self::$config_args    = array(
-			'raw'       => true,
-			'normalize' => true,
-		);
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-		if ( false === strpos( file_get_contents( self::$config_path ), "/* That's all, stop editing!" ) ) {
-			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-			if ( 1 === preg_match( '@\$table_prefix(.*;)@', file_get_contents( self::$config_path ), $matches ) ) {
-				self::$config_args = array_merge(
-					self::$config_args,
-					array(
-						'anchor'    => "$matches[0]",
-						'placement' => 'after',
-					)
-				);
-			}
-		}
 	}
 
 	/**
@@ -80,34 +62,6 @@ class WPBT_Extras {
 		add_action( 'wp_beta_tester_add_settings', array( $this, 'add_settings' ) );
 		add_action( 'wp_beta_tester_add_admin_page', array( $this, 'add_admin_page' ), 10, 2 );
 		add_action( 'wp_beta_tester_update_settings', array( $this, 'save_settings' ) );
-	}
-
-	/**
-	 * Get the `wp-config.php` file path.
-	 *
-	 * The config file may reside one level above ABSPATH but is not part of another installation.
-	 *
-	 * @see wp-load.php#L26-L42
-	 *
-	 * @return string $config_path
-	 */
-	public function get_config_path() {
-		$config_path = ABSPATH . 'wp-config.php';
-
-		if ( ! file_exists( $config_path ) ) {
-			if ( @file_exists( dirname( ABSPATH ) . '/wp-config.php' ) && ! @file_exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
-				$config_path = dirname( ABSPATH ) . '/wp-config.php';
-			}
-		}
-
-		/**
-		 * Filter the config file path.
-		 *
-		 * @since 2.0.0
-		 *
-		 * @param string $config_path
-		 */
-		return apply_filters( 'wp_beta_tester_config_path', $config_path );
 	}
 
 	/**
@@ -139,13 +93,6 @@ class WPBT_Extras {
 			'wp_beta_tester_extras'
 		);
 
-		add_settings_section(
-			'wp_beta_tester_new_feature_testing',
-			esc_html__( 'New Feature Testing', 'wordpress-beta-tester' ),
-			array( $this, 'print_new_feature_testing_top' ),
-			'wp_beta_tester_extras'
-		);
-
 		add_settings_field(
 			'skip_autoupdate_email',
 			null,
@@ -156,21 +103,6 @@ class WPBT_Extras {
 				'id'          => 'skip_autoupdate_email',
 				'title'       => esc_html__( 'Skip successful autoupdate emails.', 'wordpress-beta-tester' ),
 				'description' => esc_html__( 'Disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.', 'wordpress-beta-tester' ),
-			)
-		);
-
-			// Example.
-		add_settings_field(
-			'example',
-			null,
-			array( 'WPBT_Settings', 'checkbox_setting' ),
-			'wp_beta_tester_extras',
-			'wp_beta_tester_new_feature_testing',
-			array(
-				'id'          => 'example',
-				'title'       => esc_html__( 'Just an example.', 'wordpress-beta-tester' ),
-				'description' => esc_html__( 'Look in `wp-config.php` for results.', 'wordpress-beta-tester' ),
-				'class'       => is_writable( self::$config_path ) ? '' : 'hidden',
 			)
 		);
 	}
@@ -268,52 +200,6 @@ class WPBT_Extras {
 	}
 
 	/**
-	 * Add constants to wp-config.php file.
-	 *
-	 * @uses https://github.com/wp-cli/wp-config-transformer
-	 *
-	 * @param  array $add Constants to add to wp-config.php.
-	 * @return void|array
-	 */
-	private function add_constants( $add ) {
-		try {
-			$config_transformer = new \WPConfigTransformer( self::$config_path );
-			foreach ( array_keys( $add ) as $constant ) {
-				$feature_flag = strtoupper( 'wp_beta_tester_' . $constant );
-				$config_transformer->update( 'constant', $feature_flag, 'true', self::$config_args );
-			}
-		} catch ( \Exception $e ) {
-			$messsage = 'Caught Exception: \WPBT_Extras::add_constants() - ' . $e->getMessage();
-			// phpcs:ignore Squiz.PHP.CommentedOutCode.Found,Squiz.Commenting.InlineComment.InvalidEndChar
-			// error_log( $messsage );
-			wp_die( esc_html( $messsage ) );
-		}
-	}
-
-	/**
-	 * Remove constants from wp-config.php file.
-	 *
-	 * @uses https://github.com/wp-cli/wp-config-transformer
-	 *
-	 * @param  array $remove Constants to remove from wp-config.php.
-	 * @return void
-	 */
-	private function remove_constants( $remove ) {
-		try {
-			$config_transformer = new \WPConfigTransformer( self::$config_path );
-			foreach ( array_keys( $remove ) as $constant ) {
-				$feature_flag = strtoupper( 'wp_beta_tester_' . $constant );
-				$config_transformer->remove( 'constant', $feature_flag );
-			}
-		} catch ( \Exception $e ) {
-			$messsage = 'Caught Exception: \WPBT_Extras::remove_constants() - ' . $e->getMessage();
-			// phpcs:ignore Squiz.PHP.CommentedOutCode.Found,Squiz.Commenting.InlineComment.InvalidEndChar
-			// error_log( $messsage );
-			wp_die( esc_html( $messsage ) );
-		}
-	}
-
-	/**
 	 * Redirect page/tab after saving options.
 	 *
 	 * @param  mixed $option_page Settings page.
@@ -321,15 +207,6 @@ class WPBT_Extras {
 	 */
 	public function save_redirect_page( $option_page ) {
 		return array_merge( $option_page, array( 'wp_beta_tester_extras' ) );
-	}
-
-	/**
-	 * Print new feature testing section information.
-	 *
-	 * @return void
-	 */
-	public function print_new_feature_testing_top() {
-		esc_html_e( 'This area is for extra special beta testing. If nothing is present there are no additional features that need testing or the `wp-config.php` file is not writable. Features will set constants in the `wp-config.php` file.', 'wordpress-beta-tester' );
 	}
 
 	/**

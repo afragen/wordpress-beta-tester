@@ -320,7 +320,15 @@ class WPBT_Bug_Report {
 			return;
 		}
 
-		$agent    = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
+		$agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
+
+		if ( false !== strpos( $agent, 'OPR' ) ) {
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$is_chrome = false;
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$is_opera = true;
+		}
+
 		$browsers = array(
 			'Lynx'              => $is_lynx,
 			'Gecko'             => $is_gecko,

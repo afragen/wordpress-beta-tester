@@ -26,16 +26,6 @@ Please enable auto-updates for this plugin to ensure future changes are properly
 
 There is a setting to **Skip successful autoupdate emails**. It functions to disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.
 
-The **Extra Settings** tab may contain choices for testing new features in trunk that require constants to be set. A checked feature will add a constant to the user's `wp-config.php` file in the format as follows:
-
-`define( 'WP_BETA_TESTER_{$feature}', true );`
-
-Unchecking the feature will remove the constant.
-
-This plugin resets the constants in `wp-config.php` on plugin activation and removes them on plugin deactivation. Use the filter `wp_beta_tester_config_path` to return a non-standard `wp-config.php` file path.
-
-If no settings are present there is no testing to be done that requires this feature.
-
 ### Report a Bug
 
 This feature will hopefully promote the testing and reporting of issues to the appropriate location.

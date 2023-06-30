@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 6.3
-Stable Tag: 3.4.1
+Stable Tag: 3.5.0
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -28,16 +28,6 @@ Please enable auto-updates for this plugin to ensure future changes are properly
 
 There is a setting to **Skip successful autoupdate emails**.  It functions to disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.
 
-The **Extra Settings** tab may contain choices for testing new features in trunk that require constants to be set. A checked feature will add a constant to the user's `wp-config.php` file in the format as follows:
-
-`define( 'WP_BETA_TESTER_{$feature}', true );`
-
-Unchecking the feature will remove the constant.
-
-This plugin resets the constants in `wp-config.php` on plugin activation and removes them on plugin deactivation. Use the filter `wp_beta_tester_config_path` to return a non-standard `wp-config.php` file path.
-
-If no settings are present there is no testing to be done that requires this feature.
-
 ### Report a Bug
 
 This feature will hopefully promote the testing and reporting of issues to the appropriate location.
@@ -47,6 +37,13 @@ There is a **Report a Bug** admin menu item to directly take the user to the **R
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.5.0 / 2023-06-30
+* update dashboard widget for MarComm publishing of posts
+* update to correctly identify Opera browser in `Report a Bug`
+* update API query when channel set to beta or RC and version is non-current
+* fix `WP_Beta_Tester::switch_update_offer()` to correctly display 'Update' or 'Re-install' buttons on update-core.php
+* remove unused item from **Extra Settings** tab
 
 #### 3.4.1 / 2023-05-26
 * **Report a Bug** only for logged in users
