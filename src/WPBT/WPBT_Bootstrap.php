@@ -111,8 +111,8 @@ class WPBT_Bootstrap {
 	 */
 	public function load_hooks() {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
-		register_activation_hook( $this->file, array( $this, 'activate' ) );
-		register_deactivation_hook( $this->file, array( $this, 'deactivate' ) );
+		register_activation_hook( $this->file, array( $this, 'de_activate' ) );
+		register_deactivation_hook( $this->file, array( $this, 'de_activate' ) );
 	}
 
 	/**
@@ -125,26 +125,14 @@ class WPBT_Bootstrap {
 	}
 
 	/**
-	 * Run on plugin activation.
+	 * Run on plugin activation/deactivation.
 	 *
-	 * Delete 'update_core' transient and add any saved extra settings to wp-config.php.
+	 * Delete 'update_core' transient.
 	 *
 	 * @return void
 	 */
-	public function activate() {
+	public function de_activate() {
 		delete_site_transient( 'update_core' );
-		( new WPBT_Extras( new WP_Beta_Tester( $this->file, self::$options ), self::$options ) )->activate();
 	}
 
-	/**
-	 * Run on plugin deactivation.
-	 *
-	 * Delete 'update_core' transient and remove any extras settings from wp-config.php.
-	 *
-	 * @return void
-	 */
-	public function deactivate() {
-		delete_site_transient( 'update_core' );
-		( new WPBT_Extras( new WP_Beta_Tester( $this->file, self::$options ), self::$options ) )->deactivate();
-	}
 }

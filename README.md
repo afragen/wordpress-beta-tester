@@ -26,6 +26,8 @@ Please enable auto-updates for this plugin to ensure future changes are properly
 
 There is a setting to **Skip successful autoupdate emails**. It functions to disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.
 
+There is a setting to **Hide** the **Report a Bug** feature.
+
 ### Report a Bug
 
 This feature will hopefully promote the testing and reporting of issues to the appropriate location.

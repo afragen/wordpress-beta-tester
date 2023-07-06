@@ -20,20 +20,6 @@ class WPBT_Extras {
 	protected static $options;
 
 	/**
-	 * Holds `wp-config.php` file path.
-	 *
-	 * @var string
-	 */
-	protected static $config_path;
-
-	/**
-	 * Holds config args for WPConfigTransformer.
-	 *
-	 * @var array
-	 */
-	protected static $config_args;
-
-	/**
 	 * Holds the WP_Beta_Tester instance.
 	 *
 	 * @var WP_Beta_Tester
@@ -105,6 +91,19 @@ class WPBT_Extras {
 				'description' => esc_html__( 'Disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.', 'wordpress-beta-tester' ),
 			)
 		);
+
+		add_settings_field(
+			'hide_report_a_bug',
+			null,
+			array( 'WPBT_Settings', 'checkbox_setting' ),
+			'wp_beta_tester_extras',
+			'wp_beta_tester_email',
+			array(
+				'id'    => 'hide_report_a_bug',
+				'title' => esc_html__( 'Hide Report a Bug feature.', 'wordpress-beta-tester' ),
+				'class' => ! apply_filters( 'wpbt_hide_report_a_bug', false ) || isset( self::$options['hide_report_a_bug'] ) ? '' : 'hidden',
+			)
+		);
 	}
 
 	/**
@@ -122,11 +121,10 @@ class WPBT_Extras {
 		if ( isset( $post_data['option_page'] )
 			&& 'wp_beta_tester_extras' === $post_data['option_page']
 		) {
-			$options = isset( $post_data['wp-beta-tester'] )
+			$options          = isset( $post_data['wp-beta-tester'] )
 				? $post_data['wp-beta-tester']
 				: array();
-			$options = WPBT_Settings::sanitize( $options );
-			$this->update_constants( self::$options, $options );
+			$options          = WPBT_Settings::sanitize( $options );
 			$filtered_options = array_filter( self::$options, array( $this, 'get_unchecked_options' ) );
 			$options          = array_merge( $filtered_options, $options );
 			update_site_option( 'wp_beta_tester', (array) $options );
@@ -142,61 +140,6 @@ class WPBT_Extras {
 	 */
 	private function get_unchecked_options( $checked ) {
 		return '1' !== $checked;
-	}
-
-	/**
-	 * Run on activation hook.
-	 *
-	 * @return void
-	 */
-	public function activate() {
-		$add = array_filter( self::$options, array( $this, 'get_checked_options' ) );
-		if ( ! empty( $add ) ) {
-			$this->add_constants( $add );
-		}
-	}
-
-	/**
-	 * Run on deactivation hook.
-	 *
-	 * @return void
-	 */
-	public function deactivate() {
-		$remove = array_filter( self::$options, array( $this, 'get_checked_options' ) );
-		if ( ! empty( $remove ) ) {
-			$this->remove_constants( $remove );
-		}
-	}
-
-	/**
-	 * Filter saved settings to get checked options.
-	 *
-	 * @param  mixed $checked Option.
-	 * @return bool
-	 */
-	private function get_checked_options( $checked ) {
-		return '1' === $checked;
-	}
-
-	/**
-	 * Update Feature Flag constants in wp-config.php.
-	 *
-	 * @param  array $old Current value of self::$options.
-	 * @param  array $new New value of $options.
-	 * @return void
-	 */
-	private function update_constants( $old, $new ) {
-		unset( $new['skip_autoupdate_email'], $old['skip_autoupdate_email'] );
-
-		$remove = array_diff_assoc( $old, $new );
-		$add    = array_diff_assoc( $new, $old );
-
-		if ( ! empty( $add ) ) {
-			$this->add_constants( $add );
-		}
-		if ( ! empty( $remove ) ) {
-			$this->remove_constants( $remove );
-		}
 	}
 
 	/**

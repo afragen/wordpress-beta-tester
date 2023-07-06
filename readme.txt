@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 6.3
-Stable Tag: 3.5.0
+Stable Tag: 3.5.1
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -28,6 +28,8 @@ Please enable auto-updates for this plugin to ensure future changes are properly
 
 There is a setting to **Skip successful autoupdate emails**.  It functions to disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.
 
+There is a setting to **Hide** the **Report a Bug** feature.
+
 ### Report a Bug
 
 This feature will hopefully promote the testing and reporting of issues to the appropriate location.
@@ -37,6 +39,13 @@ There is a **Report a Bug** admin menu item to directly take the user to the **R
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 3.5.1 / 2023-07-06
+* add setting in `Extra Settings` to hide `Report a Bug`
+* add filter `wpbt_hide_report_a_bug`
+* update if `Report a Bug` plugin active
+* link to settings if `Report a Bug` is hidden
+* update for latest WP API responses, thanks @dd32
 
 #### 3.5.0 / 2023-06-30
 * update dashboard widget for MarComm publishing of posts
