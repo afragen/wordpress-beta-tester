@@ -413,7 +413,7 @@ class WP_Beta_Tester {
 			$dev_note_link = sprintf(
 			/* translators: %1$s Link to dev notes, %2$s: Link title */
 				'<a href="%1$s">%2$s</a>',
-				"https://make.wordpress.org/core/tag/dev-notes-$milestone_dash/",
+				"https://make.wordpress.org/core/tag/dev-notes+$milestone_dash/",
 				/* translators: %s: Milestone version */
 				sprintf( __( 'WordPress %s Dev Notes', 'wordpress-beta-tester' ), $milestone )
 			);
