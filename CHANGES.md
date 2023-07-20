@@ -1,4 +1,5 @@
 [unreleased]
+* update for changed standalone afragen/test-reports plugin
 
 #### 3.5.2 / 2023-07-12
 * fix dev-notes URL
