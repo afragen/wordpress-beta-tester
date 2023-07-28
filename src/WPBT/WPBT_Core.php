@@ -450,7 +450,7 @@ class WPBT_Core {
 		$next_versions = array(
 			'point'   => $next_point,
 			'beta'    => $exploded_version[0] . '-beta' . $next_beta,
-			'rc'      => $exploded_version[0] . '-RC' . $next_rc,
+			'rc'      => $exploded_version[0] . '-RC' . $next_rc . ' (' . __( 'or higher', 'wordpress-beta-tester' ) . ')',
 			'release' => $exploded_version[0],
 		);
 		if ( ! $next_versions['beta'] || 'rc' === self::$options['stream-option']
