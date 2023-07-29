@@ -1,5 +1,6 @@
 [unreleased]
 * update for changed standalone afragen/test-reports plugin
+* set actual next beta/RC in messaging
 
 #### 3.5.2 / 2023-07-12
 * fix dev-notes URL
