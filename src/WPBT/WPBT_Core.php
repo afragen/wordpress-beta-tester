@@ -372,6 +372,15 @@ class WPBT_Core {
 		$beta_rc      = ! empty( self::$options['stream-option'] );
 		$next_version = $this->calculate_next_versions();
 
+		// Try to set actual next beta/RC.
+		if ( ( isset( $next_version['beta'] ) && version_compare( $next_version['preferred'], $next_version['beta'], '<' ) )
+			|| ( isset( $next_version['rc'] ) && version_compare( $next_version['preferred'], $next_version['rc'], '<' ) )
+		) {
+			unset( $next_version['preferred'] );
+		} else {
+			unset( $next_version['beta'], $next_version['rc'] );
+		}
+
 		// Site is not on a beta/RC stream so use the preferred version.
 		if ( ! $beta_rc && ! empty( $next_version ) && ! self::$core_update_stream_constant ) {
 			/* translators: %s: version number */
@@ -405,6 +414,7 @@ class WPBT_Core {
 		$current_release        = $this->wp_beta_tester->get_current_wp_release();
 		$next_release           = array_map( 'intval', explode( '.', $current_release ) );
 		$is_development_version = preg_match( '/alpha|beta|RC/', $wp_version );
+		$preferred              = $this->wp_beta_tester->get_preferred_from_update_core();
 
 		// User on a current release.
 		if ( ! $is_development_version ) {
@@ -448,11 +458,13 @@ class WPBT_Core {
 		}
 
 		$next_versions = array(
-			'point'   => $next_point,
-			'beta'    => $exploded_version[0] . '-beta' . $next_beta,
-			'rc'      => $exploded_version[0] . '-RC' . $next_rc,
-			'release' => $exploded_version[0],
+			'point'     => $next_point,
+			'beta'      => $exploded_version[0] . '-beta' . $next_beta,
+			'rc'        => $exploded_version[0] . '-RC' . $next_rc,
+			'preferred' => isset( $preferred->version ) ? $preferred->version : 0,
+			'release'   => $exploded_version[0],
 		);
+
 		if ( ! $next_versions['beta'] || 'rc' === self::$options['stream-option']
 			|| 'rc' === self::$core_update_stream_constant || 1 < $next_rc
 		) {
