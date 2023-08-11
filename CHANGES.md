@@ -1,4 +1,6 @@
 [unreleased]
+
+#### 3.5.3 / 2023-08-10
 * update for changed standalone afragen/test-reports plugin
 * set actual next beta/RC in messaging
 
