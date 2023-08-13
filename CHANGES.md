@@ -1,4 +1,5 @@
 [unreleased]
+* use `automatic_updates_send_debug_email` filter to turn off sending debug email
 
 #### 3.5.3 / 2023-08-10
 * update for changed standalone afragen/test-reports plugin
