@@ -1,37 +1,48 @@
 <?xml version="1.0"?>
-<ruleset name="WordPress-Core-Plugins">
-    <description>Keep long array syntax.</description>
+<ruleset name="WordPress Core Plugins">
+    <description>Basic WordPress Core syntax.</description>
 
     <!-- Show progress and sniff codes in all reports -->
     <arg value="ps"/>
 
-    <!-- Exclude these -->
-    <exclude-pattern>*/vendor/*</exclude-pattern>
-    <exclude-pattern>*/tests/*</exclude-pattern>
-    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <!-- Only check PHP files. -->
+    <arg name="extensions" value="php"/>
 
-    <rule ref="WordPress-Core">
-        <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
-        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
-    </rule>
+    <!-- Exclude these -->
+    <exclude-pattern>/vendor/*</exclude-pattern>
+    <exclude-pattern>/node_modules/*</exclude-pattern>
+    <exclude-pattern>/tests/*</exclude-pattern>
+    <exclude-pattern>*.js</exclude-pattern>
+
     <rule ref="WordPress">
-        <!-- <exclude name="WordPress.Files.FileName" /> -->
-        <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
-        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
-        <exclude name="WordPress.NamingConventions.ValidVariableName" />
-        <exclude name="WordPress.WP.I18n.NonSingularStringLiteralText" />
-        <exclude name="WordPress.PHP.NoSilencedErrors.Discouraged" />
-        <exclude name="WordPress.PHP.DisallowShortTernary.Found" />
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
     </rule>
 
     <!-- Enforce space before closing parenthesis -->
     <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose">
         <severity>5</severity>
     </rule>
+    <rule ref="Squiz.Functions">
+        <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
+    </rule>
+    <rule ref="Squiz.ControlStructures">
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
+        <exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen"/>
+        <exclude name="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose"/>
+        <exclude name="Squiz.ControlStructures.InlineIfDeclaration.NotSingleLine"/>
+    </rule>
 
-    <rule ref="Generic.Arrays.DisallowShortArraySyntax" />
-    <!-- Use only long arrays -->
-    <rule ref="Generic.Arrays">
-        <exclude name="Generic.Arrays.DisallowLongArraySyntax.Found" />
+    <rule ref="Universal.Classes">
+        <exclude name="Universal.Classes.RequireFinalClass.NonFinalClassFound"/>
+    </rule>
+    <rule ref="Universal.NamingConventions">
+        <exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.trueFound"/>
+    </rule>
+    <rule ref="Universal.Namespaces">
+        <exclude name="Universal.Namespaces.EnforceCurlyBraceSyntax.Forbidden"/>
+    </rule>
+    <rule ref="Universal.FunctionDeclarations">
+        <exclude name="Universal.FunctionDeclarations.NoLongClosures.ExceedsRecommended"/>
     </rule>
 </ruleset>
