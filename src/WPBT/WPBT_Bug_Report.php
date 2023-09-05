@@ -170,7 +170,6 @@ class WPBT_Bug_Report {
 				true
 			);
 		}
-
 	}
 
 	/**
