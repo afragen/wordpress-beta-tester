@@ -170,7 +170,6 @@ class WPBT_Bug_Report {
 				true
 			);
 		}
-
 	}
 
 	/**
@@ -295,8 +294,8 @@ class WPBT_Bug_Report {
 				$client_version = 'Unavailable';
 			}
 		} else {
-			// phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysql_get_client_info,PHPCompatibility.Extensions.RemovedExtensions.mysql_DeprecatedRemoved
-			if ( preg_match( '|[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}|', mysql_get_client_info(), $matches ) ) {
+			// phpcs:ignore WordPress.DB.RestrictedFunctions.mysql_mysqli_get_client_info,PHPCompatibility.Extensions.RemovedExtensions.mysql_DeprecatedRemoved
+			if ( preg_match( '|[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}|', mysqli_get_client_info(), $matches ) ) {
 				$client_version = $matches[0];
 			} else {
 				$client_version = 'Unavailable';

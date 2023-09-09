@@ -134,5 +134,4 @@ class WPBT_Bootstrap {
 	public function de_activate() {
 		delete_site_transient( 'update_core' );
 	}
-
 }

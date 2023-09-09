@@ -13,7 +13,7 @@
  * Plugin URI:        https://wordpress.org/plugins/wordpress-beta-tester/
  * Description:       Allows you to easily upgrade to Beta releases.
  * Author:            WordPress Upgrade/Install Team
- * Version:           3.5.3
+ * Version:           3.5.4
  * Network:           true
  * Author URI:        https://make.wordpress.org/core/components/upgrade-install/
  * Text Domain:       wordpress-beta-tester
@@ -34,7 +34,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 add_action(
 	'plugins_loaded',
-	function() {
+	static function () {
 		( new WPBT_Bootstrap( __FILE__ ) )->run();
 	}
 );

@@ -187,31 +187,16 @@ class WPBT_Extras {
 		// Disable update emails on success.
 		add_filter(
 			'auto_core_update_send_email',
-			function ( $true, $type ) {
-				$true = 'success' === $type ? false : $true;
+			static function ( $send, $type ) {
+				$send = 'success' === $type ? false : $send;
 
-				return $true;
+				return $send;
 			},
 			10,
 			2
 		);
 
-		// Disable sending debug email if no failures.
-		add_filter(
-			'automatic_updates_debug_email',
-			function ( $email, $failures ) {
-				$empty_email = array(
-					'to'      => null,
-					'subject' => null,
-					'body'    => null,
-					'headers' => null,
-				);
-				$email       = 0 === $failures ? $empty_email : $email;
-
-				return $email;
-			},
-			10,
-			2
-		);
+		// Disable sending debug email.
+		add_filter( 'automatic_updates_send_debug_email', '__return_false', 10, 2 );
 	}
 }
