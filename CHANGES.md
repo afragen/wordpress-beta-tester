@@ -1,5 +1,6 @@
 [unreleased]
 * use `automatic_updates_send_debug_email` filter to turn off sending debug email
+* `mysql_get_client_info()` no longer in PHP 8.2, switch to `mysqli_get_client_info()`
 
 #### 3.5.3 / 2023-08-10
 * update for changed standalone afragen/test-reports plugin
