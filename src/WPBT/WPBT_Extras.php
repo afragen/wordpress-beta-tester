@@ -187,7 +187,7 @@ class WPBT_Extras {
 		// Disable update emails on success.
 		add_filter(
 			'auto_core_update_send_email',
-			function ( $send, $type ) {
+			static function ( $send, $type ) {
 				$send = 'success' === $type ? false : $send;
 
 				return $send;
