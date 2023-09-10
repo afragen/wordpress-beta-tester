@@ -2,7 +2,7 @@
 
 #### 3.5.4 / 2023-09-09
 * use `automatic_updates_send_debug_email` filter to turn off sending debug email
-* `mysql_get_client_info()` no longer in PHP 8.2, switch to `mysqli_get_client_info()`
+* `mysql_get_client_info()` no longer in PHP 7.0, switch to `mysqli_get_client_info()`
 * make anonymous functions static
 
 #### 3.5.3 / 2023-08-10
