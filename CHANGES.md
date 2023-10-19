@@ -1,4 +1,5 @@
 [unreleased]
+* add `Settings` to action links
 
 #### 3.5.4 / 2023-09-09
 * use `automatic_updates_send_debug_email` filter to turn off sending debug email
