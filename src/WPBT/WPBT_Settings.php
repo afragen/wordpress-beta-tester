@@ -27,6 +27,13 @@ class WPBT_Settings {
 	protected static $options;
 
 	/**
+	 * Admin Page parameter slug.
+	 *
+	 * @var string
+	 */
+	protected static $page_slug = 'wp-beta-tester';
+
+	/**
 	 * Constructor.
 	 *
 	 * @param  WP_Beta_Tester $wp_beta_tester Instance of class WP_Beta_Tester.
@@ -68,6 +75,9 @@ class WPBT_Settings {
 		add_action( 'network_admin_edit_wp_beta_tester', array( $this, 'update_settings' ) );
 		add_action( 'admin_init', array( $this, 'update_settings' ) );
 
+		$al_hook = 'plugin_action_links_wordpress-beta-tester/wp-beta-tester.php';
+		add_action( is_multisite() ? 'network_admin_' . $al_hook : $al_hook, array( $this, 'add_plugin_action_links' ) );
+
 		add_action( 'admin_head-plugins.php', array( $this->wp_beta_tester, 'action_admin_head_plugins_php' ) );
 		add_action( 'admin_head-update-core.php', array( $this->wp_beta_tester, 'action_admin_head_plugins_php' ) );
 
@@ -90,8 +100,26 @@ class WPBT_Settings {
 			esc_html__( 'Beta Testing WordPress', 'wordpress-beta-tester' ),
 			esc_html_x( 'Beta Testing', 'Menu item', 'wordpress-beta-tester' ),
 			$capability,
-			'wp-beta-tester',
+			self::$page_slug,
 			array( $this, 'create_settings_page' )
+		);
+	}
+
+	/**
+	 * Add Plugin Action Links to Plugin List
+	 *
+	 * @param array $actions Links for the Plugin List Table in the WordPress Admin.
+	 *
+	 * @return array
+	 */
+	public function add_plugin_action_links( array $actions ) {
+		$url = add_query_arg( array( 'page' => self::$page_slug ), network_admin_url( is_multisite() ? 'settings.php' : 'tools.php' ) );
+
+		return array_merge(
+			array(
+				'settings' => wp_kses_post( '<a href="' . $url . '">' . esc_html__( 'Settings', 'wordpress-beta-tester' ) . '</a>' ),
+			),
+			$actions
 		);
 	}
 
