@@ -315,10 +315,10 @@ class WP_Beta_Tester {
 			is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'tools.php' )
 		);
 
-		if ( is_plugin_active( 'test-reports/wp-test-reports.php' ) ) {
+		if ( is_plugin_active( 'test-reports/test-reports.php' ) ) {
 			$report_url = add_query_arg(
 				array(
-					'page' => 'wp-test-reports',
+					'page' => 'test-reports',
 				),
 				is_multisite() ? network_admin_url( 'settings.php' ) : admin_url( 'tools.php' )
 			);
