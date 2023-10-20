@@ -395,7 +395,7 @@ class WPBT_Core {
 			// show all versions that may come next.
 			add_filter( 'wp_sprintf_l', array( $this, 'wpbt_sprintf_or' ) );
 			/* translators: %l: next version numbers */
-			$next_version = wp_sprintf( __( 'version %l', 'wordpress-beta-tester' ), $next_version ) . ', ' . __( 'whichever is released first', 'wordpress-beta-tester' );
+			$next_version = wp_sprintf( __( 'version %l, whichever is released first', 'wordpress-beta-tester' ), $next_version );
 			remove_filter( 'wp_sprintf_l', array( $this, 'wpbt_sprintf_or' ) );
 		}
 
