@@ -1,6 +1,6 @@
 [unreleased]
 * string update
-* update logic to not send debug email as appropriate
+* no need to skip debug email
 
 #### 3.5.5 / 2023-10-19
 * add `Settings` to action links, thanks @0aveRyan
