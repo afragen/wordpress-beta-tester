@@ -195,8 +195,5 @@ class WPBT_Extras {
 			10,
 			2
 		);
-
-		// Disable sending debug email.
-		add_filter( 'automatic_updates_send_debug_email', '__return_false', 10, 2 );
 	}
 }

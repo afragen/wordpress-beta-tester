@@ -369,13 +369,16 @@ class WP_Beta_Tester {
 		);
 		$urls     = array( "https://wordpress.org/news/tag/development/feed/?s=$milestone", "https://make.wordpress.org/core/tag/development/feed/?s=$milestone" );
 
+		// For testing, set cache to 10 seconds.
+		// add_filter( 'wp_feed_cache_transient_lifetime', function () { return 10; } );
+
 		ob_start();
 		wp_widget_rss_output( array( 'url' => $urls ), $rss_args );
 		$feed = ob_get_contents();
 		ob_end_clean();
 
 		$milestone = preg_quote( $milestone, '.' );
-		$li_regex  = "#<li>.*$milestone.*?<\/li>#";
+		$li_regex  = "#<li>.*$milestone.*<\/li>#";
 		preg_match( $li_regex, $feed, $matches );
 		$match = array_pop( $matches );
 		$list  = empty( $match ) ? '' : "<ul>$match</ul>";

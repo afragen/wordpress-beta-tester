@@ -33,16 +33,16 @@ class WPBT_Help {
 		}
 
 		get_current_screen()->set_help_sidebar(
-			'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
-			'<p>' . __( '<a href="https://make.wordpress.org/core/handbook/testing/beta-testing/">Beta Testing</a>', 'wordpress-beta-tester' ) . '</p>'
+			'<p><strong>' . __( 'For more information:' ) . '</strong></p>'
+			. '<p>' . __( '<a href="https://make.wordpress.org/core/handbook/testing/beta-testing/">Beta Testing</a>', 'wordpress-beta-tester' ) . '</p>'
 		);
 
 		get_current_screen()->add_help_tab(
 			array(
 				'id'      => 'overview',
 				'title'   => __( 'Overview', 'wordpress-beta-tester' ),
-				'content' => '<p>' .
-				sprintf(
+				'content' => '<p>'
+				. sprintf(
 					/* translators: 1: link to backing up database, 2: link to make.wp.org/core, 3: link to beta support forum */
 					__( 'By their nature, these releases are unstable and should not be used any place where your data is important. So please <a href="%1$s">back up your database</a> before upgrading to a test release. In order to hear about the latest beta releases, your best bet is to watch the <a href="%2$s">development blog</a> and the <a href="%3$s">beta forum</a>.', 'wordpress-beta-tester' ),
 					_x( 'https://wordpress.org/support/article/wordpress-backups/', 'URL to database backup instructions on HelpHub', 'wordpress-beta-tester' ),
@@ -56,9 +56,9 @@ class WPBT_Help {
 			array(
 				'id'      => 'beta/RC',
 				'title'   => __( 'Beta/RC', 'wordpress-beta-tester' ),
-				'content' => '<p>' .
-					__( 'You must select either the <em>Point release</em> or <em>Bleeding edge</em> channel. Then select the <em>Beta/RC Only</em> or <em>Release Candidates Only</em> stream. Once saved you will only see an update notice when the next release, RC, or beta is available.', 'wordpress-beta-tester' ) . '</p><p>' .
-					__( '<em>Point release</em> channel only has the <em>Nightlies</em> stream available at this time.', 'wordpress-beta-tester' ) . '</p>',
+				'content' => '<p>'
+					. __( 'You must select either the <em>Point release</em> or <em>Bleeding edge</em> channel. Then select the <em>Beta/RC Only</em> or <em>Release Candidates Only</em> stream. Once saved you will only see an update notice when the next release, RC, or beta is available.', 'wordpress-beta-tester' ) . '</p><p>'
+					. __( '<em>Point release</em> channel only has the <em>Nightlies</em> stream available at this time.', 'wordpress-beta-tester' ) . '</p>',
 			)
 		);
 
