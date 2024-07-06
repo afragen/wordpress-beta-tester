@@ -1,4 +1,6 @@
 [unreleased]
+
+#### 3.5.6 / 2024-07-06
 * string update
 * no need to skip debug email
 
