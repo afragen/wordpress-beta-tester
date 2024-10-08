@@ -1,4 +1,5 @@
 [unreleased]
+* remove Report a Bug in favor of using the standalone Test Reports plugin
 
 #### 3.5.6 / 2024-07-06
 * string update
