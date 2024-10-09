@@ -60,7 +60,6 @@ class ComposerStaticInit248763277659ec81f8c4ff690d89804d
         'PHPCSUtils\\Utils\\UseStatements' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/UseStatements.php',
         'PHPCSUtils\\Utils\\Variables' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Variables.php',
         'WPBT_Bootstrap' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Bootstrap.php',
-        'WPBT_Bug_Report' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Bug_Report.php',
         'WPBT_Core' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Core.php',
         'WPBT_Extras' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Extras.php',
         'WPBT_Help' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Help.php',
