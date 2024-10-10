@@ -45,7 +45,6 @@ return array(
     'PHPCSUtils\\Utils\\UseStatements' => $vendorDir . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/UseStatements.php',
     'PHPCSUtils\\Utils\\Variables' => $vendorDir . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Variables.php',
     'WPBT_Bootstrap' => $baseDir . '/src/WPBT/WPBT_Bootstrap.php',
-    'WPBT_Bug_Report' => $baseDir . '/src/WPBT/WPBT_Bug_Report.php',
     'WPBT_Core' => $baseDir . '/src/WPBT/WPBT_Core.php',
     'WPBT_Extras' => $baseDir . '/src/WPBT/WPBT_Extras.php',
     'WPBT_Help' => $baseDir . '/src/WPBT/WPBT_Help.php',
