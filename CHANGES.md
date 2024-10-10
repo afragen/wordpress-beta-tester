@@ -1,4 +1,6 @@
 [unreleased]
+
+#### 3.6.0 / 2024-10-09
 * remove Report a Bug in favor of using the standalone Test Reports plugin
 
 #### 3.5.6 / 2024-07-06
