@@ -225,6 +225,10 @@ class WP_Beta_Tester {
 		if ( false === $preferred ) {
 			wp_version_check();
 			$preferred = get_preferred_from_update_core();
+			if ( ! is_object( $preferred ) ) {
+				$preferred          = new \stdClass();
+				$preferred->version = '0';
+			}
 		}
 
 		return $preferred;
