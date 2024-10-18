@@ -225,11 +225,16 @@ class WP_Beta_Tester {
 		if ( false === $preferred ) {
 			wp_version_check();
 			$preferred = get_preferred_from_update_core();
-			if ( ! is_object( $preferred ) ) {
-				$preferred          = new \stdClass();
-				$preferred->version = '0';
-			}
 		}
+
+		// get_preferred_from_update_core() can return false.
+		if ( false === $preferred ) {
+			$preferred['response'] = 'latest';
+			$preferred['version']  = '0';
+			$preferred             = (object) $preferred;
+		}
+
+		$preferred->version = property_exists( $preferred, 'version' ) ? $preferred->version : '0';
 
 		return $preferred;
 	}
