@@ -32,6 +32,9 @@ PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
 
+#### 3.6.1 / 2024-10-23
+* fix if `get_preferred_from_update_core()` continues to return less than a complete response
+
 #### 3.6.0 / 2024-10-09
 * remove Report a Bug in favor of using the standalone Test Reports plugin
 
