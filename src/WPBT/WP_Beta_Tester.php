@@ -227,6 +227,15 @@ class WP_Beta_Tester {
 			$preferred = get_preferred_from_update_core();
 		}
 
+		// get_preferred_from_update_core() can return false.
+		if ( false === $preferred ) {
+			$preferred['response'] = 'latest';
+			$preferred['version']  = '0';
+			$preferred             = (object) $preferred;
+		}
+
+		$preferred->version = property_exists( $preferred, 'version' ) ? $preferred->version : '0';
+
 		return $preferred;
 	}
 
