@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
 Requires PHP: 5.6
 Tested up to: 6.7
-Stable Tag: 3.6.0
+Stable Tag: 3.6.1
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
