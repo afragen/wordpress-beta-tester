@@ -1,4 +1,6 @@
 [unreleased]
+
+#### 3.6.2 / 2024-12-02
 * Plugin Check and i18n updates
 
 #### 3.6.1 / 2024-10-23
