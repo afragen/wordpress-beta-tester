@@ -2,14 +2,14 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress Beta Tester 3.6.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-beta-tester\n"
+"Project-Id-Version: wordpress-beta-tester 3.6.2\n"
+"Report-Msgid-Bugs-To: https://github.com/afragen/wordpress-beta-tester/wordpress-beta-tester/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-10T00:01:50+00:00\n"
+"POT-Creation-Date: 2024-12-02T19:37:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wordpress-beta-tester\n"
@@ -198,6 +198,10 @@ msgstr ""
 msgid "Disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent."
 msgstr ""
 
+#: src/WPBT/WPBT_Help.php:36
+msgid "For more information:"
+msgstr ""
+
 #: src/WPBT/WPBT_Help.php:37
 msgid "<a href=\"https://make.wordpress.org/core/handbook/testing/beta-testing/\">Beta Testing</a>"
 msgstr ""
@@ -262,36 +266,36 @@ msgstr ""
 msgid "<strong>Warning:</strong> Your current <a href=\"%s\">WordPress Beta Tester plugin configuration</a> will downgrade your installation to a previous version - please reconfigure it."
 msgstr ""
 
-#: src/WPBT/WP_Beta_Tester.php:289
+#: src/WPBT/WP_Beta_Tester.php:298
 msgid "WordPress Beta Testing"
 msgstr ""
 
 #. translators: %s: WordPress version
-#: src/WPBT/WP_Beta_Tester.php:309
+#: src/WPBT/WP_Beta_Tester.php:318
 msgid "Please help test <strong>WordPress %s</strong>."
 msgstr ""
 
 #. translators: %1: link to closed and reopened trac tickets on current milestone
-#: src/WPBT/WP_Beta_Tester.php:315
+#: src/WPBT/WP_Beta_Tester.php:324
 msgid "Here are the <a href=\"%s\" target=\"_blank\">commits for the milestone</a>."
 msgstr ""
 
 #. translators: %s: update version
-#: src/WPBT/WP_Beta_Tester.php:324
+#: src/WPBT/WP_Beta_Tester.php:333
 msgid "Currently your site is set to update to <strong>%s</strong>."
 msgstr ""
 
 #. translators: %s: WP Beta Tester settings URL
-#: src/WPBT/WP_Beta_Tester.php:330
+#: src/WPBT/WP_Beta_Tester.php:339
 msgid "Head over to your <a href=\"%s\">WordPress Beta Tester Settings</a> and make sure the <strong>beta/RC</strong> stream is selected."
 msgstr ""
 
 #. translators: %s: Milestone version
-#: src/WPBT/WP_Beta_Tester.php:389
+#: src/WPBT/WP_Beta_Tester.php:398
 msgid "WordPress %s Dev Notes"
 msgstr ""
 
 #. translators: %s: Milestone version
-#: src/WPBT/WP_Beta_Tester.php:399
+#: src/WPBT/WP_Beta_Tester.php:408
 msgid "WordPress %s Field Guide"
 msgstr ""
