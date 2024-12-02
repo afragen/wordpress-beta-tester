@@ -206,7 +206,7 @@ class WPBT_Core {
 		?>
 		<fieldset>
 			<tr>
-				<th><label><?php esc_html_e( __( 'Save after switching', 'wordpress-beta-tester' ) ); ?></label></th>
+				<th><label><?php echo esc_html( __( 'Save after switching', 'wordpress-beta-tester' ) ); ?></label></th>
 				<td></td>
 			</tr>
 		</fieldset>

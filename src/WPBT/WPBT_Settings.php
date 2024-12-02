@@ -337,7 +337,7 @@ class WPBT_Settings {
 			<?php echo esc_attr( $args['title'] ); ?>
 			<?php
 			if ( isset( $args['description'] ) ) {
-				echo '<p class="description">' . esc_attr__( $args['description'] ) . '</p>';
+				echo '<p class="description">' . esc_attr( $args['description'] ) . '</p>';
 			}
 			?>
 		</label>

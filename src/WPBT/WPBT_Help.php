@@ -33,7 +33,7 @@ class WPBT_Help {
 		}
 
 		get_current_screen()->set_help_sidebar(
-			'<p><strong>' . __( 'For more information:' ) . '</strong></p>'
+			'<p><strong>' . __( 'For more information:', 'wordpress-beta-tester' ) . '</strong></p>'
 			. '<p>' . __( '<a href="https://make.wordpress.org/core/handbook/testing/beta-testing/">Beta Testing</a>', 'wordpress-beta-tester' ) . '</p>'
 		);
 
