@@ -1,6 +1,6 @@
 [unreleased]
 * update workflow
-* add extra setting to remove auto-installed plugins
+* add extra setting to remove auto-installed plugin(s)
 
 #### 3.6.2 / 2024-12-02
 * Plugin Check and i18n updates
