@@ -1,4 +1,5 @@
 [unreleased]
+* update workflow
 
 #### 3.6.2 / 2024-12-02
 * Plugin Check and i18n updates
