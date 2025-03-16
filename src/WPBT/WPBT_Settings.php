@@ -55,6 +55,7 @@ class WPBT_Settings {
 		( new WPBT_Core( $this->wp_beta_tester, self::$options ) )->load_hooks();
 		( new WPBT_Extras( $this->wp_beta_tester, self::$options ) )->load_hooks();
 		( new WPBT_Extras( $this->wp_beta_tester, self::$options ) )->skip_autoupdate_email();
+		( new WPBT_Extras( $this->wp_beta_tester, self::$options ) )->remove_auto_installed_plugins();
 		( new WPBT_Help() )->load_hooks();
 	}
 
