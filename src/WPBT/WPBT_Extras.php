@@ -206,6 +206,9 @@ class WPBT_Extras {
 		if ( ! isset( self::$options['remove_auto_installed_plugins'] ) ) {
 			return;
 		}
+
+		// Needed as sometimes `delete_plugins()` not ready.
+		require_once ABSPATH . 'wp-admin/includes/file.php';
 		add_action( 'init', fn() => delete_plugins( array( 'akismet/akismet.php' ) ) );
 	}
 }
