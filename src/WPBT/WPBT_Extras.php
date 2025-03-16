@@ -101,7 +101,7 @@ class WPBT_Extras {
 			array(
 				'id'          => 'remove_auto_installed_plugins',
 				'title'       => esc_html__( 'Delete auto-installed plugins.', 'wordpress-beta-tester' ),
-				'description' => esc_html__( 'Akismet and Hello Dolly are automatically installed with beta testing offers.', 'wordpress-beta-tester' ),
+				'description' => esc_html__( 'Akismet is automatically installed with beta testing offers.', 'wordpress-beta-tester' ),
 			)
 		);
 	}
@@ -206,11 +206,6 @@ class WPBT_Extras {
 		if ( ! isset( self::$options['remove_auto_installed_plugins'] ) ) {
 			return;
 		}
-		add_action(
-			'init',
-			function () {
-				delete_plugins( array( 'akismet/akismet.php', 'hello.php' ) );
-			}
-		);
+		add_action( 'init', fn() => delete_plugins( array( 'akismet/akismet.php' ) ) );
 	}
 }
