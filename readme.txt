@@ -32,6 +32,10 @@ PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
 
+#### 3.6.3 / 2025-03-25
+* update workflow
+* add extra setting to remove auto-installed plugin(s)
+
 #### 3.6.2 / 2024-12-02
 * Plugin Check and i18n updates
 
