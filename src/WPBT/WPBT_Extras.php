@@ -39,6 +39,17 @@ class WPBT_Extras {
 	}
 
 	/**
+	 * Initialize Extras.
+	 *
+	 * @return void
+	 */
+	public function init() {
+		$this->load_hooks();
+		$this->skip_autoupdate_email();
+		$this->remove_auto_installed_plugins();
+	}
+
+	/**
 	 * Load hooks.
 	 *
 	 * @return void
@@ -89,6 +100,19 @@ class WPBT_Extras {
 				'id'          => 'skip_autoupdate_email',
 				'title'       => esc_html__( 'Skip successful autoupdate emails.', 'wordpress-beta-tester' ),
 				'description' => esc_html__( 'Disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.', 'wordpress-beta-tester' ),
+			)
+		);
+
+		add_settings_field(
+			'remove_auto_installed_plugins',
+			null,
+			array( 'WPBT_Settings', 'checkbox_setting' ),
+			'wp_beta_tester_extras',
+			'wp_beta_tester_email',
+			array(
+				'id'          => 'remove_auto_installed_plugins',
+				'title'       => esc_html__( 'Delete auto-installed plugins.', 'wordpress-beta-tester' ),
+				'description' => esc_html__( 'Akismet is automatically installed with beta testing offers.', 'wordpress-beta-tester' ),
 			)
 		);
 	}
@@ -182,5 +206,20 @@ class WPBT_Extras {
 			10,
 			2
 		);
+	}
+
+	/**
+	 * Remove auto-installed plugins installed with every beta testing offer.
+	 *
+	 * @return void
+	 */
+	public function remove_auto_installed_plugins() {
+		if ( ! isset( self::$options['remove_auto_installed_plugins'] ) ) {
+			return;
+		}
+
+		// Needed as sometimes `delete_plugins()` not ready.
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		add_action( 'init', fn() => delete_plugins( array( 'akismet/akismet.php' ) ) );
 	}
 }
