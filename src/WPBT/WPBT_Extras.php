@@ -39,6 +39,17 @@ class WPBT_Extras {
 	}
 
 	/**
+	 * Initialize Extras.
+	 *
+	 * @return void
+	 */
+	public function init() {
+		$this->load_hooks();
+		$this->skip_autoupdate_email();
+		$this->remove_auto_installed_plugins();
+	}
+
+	/**
 	 * Load hooks.
 	 *
 	 * @return void
