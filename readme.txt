@@ -1,7 +1,7 @@
 # WordPress Beta Tester
 
 Tags: beta, advanced, testing
-Contributors: westi, mlteal, afragen, pbiron, costdev
+Contributors: afragen, costdev, pbiron, mlteal, westi
 License: GPLv2
 License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 3.1
@@ -363,4 +363,3 @@ PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 1. This shows the main administration page for the plugin
 2. This shows the Extra Settings page for the plugin
 3. This shows the Dashboard callout
-4. This shows the 'Report a Bug' tab
