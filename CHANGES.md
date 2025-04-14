@@ -1,4 +1,5 @@
 [unreleased]
+* fixed incorrect path to `delete_plugins()`
 
 #### 3.6.3 / 2025-03-25
 * update workflow
