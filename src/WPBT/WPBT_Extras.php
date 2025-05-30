@@ -220,6 +220,13 @@ class WPBT_Extras {
 
 		// Needed as sometimes `delete_plugins()` not ready.
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		add_action( 'init', fn() => delete_plugins( array( 'akismet/akismet.php' ) ) );
+		add_action(
+			'init',
+			function () {
+				if ( function_exists( 'request_filesystem_credentials' ) ) {
+					delete_plugins( array( 'akismet/akismet.php' ) );
+				}
+			}
+		);
 	}
 }

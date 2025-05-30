@@ -1,5 +1,6 @@
 [unreleased]
 * fixed incorrect path to `delete_plugins()`
+* check for `require_filesystem_credentials()` as missing during update.
 
 #### 3.6.3 / 2025-03-25
 * update workflow
