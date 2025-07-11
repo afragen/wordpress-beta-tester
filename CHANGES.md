@@ -1,4 +1,7 @@
 [unreleased]
+
+#### 3.6.4 / 2025-07-10
+* update readme
 * fixed incorrect path to `delete_plugins()`
 * check for `require_filesystem_credentials()` as missing during update.
 
