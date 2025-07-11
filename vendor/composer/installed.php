@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'afragen/wordpress-beta-tester',
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
-        'reference' => 'cd89880fcbc2f8b46d01c1e5f48337bff3256430',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'f942f73118c58e4794384adfa673ef5d24a6d9a1',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'afragen/wordpress-beta-tester' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => 'cd89880fcbc2f8b46d01c1e5f48337bff3256430',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'f942f73118c58e4794384adfa673ef5d24a6d9a1',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
