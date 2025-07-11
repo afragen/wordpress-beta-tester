@@ -1,5 +1,10 @@
 [unreleased]
 
+#### 3.6.4 / 2025-07-10
+* update readme
+* fixed incorrect path to `delete_plugins()`
+* check for `require_filesystem_credentials()` as missing during update.
+
 #### 3.6.3 / 2025-03-25
 * update workflow
 * add extra setting to remove auto-installed plugin(s)
