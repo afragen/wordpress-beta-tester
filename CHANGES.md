@@ -1,4 +1,5 @@
 [unreleased]
+* fix bool to array conversion error
 
 #### 3.6.4 / 2025-07-10
 * update readme

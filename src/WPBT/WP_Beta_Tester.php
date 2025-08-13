@@ -229,6 +229,7 @@ class WP_Beta_Tester {
 
 		// get_preferred_from_update_core() can return false.
 		if ( false === $preferred ) {
+			$preferred             = array();
 			$preferred['response'] = 'latest';
 			$preferred['version']  = '0';
 			$preferred             = (object) $preferred;
