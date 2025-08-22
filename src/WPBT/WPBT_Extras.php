@@ -125,7 +125,7 @@ class WPBT_Extras {
 				'wp_beta_tester_email',
 				array(
 					'id'          => 'skip_bundled_files_on_upgrade',
-					'title'       => esc_html__( 'Skip bundled plugins/themes on upgrade.', 'wordpress-beta-tester' ),
+					'title'       => esc_html__( 'Skip bundled plugins and themes on upgrade.', 'wordpress-beta-tester' ),
 					'description' => esc_html__( 'Bundled plugins and themes are skipped on Core Upgrade.', 'wordpress-beta-tester' ),
 				)
 			);
