@@ -47,7 +47,6 @@ class WPBT_Extras {
 		$this->load_hooks();
 		$this->skip_autoupdate_email();
 		$this->skip_bundled_files_on_upgrade();
-		$this->remove_auto_installed_plugins();
 	}
 
 	/**
@@ -104,31 +103,25 @@ class WPBT_Extras {
 			)
 		);
 
+		add_settings_section(
+			'wp_beta_tester_bundled',
+			null,
+			null,
+			'wp_beta_tester_extras'
+		);
+
 		add_settings_field(
-			'remove_auto_installed_plugins',
+			'skip_bundled_files_on_upgrade',
 			null,
 			array( 'WPBT_Settings', 'checkbox_setting' ),
 			'wp_beta_tester_extras',
-			'wp_beta_tester_email',
+			'wp_beta_tester_bundled',
 			array(
-				'id'          => 'remove_auto_installed_plugins',
-				'title'       => esc_html__( 'Delete auto-installed plugins.', 'wordpress-beta-tester' ),
-				'description' => esc_html__( 'Akismet is automatically installed with beta testing offers.', 'wordpress-beta-tester' ),
+				'id'          => 'skip_bundled_files_on_upgrade',
+				'title'       => esc_html__( 'Skip bundled plugins and themes on upgrade.', 'wordpress-beta-tester' ),
+				'description' => esc_html__( 'Bundled plugins and themes are skipped on Core Upgrade.', 'wordpress-beta-tester' ),
 			)
 		);
-
-			add_settings_field(
-				'skip_bundled_files_on_upgrade',
-				null,
-				array( 'WPBT_Settings', 'checkbox_setting' ),
-				'wp_beta_tester_extras',
-				'wp_beta_tester_email',
-				array(
-					'id'          => 'skip_bundled_files_on_upgrade',
-					'title'       => esc_html__( 'Skip bundled plugins and themes on upgrade.', 'wordpress-beta-tester' ),
-					'description' => esc_html__( 'Bundled plugins and themes are skipped on Core Upgrade.', 'wordpress-beta-tester' ),
-				)
-			);
 	}
 
 	/**
@@ -235,27 +228,5 @@ class WPBT_Extras {
 		if ( ! defined( 'CORE_UPGRADE_SKIP_NEW_BUNDLED' ) ) {
 			define( 'CORE_UPGRADE_SKIP_NEW_BUNDLED', true );
 		}
-	}
-
-	/**
-	 * Remove auto-installed plugins installed with every beta testing offer.
-	 *
-	 * @return void
-	 */
-	public function remove_auto_installed_plugins() {
-		if ( ! isset( self::$options['remove_auto_installed_plugins'] ) ) {
-			return;
-		}
-
-		// Needed as sometimes `delete_plugins()` not ready.
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		add_action(
-			'init',
-			function () {
-				if ( function_exists( 'request_filesystem_credentials' ) ) {
-					delete_plugins( array( 'akismet/akismet.php' ) );
-				}
-			}
-		);
 	}
 }
