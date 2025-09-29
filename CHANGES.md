@@ -1,5 +1,11 @@
 [unreleased]
 
+#### 3.6.5 / 2025-09-29
+* fix bool to array conversion error
+* add Extra Setting to set `CORE_UPGRADE_SKIP_NEW_BUNDLED` constant
+* remove Extra Setting to specifically remove Akismet
+* SimplePie 1.9.0 deprecated passing array to `fetch_feed()`
+
 #### 3.6.4 / 2025-07-10
 * update readme
 * fixed incorrect path to `delete_plugins()`

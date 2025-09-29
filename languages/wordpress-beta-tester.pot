@@ -2,16 +2,16 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress Beta Tester 3.6.3\n"
+"Project-Id-Version: WordPress Beta Tester 3.6.5\n"
 "Report-Msgid-Bugs-To: https://github.com/afragen/wordpress-beta-tester/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-25T18:19:14+00:00\n"
+"POT-Creation-Date: 2025-09-29T16:02:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wordpress-beta-tester\n"
 
 #. Plugin Name of the plugin
@@ -65,6 +65,7 @@ msgstr ""
 
 #. translators: 1: link to backing up database, 2: link to make.wp.org/core, 3: link to beta support forum
 #: src/WPBT/WPBT_Core.php:177
+#, php-format
 msgid "By their nature, these releases are unstable and should not be used anyplace where your data is important. So please <a href=\"%1$s\">back up your database</a> before upgrading to a test release. In order to hear about the latest beta releases, your best bet is to watch the <a href=\"%2$s\">development blog</a> and the <a href=\"%3$s\">beta forum</a>."
 msgstr ""
 
@@ -82,6 +83,7 @@ msgstr ""
 
 #. translators: %s: link to new trac ticket
 #: src/WPBT/WPBT_Core.php:185
+#, php-format
 msgid "Thank you for helping test WordPress. Please <a href=\"%s\">report any bugs you find</a>."
 msgstr ""
 
@@ -91,6 +93,7 @@ msgstr ""
 
 #. translators: %s: update version
 #: src/WPBT/WPBT_Core.php:193
+#, php-format
 msgid "Currently your site is set to update to %s."
 msgstr ""
 
@@ -105,6 +108,7 @@ msgstr ""
 #. translators: %s: WP_AUTO_UPDATE_CORE setting
 #: src/WPBT/WPBT_Core.php:223
 #: src/WPBT/WPBT_Core.php:274
+#, php-format
 msgid "`WP_AUTO_UPDATE_CORE` is defined as `%s`."
 msgstr ""
 
@@ -114,6 +118,7 @@ msgstr ""
 
 #. translators: %s: Current WordPress version base, eg 5.5
 #: src/WPBT/WPBT_Core.php:242
+#, php-format
 msgid "This contains the work that is occurring on a branch in preparation for a %s point release. This should also be fairly stable but will be available before the branch is ready for release."
 msgstr ""
 
@@ -159,6 +164,7 @@ msgstr ""
 
 #. translators: %s: version number
 #: src/WPBT/WPBT_Core.php:387
+#, php-format
 msgid "version %s"
 msgstr ""
 
@@ -173,16 +179,19 @@ msgstr ""
 
 #. translators: Used to join items in a list with more than 2 items.
 #: src/WPBT/WPBT_Core.php:492
+#, php-format
 msgid "%1$s, %2$s"
 msgstr ""
 
 #. translators: Used to join last two items in a list with more than 2 times.
 #: src/WPBT/WPBT_Core.php:494
+#, php-format
 msgid "%1$s, or %2$s"
 msgstr ""
 
 #. translators: Used to join items in a list with only 2 items.
 #: src/WPBT/WPBT_Core.php:496
+#, php-format
 msgid "%1$s or %2$s"
 msgstr ""
 
@@ -198,12 +207,12 @@ msgstr ""
 msgid "Disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent."
 msgstr ""
 
-#: src/WPBT/WPBT_Extras.php:114
-msgid "Delete auto-installed plugins."
+#: src/WPBT/WPBT_Extras.php:121
+msgid "Skip bundled plugins and themes on upgrade."
 msgstr ""
 
-#: src/WPBT/WPBT_Extras.php:115
-msgid "Akismet is automatically installed with beta testing offers."
+#: src/WPBT/WPBT_Extras.php:122
+msgid "Bundled plugins and themes are skipped on Core Upgrade."
 msgstr ""
 
 #: src/WPBT/WPBT_Help.php:36
@@ -220,6 +229,7 @@ msgstr ""
 
 #. translators: 1: link to backing up database, 2: link to make.wp.org/core, 3: link to beta support forum
 #: src/WPBT/WPBT_Help.php:47
+#, php-format
 msgid "By their nature, these releases are unstable and should not be used any place where your data is important. So please <a href=\"%1$s\">back up your database</a> before upgrading to a test release. In order to hear about the latest beta releases, your best bet is to watch the <a href=\"%2$s\">development blog</a> and the <a href=\"%3$s\">beta forum</a>."
 msgstr ""
 
@@ -271,39 +281,46 @@ msgstr ""
 
 #. translators: %s: WordPress Beta Tester Settings page URL
 #: src/WPBT/WP_Beta_Tester.php:126
+#, php-format
 msgid "<strong>Warning:</strong> Your current <a href=\"%s\">WordPress Beta Tester plugin configuration</a> will downgrade your installation to a previous version - please reconfigure it."
 msgstr ""
 
-#: src/WPBT/WP_Beta_Tester.php:298
+#: src/WPBT/WP_Beta_Tester.php:299
 msgid "WordPress Beta Testing"
 msgstr ""
 
 #. translators: %s: WordPress version
-#: src/WPBT/WP_Beta_Tester.php:318
+#: src/WPBT/WP_Beta_Tester.php:319
+#, php-format
 msgid "Please help test <strong>WordPress %s</strong>."
 msgstr ""
 
 #. translators: %1: link to closed and reopened trac tickets on current milestone
-#: src/WPBT/WP_Beta_Tester.php:324
+#: src/WPBT/WP_Beta_Tester.php:325
+#, php-format
 msgid "Here are the <a href=\"%s\" target=\"_blank\">commits for the milestone</a>."
 msgstr ""
 
 #. translators: %s: update version
-#: src/WPBT/WP_Beta_Tester.php:333
+#: src/WPBT/WP_Beta_Tester.php:334
+#, php-format
 msgid "Currently your site is set to update to <strong>%s</strong>."
 msgstr ""
 
 #. translators: %s: WP Beta Tester settings URL
-#: src/WPBT/WP_Beta_Tester.php:339
+#: src/WPBT/WP_Beta_Tester.php:340
+#, php-format
 msgid "Head over to your <a href=\"%s\">WordPress Beta Tester Settings</a> and make sure the <strong>beta/RC</strong> stream is selected."
 msgstr ""
 
 #. translators: %s: Milestone version
-#: src/WPBT/WP_Beta_Tester.php:398
+#: src/WPBT/WP_Beta_Tester.php:399
+#, php-format
 msgid "WordPress %s Dev Notes"
 msgstr ""
 
 #. translators: %s: Milestone version
-#: src/WPBT/WP_Beta_Tester.php:408
+#: src/WPBT/WP_Beta_Tester.php:409
+#, php-format
 msgid "WordPress %s Field Guide"
 msgstr ""

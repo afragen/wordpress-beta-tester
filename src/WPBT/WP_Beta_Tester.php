@@ -229,6 +229,7 @@ class WP_Beta_Tester {
 
 		// get_preferred_from_update_core() can return false.
 		if ( false === $preferred ) {
+			$preferred             = array();
 			$preferred['response'] = 'latest';
 			$preferred['version']  = '0';
 			$preferred             = (object) $preferred;
@@ -354,13 +355,13 @@ class WP_Beta_Tester {
 			'show_summary' => 0,
 			'items'        => 10,
 		);
-		$urls     = array( "https://wordpress.org/news/tag/development/feed/?s=$milestone", "https://make.wordpress.org/core/tag/development/feed/?s=$milestone" );
 
 		// For testing, set cache to 10 seconds.
 		// add_filter( 'wp_feed_cache_transient_lifetime', function () { return 10; } );
 
 		ob_start();
-		wp_widget_rss_output( array( 'url' => $urls ), $rss_args );
+		wp_widget_rss_output( "https://wordpress.org/news/tag/development/feed/?s=$milestone", $rss_args );
+		wp_widget_rss_output( "https://make.wordpress.org/core/tag/development/feed/?s=$milestone", $rss_args );
 		$feed = ob_get_contents();
 		ob_end_clean();
 
