@@ -7,7 +7,7 @@ License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 4.9
 Requires PHP: 5.6
 Tested up to: 6.9
-Stable Tag: 3.6.5
+Stable Tag: 4.0.0
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -31,6 +31,10 @@ There is a setting to **Skip successful autoupdate emails**.  It functions to di
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 4.0.0 / 2025-11-06
+* refactor to use `core_version_check_query_args` filter for simplicity and compatibility
+* update to require WordPress 4.9
 
 #### 3.6.4 / 2025-07-10
 * update readme

@@ -1,5 +1,7 @@
 [unreleased]
-* use `core_version_check_query_args` filter for simplicity and compatibility
+
+#### 4.0.0 / 2025-11-06
+* refactor to use `core_version_check_query_args` filter for simplicity and compatibility
 * update to require WordPress 4.9
 
 #### 3.6.5 / 2025-09-29
