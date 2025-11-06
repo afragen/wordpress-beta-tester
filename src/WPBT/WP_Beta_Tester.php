@@ -27,20 +27,6 @@ class WP_Beta_Tester {
 	public static $options;
 
 	/**
-	 * Holds WP_AUTO_UPDATE_CORE if set.
-	 *
-	 * @var string|bool
-	 */
-	public static $core_update_stream_constant;
-
-	/**
-	 * Holds WP_AUTO_UPDATE_CORE if set.
-	 *
-	 * @var string|bool
-	 */
-	public static $core_update_channel_constant;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param  string $file    Main plugin file.
@@ -48,10 +34,8 @@ class WP_Beta_Tester {
 	 * @return void
 	 */
 	public function __construct( $file, $options ) {
-		$this->file                         = $file;
-		self::$options                      = $options;
-		self::$core_update_stream_constant  = defined( 'WP_AUTO_UPDATE_CORE' ) && in_array( \WP_AUTO_UPDATE_CORE, array( 'beta', 'rc' ), true ) ? \WP_AUTO_UPDATE_CORE : false;
-		self::$core_update_channel_constant = defined( 'WP_AUTO_UPDATE_CORE' ) && in_array( \WP_AUTO_UPDATE_CORE, array( 'development', 'branch-development' ), true ) ? \WP_AUTO_UPDATE_CORE : false;
+		$this->file    = $file;
+		self::$options = $options;
 	}
 
 	/**
