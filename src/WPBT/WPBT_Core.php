@@ -198,13 +198,13 @@ class WPBT_Core {
 				<?php esc_html_e( 'Point release', 'wordpress-beta-tester' ); ?>
 				</label></th>
 				<td>
-					<?php
+				<?php
 					printf(
 						/* translators: %s: Current WordPress version base, eg 5.5 */
 						esc_html__( 'This contains the work that is occurring on a branch in preparation for a %s point release. This should also be fairly stable but will be available before the branch is ready for release.', 'wordpress-beta-tester' ),
 						esc_attr( $next_versions['point'] )
 					);
-					?>
+				?>
 				</td>
 			</tr>
 			<tr>
