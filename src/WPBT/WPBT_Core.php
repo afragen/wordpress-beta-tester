@@ -316,7 +316,7 @@ class WPBT_Core {
 
 		// Try to set actual next beta/RC.
 		if ( ( isset( $next_version['beta'] ) && version_compare( $next_version['preferred'], $next_version['beta'], '<' ) )
-		|| ( isset( $next_version['rc'] ) && version_compare( $next_version['preferred'], $next_version['rc'], '<' ) )
+			|| ( isset( $next_version['rc'] ) && version_compare( $next_version['preferred'], $next_version['rc'], '<' ) )
 		) {
 			unset( $next_version['preferred'] );
 		} else {
@@ -407,9 +407,7 @@ class WPBT_Core {
 			'release'   => $exploded_version[0],
 		);
 
-		if ( ! $next_versions['beta'] || 'rc' === self::$options['stream-option']
-		|| 1 < $next_rc
-		) {
+		if ( ! $next_versions['beta'] || 'rc' === self::$options['stream-option'] || 1 < $next_rc ) {
 			unset( $next_versions['beta'] );
 		}
 
