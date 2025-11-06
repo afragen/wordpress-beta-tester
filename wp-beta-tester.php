@@ -21,7 +21,7 @@
  * License:           GPL v2 or later
  * License URI:       https://www.opensource.org/licenses/GPL-2.0
  * GitHub Plugin URI: https://github.com/afragen/wordpress-beta-tester
- * Requires at least: 3.1
+ * Requires at least: 4.9
  * Requires PHP:      5.6
  */
 

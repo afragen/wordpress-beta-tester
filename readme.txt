@@ -4,7 +4,7 @@ Tags: beta, advanced, testing
 Contributors: afragen, costdev, pbiron, mlteal, westi
 License: GPLv2
 License URI: https://www.opensource.org/licenses/GPL-2.0
-Requires at least: 3.1
+Requires at least: 4.9
 Requires PHP: 5.6
 Tested up to: 6.9
 Stable Tag: 3.6.5
