@@ -3,7 +3,7 @@
 * Contributors: [afragen](https://github.com/afragen), [costdev](https:/github.com/costdev), [pbiron](https://github.com/pbiron), [westi](https://github.com/westi), [mlteal](https://github.com/mlteal)
 * License: GPLv2
 * License URI: https://www.opensource.org/licenses/GPL-2.0
-* Requires at least: 3.1
+* Requires at least: 4.9
 * Requires PHP: 5.6
 * Stable Tag: master
 
@@ -25,5 +25,7 @@ Please enable auto-updates for this plugin to ensure future changes are properly
 ### Extra Settings
 
 There is a setting to **Skip successful autoupdate emails**. It functions to disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.
+
+There is a setting to **Skip bundled plugins and themes**. It functions to disable the installation of any plugins or themes that are bundled with the Core update.
 
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).

@@ -28,6 +28,9 @@ Please enable auto-updates for this plugin to ensure future changes are properly
 
 There is a setting to **Skip successful autoupdate emails**.  It functions to disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.
 
+There is a setting to **Skip bundled plugins and themes**. It functions to disable the installation of any plugins or themes that are bundled with the Core update.
+
+
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
@@ -369,6 +372,6 @@ PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Screenshots
 
-1. This shows the main administration page for the plugin
-2. This shows the Extra Settings page for the plugin
-3. This shows the Dashboard callout
+1. Main Settings page
+2. Extra Settings page
+3. Dashboard widget
