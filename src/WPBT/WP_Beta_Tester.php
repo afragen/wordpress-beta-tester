@@ -357,6 +357,7 @@ class WP_Beta_Tester {
 		);
 
 		// For testing, set cache to 10 seconds.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		// add_filter( 'wp_feed_cache_transient_lifetime', function () { return 10; } );
 
 		ob_start();
