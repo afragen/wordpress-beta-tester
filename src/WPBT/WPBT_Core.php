@@ -150,6 +150,11 @@ class WPBT_Core {
 			echo '<p>' . wp_kses_post( __( '<strong>Please note:</strong> There are no development builds available for the beta stream you have chosen, so you will receive normal update notifications.', 'wordpress-beta-tester' ) ) . '</p>';
 			echo '</div>';
 		}
+		if ( defined( 'WP_AUTO_UPDATE_CORE' ) && WP_AUTO_UPDATE_CORE ) {
+			echo '<div class="error fade"><p>';
+			echo wp_kses_post( __( '<strong>Warning:</strong> Automatic core updates are enabled via the WP_AUTO_UPDATE_CORE constant. WordPress Beta Tester settings will be overridden.', 'wordpress-beta-tester' ) );
+			echo '</p></div>';
+		}
 
 		$version = $this->get_next_version( $preferred->version );
 
