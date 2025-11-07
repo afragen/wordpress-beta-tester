@@ -27,20 +27,6 @@ class WP_Beta_Tester {
 	public static $options;
 
 	/**
-	 * Holds WP_AUTO_UPDATE_CORE if set.
-	 *
-	 * @var string|bool
-	 */
-	public static $core_update_stream_constant;
-
-	/**
-	 * Holds WP_AUTO_UPDATE_CORE if set.
-	 *
-	 * @var string|bool
-	 */
-	public static $core_update_channel_constant;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param  string $file    Main plugin file.
@@ -48,10 +34,8 @@ class WP_Beta_Tester {
 	 * @return void
 	 */
 	public function __construct( $file, $options ) {
-		$this->file                         = $file;
-		self::$options                      = $options;
-		self::$core_update_stream_constant  = defined( 'WP_AUTO_UPDATE_CORE' ) && in_array( \WP_AUTO_UPDATE_CORE, array( 'beta', 'rc' ), true ) ? \WP_AUTO_UPDATE_CORE : false;
-		self::$core_update_channel_constant = defined( 'WP_AUTO_UPDATE_CORE' ) && in_array( \WP_AUTO_UPDATE_CORE, array( 'development', 'branch-development' ), true ) ? \WP_AUTO_UPDATE_CORE : false;
+		$this->file    = $file;
+		self::$options = $options;
 	}
 
 	/**
@@ -77,7 +61,22 @@ class WP_Beta_Tester {
 				'action_update_option_wp_beta_tester_stream',
 			)
 		);
-		add_filter( 'pre_http_request', array( $this, 'filter_http_request' ), 10, 3 );
+
+		// Set channel query arg for core version check.
+		add_filter( 'core_version_check_query_args', array( $this, 'set_core_update_channel_constant' ), 10, 1 );
+
+		/* // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+		 * For testing pretend we're on another release.
+		 * $url = add_query_arg( 'pretend_releases', array( '5.6-beta2' ), $url );
+		add_filter(
+			'core_version_check_query_args',
+			function ( $query_args ) {
+				return array_merge( $query_args, array( 'pretend_releases' => array( '5.6-beta2' ) ) );
+			},
+			10,
+			1
+		);
+		*/
 
 		// Fixed in https://core.trac.wordpress.org/changeset/49708.
 		if ( version_compare( get_bloginfo( 'version' ), '5.6-RC1-49708', '<=' )
@@ -131,74 +130,25 @@ class WP_Beta_Tester {
 	}
 
 	/**
-	 * Filter 'pre_http_request' to add beta-tester API check.
+	 * Get channel query arg.
 	 *
-	 * @param  mixed  $result $result from filter.
-	 * @param  array  $args   Array of filter args.
-	 * @param  string $url    URL from filter.
-	 * @return stdClass Output from wp_remote_get().
+	 * @return string
 	 */
-	public function filter_http_request( $result, $args, $url ) {
-		if ( $result || isset( $args['_beta_tester'] ) ) {
-			return $result;
-		}
-		if ( false === strpos( $url, '//api.wordpress.org/core/version-check/' ) ) {
-			return $result;
-		}
-
-		// It's a core-update request.
-		$args['_beta_tester'] = true;
-
-		$url = empty( self::$options['stream-option'] )
-			? add_query_arg( 'channel', self::$options['channel'], $url )
-			: add_query_arg( 'channel', self::$options['stream-option'], $url );
-
-		// Use WP_AUTO_UPDATE_CORE if set.
-		$url = self::$core_update_stream_constant ? add_query_arg( 'channel', self::$core_update_stream_constant, $url ) : $url;
-		$url = self::$core_update_channel_constant ? add_query_arg( 'channel', self::$core_update_channel_constant, $url ) : $url;
-
-		// Make adjustments for switching between channels.
-		$url = $this->channel_switching_modification( $url );
-
-		// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-		// $url = add_query_arg( 'pretend_releases', array( '5.6-beta2' ), $url );
-		// pretend_releases[]=5.6-beta2 query arg example.
-
-		return wp_remote_get( $url, $args );
+	public static function get_channel() {
+		return empty( self::$options['stream-option'] )
+			? self::$options['channel']
+			: self::$options['stream-option'];
 	}
 
 	/**
-	 * Modify URL to version check to return expected API response.
+	 * Set channel query arg in wp_version_check().
 	 *
-	 * @param string $url Version check URL.
+	 * @param  array $query_args Array of query args.
 	 *
-	 * @return string $url
+	 * @return array
 	 */
-	private function channel_switching_modification( $url ) {
-		$next_versions = ( new WPBT_Core( $this, static::$options ) )->calculate_next_versions();
-		$wp_version    = get_bloginfo( 'version' );
-		$channel       = self::$core_update_channel_constant ? self::$core_update_channel_constant : self::$options['channel'];
-
-		if ( false !== strpos( $channel, 'development' )
-			&& version_compare( $wp_version, $next_versions['point'], '<' )
-		) {
-			return $url;
-		}
-
-		switch ( $channel ) {
-			case 'branch-development':
-				$url = add_query_arg( 'version', $next_versions['point'] . '-alpha', $url );
-				break;
-			case 'development':
-				if ( false !== strpos( $wp_version, $next_versions['point'] )
-					|| version_compare( $wp_version, $next_versions['point'], '<' )
-				) {
-					$url = add_query_arg( 'version', $next_versions['release'] . '-alpha', $url );
-				}
-				break;
-		}
-
-		return $url;
+	public function set_core_update_channel_constant( $query_args ) {
+		return array_merge( $query_args, array( 'channel' => self::get_channel() ) );
 	}
 
 	/**
@@ -357,6 +307,7 @@ class WP_Beta_Tester {
 		);
 
 		// For testing, set cache to 10 seconds.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		// add_filter( 'wp_feed_cache_transient_lifetime', function () { return 10; } );
 
 		ob_start();
