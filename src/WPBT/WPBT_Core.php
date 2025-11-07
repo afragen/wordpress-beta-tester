@@ -145,13 +145,8 @@ class WPBT_Core {
 	public function print_core_settings_top() {
 		$this->wp_beta_tester->action_admin_head_plugins_php(); // Check configuration.
 		$preferred = $this->wp_beta_tester->get_preferred_from_update_core();
-		if ( 'development' !== $preferred->response ) {
-			echo '<div class="updated fade">';
-			echo '<p>' . wp_kses_post( __( '<strong>Please note:</strong> There are no development builds available for the beta stream you have chosen, so you will receive normal update notifications.', 'wordpress-beta-tester' ) ) . '</p>';
-			echo '</div>';
-		}
 		if ( defined( 'WP_AUTO_UPDATE_CORE' ) && WP_AUTO_UPDATE_CORE ) {
-			echo '<div class="error fade"><p>';
+			echo '<div class="notice notice-warning fade"><p>';
 			echo wp_kses_post( __( '<strong>Warning:</strong> Automatic core updates are enabled via the WP_AUTO_UPDATE_CORE constant. WordPress Beta Tester settings will be overridden.', 'wordpress-beta-tester' ) );
 			echo '</p></div>';
 		}
