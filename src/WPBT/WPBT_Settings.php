@@ -284,7 +284,7 @@ class WPBT_Settings {
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Beta Testing WordPress', 'wordpress-beta-tester' ); ?></h1>
 			<?php $this->options_tabs(); ?>
-			<div class="updated fade">
+			<div class="notice notice-info fade">
 				<p><?php echo wp_kses_post( __( '<strong>Please note:</strong> Once you have switched your website to one of these beta versions of software, it will not always be possible to downgrade as the database structure may be updated during the development of a major release.', 'wordpress-beta-tester' ) ); ?></p>
 			</div>
 		<?php
