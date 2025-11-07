@@ -35,8 +35,9 @@ PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
 
-#### 4.0.0 / 2025-11-06
+#### 4.0.0 / 2025-11-07
 * refactor to use `core_version_check_query_args` filter for simplicity and compatibility
+* remove checks on `WP_AUTO_UPDATE_CORE`
 * update to require WordPress 4.9
 
 #### 3.6.4 / 2025-07-10
