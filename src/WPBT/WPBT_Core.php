@@ -147,7 +147,7 @@ class WPBT_Core {
 		$preferred = $this->wp_beta_tester->get_preferred_from_update_core();
 		if ( defined( 'WP_AUTO_UPDATE_CORE' ) && WP_AUTO_UPDATE_CORE ) {
 			echo '<div class="notice notice-warning fade"><p>';
-			echo wp_kses_post( __( '<strong>Warning:</strong> Automatic core updates are enabled via the WP_AUTO_UPDATE_CORE constant. WordPress Beta Tester settings will be overridden.', 'wordpress-beta-tester' ) );
+			echo wp_kses_post( __( '<strong>Warning:</strong> The `WP_AUTO_UPDATE_CORE` constant is set. WordPress Beta Tester settings will be overridden.', 'wordpress-beta-tester' ) );
 			echo '</p></div>';
 		}
 
