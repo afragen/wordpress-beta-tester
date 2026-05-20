@@ -53,9 +53,8 @@
             "src/"
         ]
     },
-    "scripts": {
-        "wpcs": [
-            "vendor/bin/phpcbf .; vendor/bin/phpcs ."
-        ]
-    }
+ 	"scripts": {
+		"lint": "@php ./vendor/bin/phpcs .",
+		"format": "@php ./vendor/bin/phpcbf ."
+	}
 }
