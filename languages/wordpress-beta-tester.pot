@@ -1,15 +1,15 @@
-# Copyright (C) 2025 WordPress Upgrade/Install Team
+# Copyright (C) 2026 WordPress Upgrade/Install Team
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress Beta Tester 4.0.0\n"
+"Project-Id-Version: WordPress Beta Tester 4.0.0.1\n"
 "Report-Msgid-Bugs-To: https://github.com/afragen/wordpress-beta-tester/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-07T01:38:42+00:00\n"
+"POT-Creation-Date: 2026-05-20T18:47:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wordpress-beta-tester\n"
@@ -148,34 +148,34 @@ msgid "This is for the Release Candidate releases only of the selected channel."
 msgstr ""
 
 #. translators: %s: version number
-#: src/WPBT/WPBT_Core.php:329
+#: src/WPBT/WPBT_Core.php:334
 #, php-format
 msgid "version %s"
 msgstr ""
 
-#: src/WPBT/WPBT_Core.php:335
+#: src/WPBT/WPBT_Core.php:340
 msgid "next development version"
 msgstr ""
 
 #. translators: %l: next version numbers
-#: src/WPBT/WPBT_Core.php:340
+#: src/WPBT/WPBT_Core.php:345
 msgid "version %l, whichever is released first"
 msgstr ""
 
 #. translators: Used to join items in a list with more than 2 items.
-#: src/WPBT/WPBT_Core.php:432
+#: src/WPBT/WPBT_Core.php:437
 #, php-format
 msgid "%1$s, %2$s"
 msgstr ""
 
 #. translators: Used to join last two items in a list with more than 2 times.
-#: src/WPBT/WPBT_Core.php:434
+#: src/WPBT/WPBT_Core.php:439
 #, php-format
 msgid "%1$s, or %2$s"
 msgstr ""
 
 #. translators: Used to join items in a list with only 2 items.
-#: src/WPBT/WPBT_Core.php:436
+#: src/WPBT/WPBT_Core.php:441
 #, php-format
 msgid "%1$s or %2$s"
 msgstr ""
