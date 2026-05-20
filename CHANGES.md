@@ -1,4 +1,5 @@
 [unreleased]
+* update display of next versions
 
 #### 4.0.0 / 2025-11-07
 * refactor to use `core_version_check_query_args` filter for simplicity and compatibility

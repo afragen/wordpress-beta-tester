@@ -320,7 +320,12 @@ class WPBT_Core {
 		) {
 			unset( $next_version['preferred'] );
 		} else {
-			unset( $next_version['beta'], $next_version['rc'] );
+			unset( $next_version['beta'] );
+		}
+
+		// Remove preferred version if it is the same as the next version to avoid confusion.
+		if ( version_compare( $preferred_version, $next_version['release'], '==' ) ) {
+			unset( $next_version['preferred'] );
 		}
 
 		// Site is not on a beta/RC stream so use the preferred version.
