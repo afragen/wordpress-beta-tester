@@ -6,8 +6,8 @@ License: GPLv2
 License URI: https://www.opensource.org/licenses/GPL-2.0
 Requires at least: 4.9
 Requires PHP: 5.6
-Tested up to: 6.9
-Stable Tag: 4.0.0
+Tested up to: 7.1
+Stable Tag: 4.0.1
 
 Allows you to easily upgrade for testing the next versions of WordPress.
 
@@ -34,6 +34,10 @@ There is a setting to **Skip bundled plugins and themes**. It functions to disab
 PRs are welcome on [GitHub](https://github.com/afragen/wordpress-beta-tester).
 
 ## Changelog
+
+#### 4.0.1 / 2026-08-13
+* update display of next versions
+* update tested to
 
 #### 4.0.0 / 2025-11-07
 * refactor to use `core_version_check_query_args` filter for simplicity and compatibility

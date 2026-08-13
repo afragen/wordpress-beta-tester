@@ -1,5 +1,9 @@
 [unreleased]
 
+#### 4.0.1 / 2026-08-13
+* update display of next versions
+* update tested to
+
 #### 4.0.0 / 2025-11-07
 * refactor to use `core_version_check_query_args` filter for simplicity and compatibility
 * remove checks on `WP_AUTO_UPDATE_CORE`
