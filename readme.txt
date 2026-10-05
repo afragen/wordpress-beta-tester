@@ -24,6 +24,23 @@ Don't forget to backup before you start!
 
 Please enable auto-updates for this plugin to ensure future changes are properly handled with core updates.
 
+### Plugin Update Versions
+
+The **Plugins** screen gains an **Update Version** dropdown for every plugin hosted on WordPress.org:
+
+* **Latest** — the default. The newest tag of any kind, pre-releases included, is offered as an update. Many plugin authors tag pre-releases in their WordPress.org SVN repository, e.g. `9.9.0-beta.1`, `9.9.0-rc.1`, or `3.0.0-RC1`. When the newest tag is simply the current stable release, nothing changes.
+* **Latest Stable** — opts that plugin out. WordPress behaves exactly as it normally does.
+* **A specific version** — the plugin's full tag list loads as soon as you open the dropdown, so you can pin it to any published version. That version is then offered as an update whether it is newer or older than what is installed, which makes it a straightforward way to roll a plugin back.
+
+A pin is a lock. Once the pinned version is installed the plugin stays on it: newer releases, including security releases, are withheld until you set the plugin back to **Latest** or **Latest Stable**. The dropdown shows "Pinned to *x.y.z*" so you can see at a glance which plugins are held back.
+
+Please note:
+
+* Because **Latest** is the default, activating this plugin starts offering pre-release versions of every WordPress.org plugin on the site. Switch any plugin to **Latest Stable** to opt it out.
+* Pre-release plugins can be unstable. Backup your site before updating.
+* Nothing here is **ever auto-updated**, even for plugins you have auto-updates switched on for — you always click "Update Now" yourself.
+* Plugins that are not hosted on WordPress.org have no tags to offer and are marked as such in the column.
+
 ### Extra Settings
 
 There is a setting to **Skip successful autoupdate emails**.  It functions to disable sending emails to the admin user for successful autoupdates. Only emails indicating failures of the autoupdate process are sent.

@@ -1,4 +1,7 @@
 [unreleased]
+* add an "Update Version" dropdown to the Plugins screen: Latest (default), Latest Stable, or pin any tagged version
+* pinning a version offers it as an update in either direction and then holds it, so a rollback stays rolled back
+* never auto-update a pre-release or pinned version, regardless of per-plugin auto-update settings
 
 #### 4.0.1 / 2026-08-13
 * update display of next versions

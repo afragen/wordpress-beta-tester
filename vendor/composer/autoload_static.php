@@ -78,7 +78,9 @@ class ComposerStaticInit248763277659ec81f8c4ff690d89804d
         'WPBT_Core' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Core.php',
         'WPBT_Extras' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Extras.php',
         'WPBT_Help' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Help.php',
+        'WPBT_Plugins' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Plugins.php',
         'WPBT_Settings' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Settings.php',
+        'WPBT_Version_Compare' => __DIR__ . '/../..' . '/src/WPBT/WPBT_Version_Compare.php',
         'WP_Beta_Tester' => __DIR__ . '/../..' . '/src/WPBT/WP_Beta_Tester.php',
     );
 

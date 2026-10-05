@@ -289,6 +289,15 @@ class WP_Beta_Tester {
 				/* translators: %s: WP Beta Tester settings URL */
 				printf( wp_kses_post( '<p>' . __( 'Head over to your <a href="%s">WordPress Beta Tester Settings</a> and make sure the <strong>beta/RC</strong> stream is selected.', 'wordpress-beta-tester' ) . '</p>' ), esc_url( $wpbt_settings_page ) );
 			}
+
+			$plugin_versions = WPBT_Plugins::get_update_versions();
+			if ( ! empty( $plugin_versions ) ) {
+				printf(
+					/* translators: %s: number of plugins with a non-default Update Version setting */
+					wp_kses_post( '<p>' . _n( '<strong>%s</strong> plugin has a non-default Update Version setting.', '<strong>%s</strong> plugins have a non-default Update Version setting.', count( $plugin_versions ), 'wordpress-beta-tester' ) . '</p>' ),
+					esc_html( number_format_i18n( count( $plugin_versions ) ) )
+				);
+			}
 		}
 	}
 

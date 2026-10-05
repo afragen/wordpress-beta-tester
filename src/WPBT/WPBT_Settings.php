@@ -54,6 +54,7 @@ class WPBT_Settings {
 		$this->load_hooks();
 		( new WPBT_Core( $this->wp_beta_tester, self::$options ) )->load_hooks();
 		( new WPBT_Extras( $this->wp_beta_tester, self::$options ) )->init();
+		( new WPBT_Plugins( $this->wp_beta_tester, self::$options ) )->init();
 		( new WPBT_Help() )->load_hooks();
 	}
 
