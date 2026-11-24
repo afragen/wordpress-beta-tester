@@ -315,8 +315,8 @@ class WPBT_Core {
 		$next_version = $this->calculate_next_versions();
 
 		// Try to set actual next beta/RC.
-		if ( ( isset( $next_version['beta'] ) && version_compare( $next_version['preferred'], $next_version['beta'], '<' ) )
-			|| ( isset( $next_version['rc'] ) && version_compare( $next_version['preferred'], $next_version['rc'], '<' ) )
+		if ( ( isset( $next_version['beta'] ) && version_compare( $next_version['preferred'], $next_version['beta'], '<=' ) )
+			|| ( isset( $next_version['rc'] ) && version_compare( $next_version['preferred'], $next_version['rc'], '<=' ) )
 		) {
 			unset( $next_version['preferred'] );
 		} else {
@@ -364,7 +364,7 @@ class WPBT_Core {
 		$preferred              = $this->wp_beta_tester->get_preferred_from_update_core();
 
 		// User on a current release.
-		if ( ! $is_development_version ) {
+		if ( ! $is_development_version && ! empty( $next_release ) ) {
 			unset( $next_release[2] );
 			$next_release[1] = $next_release[1] + 1;
 

@@ -1,5 +1,6 @@
 [unreleased]
 * update GA
+* update `calculate_next_versions()` and `get_next_version()`
 
 #### 4.0.1 / 2026-08-13
 * update display of next versions
